@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/styleform.css">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="/RetroToon/assets/images/Design_sans_titre-removebg-preview_2.png"> <!-- pour logo fenetre -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+<title>RetroToon</title>
+</head>
+<body>
+    <header>
+        <nav id="menu">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <a href="index-client.html">
+                    <img src="/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Liens de navigation au centre -->
+            <ul class="nav-links">
+                <li><a href="index-client.html">Accueil</a></li>
+                <li><a href="series.html">Séries</a></li>
+                <li><a href="films.html">Films</a></li>
+                <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
+            </ul>
+
+            <!-- Icônes à droite -->
+            <div class="nav-icons">
+                <form class="search-container" action="resultas-barre-de-recherche.html">
+                    <input id="search-box" type="text" class="search-box" name="q" />
+                    <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
+                </form>
+                <a href="#" class="icon" style="text-decoration: none;"><i class="fi fi-rr-heart"></i></a>
+                <div class="account">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+
+                    <ul class="sub-menus" id="accountSubMenu">
+                        <li onclick="modeEnfant()"><a href='/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <hr>
+                        <li><a href='/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <hr>
+                        <li><a href='/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="tab-bar">
+        <a href="index-client.html"><i class="fa-solid fa-house"></i></a>
+        <a href="#"><i class="fi fi-rr-clapperboard-play"></i></a>
+        <a href="#"><i class="fi fi-rr-tv-retro"></i></a>
+        <a href="years.html"><i class="fi fi-rr-90s-music-disc"></i></i></a>
+        <a href="#"><i class="fi fi-rr-heart"></i></a>
+        <a href="#" class="icon dropdown-arrow" id="accountToggle">
+            <i class="fa-solid fa-user"></i>
+        </a>
+    </div>
+    <main>
+            <div class="containertitrepage">
+                <h1>Réinitialisation du mot de passe</h1>
+            </div>
+
+            <section class="reinitialisationmp">
+
+                <form class="container-formulaire" action="#" method="post">
+      
+                <h3>Email</h3>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+          
+         
+            <div class="container-asterisques">
+                <p> * Si, vous avez un compte vous allez recevoir un mail de réinitialisation de mot de passe dans quelques instants. </p>
+            </div>
+           
+            <div class="boutton-container">
+                <button type="submit" onclick="reinitialisermp()">Réinitialiser  votre mot de passe </button>
+            </div>
+          
+        </section>
+        </form>
+    </main>
+    <footer>
+        <img src="/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
+        <div id="liste-footer">
+            <a href="/html/index-client.html"><p>Accueil</p></a>
+            <a href="/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
+        </div>
+        <nav>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </nav>
+        <P>Tous droits réservés © Retrotoon Group 2024</P>
+    </footer>
+    <script src="/assets/script/scriptPara.js"></script>
+</body>
+
+</html>

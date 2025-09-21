@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/style-client.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/searchbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/sub-navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/carrousel.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png">
+    <!-- pour logo fenetre -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+</head>
+<title>RetroToon</title>
+
+<body>
+    <header>
+        <nav id="menu">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <a href="/src/main/resources/templates/html/index-client.html">
+                    <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Liens de navigation au centre -->
+            <ul class="nav-links">
+                <li><a href="/src/main/resources/templates/html/index-client.html">Accueil</a></li>
+                <li><a href="/src/main/resources/templates/html/series.html">Séries</a></li>
+                <li><a href="/src/main/resources/templates/html/films.html">Films</a></li>
+                <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
+            </ul>
+
+            <!-- Icônes à droite -->
+            <div class="nav-icons">
+                <form class="search-container" action="/src/main/resources/templates/html/resultas-barre-de-recherche.html">
+                    <input id="search-box" type="text" class="search-box" name="q" />
+                    <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
+                </form>
+                <a href="#" class="icon" style="text-decoration: none;"><i class="fi fi-rr-heart"></i></a>
+                <div class="account">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle">
+                        <i class="fi fi-sr-user"></i>
+                    </a>
+
+                    <ul class="sub-menus" id="accountSubMenu">
+                        <li onclick="modeEnfant()"><a href='/src/main/resources/templates/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <hr>
+                        <li><a href='/src/main/resources/templates/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <hr>
+                        <li><a href='/src/main/resources/templates/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="tab-bar">
+        <a href="/src/main/resources/templates/html/index-client.html" >
+            <i class="fi fi-sr-home"></i>
+        </a>
+        <a href="/src/main/resources/templates/html/series.html">
+            <i class="fi fi-rr-tv-retro"></i>
+        </a>
+
+        <a href="/src/main/resources/templates/html/films.html">
+            <i class="fi fi-rr-clapperboard-play"></i>
+        </a>
+
+        <a href="#">
+            <i class="fi fi-rr-heart"></i>
+        </a>
+
+        <a href="#" class="icon dropdown-arrow" id="accountToggle">
+            <i class="fi fi-sr-user"></i>
+        </a>
+    </div>
+
+    <main>
+        <section id="player">
+            <video autoplay muted loop playsinline>
+                <source src="/src/main/resources/static/assets/images/Shrek 4, il était une fin - Extrait ＂Le contrat＂ [VF｜HD] (online-video-cutter.com).mp4" type="video/mp4">
+            </video>
+            
+            <div class="overlay-content">
+                <img src="/src/main/resources/static/assets/images/Shrek4.png" alt="logo_titre_shrek4">
+                <p>Après avoir vaincu un méchant dragon, sauvé une belle princesse et le royaume de ses parents, que peut encore faire un ogre malodorant et mal léché ? Domestiqué, assagi, Shrek a perdu jusqu'à l'envie de rugir et regrette le bon vieux temps où il semait la terreur dans le royaume. Aujourd'hui, tel une idole déchue, il se contente de signer des autographes à tour de bras. Trop triste.</p>
+                <div id="overlay-button">
+                    <button><i class="fa-solid fa-play"></i> Lecture</button>
+                    <button><i class="fi fi-rr-info"></i> Plus d'info</button>
+                </div>
+
+                <button class="mute-button" onclick="toggleMute()">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>
+                Reprendre
+            </h2>
+            <h2>Historique de lecture</h2>
+            <div class="carousel" data-carousel data-source="history" data-layout="landscape" style="--per-page:5">
+            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
+            <div class="viewport"><div class="track" data-track></div></div>
+            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+            </div>
+            
+        </section>
+        
+
+        <section id="film" class="section">
+            <h2>
+                Films
+            </h2>
+            <div class="carousel" data-carousel data-type="movie" data-layout="portrait" style="--per-page:5">
+            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
+            <div class="viewport"><div class="track" data-track></div></div>
+            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+            </div>
+              
+        </section>
+
+        <section class="section">
+            <h2>
+                Séries
+            </h2>
+            <div class="carousel" data-carousel data-type="tv" data-layout="portrait" style="--per-page:5">
+            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
+            <div class="viewport"><div class="track" data-track></div></div>
+            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
+        <div id="liste-footer">
+            <a href="/src/main/resources/templates/html/index-client.html"><p>Accueil</p></a>
+            <a href="/src/main/resources/templates/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/src/main/resources/templates/html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
+        </div>
+        <nav>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </nav>
+        <P>Tous droits réservés © Retrotoon Group 2024</P>
+    </footer>
+
+      <div id="debug" class="debug" hidden></div>
+
+
+    <script src="/src/main/resources/static/assets/script/carrousel.js" defer></script>
+    <script src="/src/main/resources/static/assets/script/searchbar.js"></script>
+    <script src="/src/main/resources/static/assets/script/sub-navbar.js"></script>
+</body>
+
+</html>

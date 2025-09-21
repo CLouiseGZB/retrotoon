@@ -1,0 +1,45 @@
+/* ================== Sous-menus (compte) ================== */
+.account {
+  position: relative;
+}
+.sub-menus {
+  position: absolute;
+  top: 144%;
+  right: 0;
+  width: 200px;
+  background: var(--bg);
+  z-index: 99;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .6);
+}
+.sub-menus.active {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+.sub-menus li {
+  list-style: none;
+}
+.sub-menus a {
+  color: #FFFAE0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 20px 15px;
+}
+.sub-menus a:hover {
+  color: #EB7A57;
+}
+.sub-menus i {
+  padding-right: 10px;
+  font-size: 1.5rem;
+}
+.sub-menus hr {
+  border: 1px solid #FFFAE0;
+  margin-inline: 10%;
+}
+
+@media (max-width: 768px) {}

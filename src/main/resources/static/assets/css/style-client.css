@@ -1,0 +1,303 @@
+/* ================== Reset & garde-fous ================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Pour les carrousels */
+.viewport {
+  overflow: hidden;
+}
+
+/* ================== Thème & variables ================== */
+:root {
+  --bg: #001429;
+  --bg-alt: #001D3D;
+  --card: #0d1b2a;
+  --text: #f2f6fb;
+  --muted: #c6d2df;
+  --accent: #EB7A57;
+
+  --gap: 1rem;
+  --row-h: 45vh;
+  --header-h: 80px;
+  --title-shadow: 0 3px 10px rgba(0, 0, 0, .45);
+
+  /* marge horizontale des titres gérée par MQ */
+  --gutter: 24px; /* desktop */
+}
+
+/* ================== Typographies globales ================== */
+body {
+  font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-alt);
+  color: var(--text);
+}
+
+/* ================== Titres ================== */
+h1,
+h2,
+h3 {
+  font-family: "Bangers", system-ui;
+  font-weight: 400;
+  color: #FFFAE0;
+  letter-spacing: .5px;
+  line-height: 1.1;
+  text-shadow: var(--title-shadow);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+  border: 0;
+}
+h1 {
+  font-size: 3.25rem;
+  margin: calc(var(--header-h) + 1.5rem) var(--gutter) .5rem;
+}
+.section > h2,
+h2 {
+  font-size: 1.75rem;
+  margin: 0 var(--gutter) .5rem;
+}
+.section > h3,
+h3 {
+  font-size: 1.4rem;
+  margin: 1.25rem var(--gutter) .35rem;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 0 var(--gutter) 1rem;
+}
+
+/* HR discret et aligné */
+hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #FFFAE066 15%, #FFFAE0 40%, #FFFAE066 85%, transparent);
+  margin: 16px var(--gutter);
+}
+
+/* ================== En-tête (hero) ================== */
+.entete {
+  margin: calc(var(--header-h) + 2rem) auto 3rem;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.entete h1 {
+  margin: 0 0 .5rem 0;
+}
+
+/* ================== Sections génériques ================== */
+.section {
+  width: 100%;
+  padding: 24px 16px;
+}
+section:not(#player) {
+  margin: 0;
+}
+
+
+/* ================== Player / Hero vidéo ================== */
+video {
+  object-fit: cover;
+}
+
+/* Desktop par défaut : le player remplit l'écran */
+#player {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* fallback */
+  height: 100dvh; /* tient compte des barres navigateur mobiles modernes */
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* La vidéo remplit le player */
+#player .hero-video,
+#player > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Overlay contenu et superposé à la vidéo */
+.overlay-content {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  background: rgba(0, 0, 0, .5);
+  color: #FFFAE0;
+}
+.overlay-content img {
+  margin-bottom: 20px;
+  width: 25rem;
+}
+.overlay-content p {
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+#overlay-button {
+  display: flex;
+  gap: 10px;
+}
+.overlay-content button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, .2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+}
+.overlay-content button:hover {
+  color: #EB7A57;
+  background: rgba(255, 255, 255, .8);
+}
+.overlay-content i {
+  margin-right: .5rem;
+}
+.mute-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, .5);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  color: black;
+  border-radius: 5px;
+}
+.mute-button:hover {
+  background: rgba(255, 255, 255, .8);
+}
+
+/* L’overlay couvre seulement le player et laisse passer les clics en dehors des boutons */
+#player .overlay-content{
+  position: absolute;
+  inset: 0;              /* colle à la vidéo */
+  pointer-events: none;  /* ne capte pas les clics par défaut */
+}
+
+/* Les éléments interactifs restent cliquables */
+#player .overlay-content button,
+#player .overlay-content a {
+  pointer-events: auto;
+}
+
+
+
+
+/* ================== Responsive ================== */
+@media (max-width: 1024px) {
+
+  /* tailles titres */
+  h1 {
+    font-size: 2.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  
+
+  /* ----- Player demi-écran en mobile ----- */
+  #player {
+    height: 70vh !important;
+    height: 70dvh !important;
+    min-height: 70vh !important;
+    min-height: 70dvh !important;
+  }
+  /* La vidéo & l’overlay suivent la hauteur du player */
+  #player .hero-video,
+  #player > video,
+  #player .overlay-content {
+    height: 100% !important;
+  }
+
+
+  /* Player / hero (mobile) */
+  .entete img {
+    width: 90vw;
+  }
+  /* cacher la description en mobile */
+  #player .overlay-content p {
+    display: none !important;
+  }
+  .overlay-content {
+    padding: 16px;
+    z-index: 10;
+  }
+  .overlay-content img {
+    width: 50vw;
+    margin-bottom: 20px;
+  }
+  #overlay-button button {
+    padding: 5px 15px;
+    margin: 5px;
+    font-size: .8rem;
+  }
+  .overlay-content button {
+    padding: 0;
+  }
+  .mute-button {
+    position: absolute;
+    font-size: .8rem;
+    height: 1rem;
+    width: 1.3rem;
+  }
+
+  /* Titres (marges avec --gutter) */
+  h1 {
+    margin: calc(var(--header-h) + 1rem) var(--gutter) .35rem;
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  h3 {
+    font-size: 1.125rem;
+  }
+  .subtitle {
+    margin: 0 var(--gutter) .75rem;
+    font-size: .9rem;
+  }
+  hr {
+    margin: 12px var(--gutter);
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 16px 12px;
+  }
+  .section > h2,
+  h2 {
+    font-size: 1rem;
+  }
+}
+
+/* ================== Petites utilitaires optionnelles ================== */
+/* .debug-border{ border:1px dashed red; } */

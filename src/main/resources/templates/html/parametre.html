@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroToon-Paramètres</title>
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="/RetroToon/assets/imgParametre/Design_sans_titre-removebg-preview 2.png">
+    <link rel="stylesheet" href="/assets/css/parametre.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+</head>
+
+<body>
+    <header>
+        <nav id="menu">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <a href="index-client.html">
+                    <img src="/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Liens de navigation au centre -->
+            <ul class="nav-links">
+                <li><a href="index-client.html">Accueil</a></li>
+                <li><a href="series.html">Séries</a></li>
+                <li><a href="films.html">Films</a></li>
+                <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
+            </ul>
+
+            <!-- Icônes à droite -->
+            <div class="nav-icons">
+                <form class="search-container" action="resultas-barre-de-recherche.html">
+                    <input id="search-box" type="text" class="search-box" name="q" />
+                    <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
+                </form>
+                <a href="#" class="icon" style="text-decoration: none;"><i class="fi fi-rr-heart"></i></a>
+                <div class="account">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+
+                    <ul class="sub-menus" id="accountSubMenu">
+                        <li onclick="modeEnfant()"><a href='/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <hr>
+                        <li><a href='/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <hr>
+                        <li><a href='/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="tab-bar">
+        <a href="index-client.html"><i class="fa-solid fa-house"></i></a>
+        <a href="#"><i class="fi fi-rr-clapperboard-play"></i></a>
+        <a href="#"><i class="fi fi-rr-tv-retro"></i></a>
+        <a href="years.html"><i class="fi fi-rr-90s-music-disc"></i></i></a>
+        <a href="#"><i class="fi fi-rr-heart"></i></a>
+        <a href="#" class="icon dropdown-arrow" id="accountToggle">
+            <i class="fa-solid fa-user"></i>
+        </a>
+    </div>
+    <main>
+        <!----------------------SANA-------------------------------->
+        <div class="hautPage">
+            <h1>PARAMETRE DU COMPTE</h1>
+        </div>
+        <!---------------------- BOUTON -------------------------------->
+        <div class="containerParametre">
+            <section id="page-accueil" class="page active">
+                <div class="choixParametre" data-page="page-gestion-compte-1">
+                    <i class="fa-solid fa-user"></i>
+                    <p>Gestion du compte</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="choixParametre" data-page="page-gestion-compte-2">
+                    <i class="fa-solid fa-key"></i>
+                    <p>Changer mon mot de passe</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="choixParametre" data-page="page-gestion-compte-3">
+                    <i class="fa-solid fa-laptop"></i>
+                    <p>Gestion des appareils</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="choixParametre" data-page="page-gestion-compte-4">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <p>Contrôle parental</p>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+                <div class="choixParametre" data-page="page-gestion-compte-5">
+                    <i class="fi fi-rr-info"></i>
+                    <p>Aide & Contact</p>
+                </div>
+                <div class="choixParametre" data-page="page-gestion-compte-6">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <p>Déconnexion</p>
+                </div>
+            </section>
+
+            <!-- Page cachée de gestion du compte -->
+            <section id="page-gestion-compte-1" class="page">
+                <div class="container-cache">
+                    <h3>Modifier mes données personnelles</h3>
+                    <label for="nom">Nom</label>
+                    <input type="text">
+                    <label for="prenom">Prénom</label>
+                    <input type="text">
+                    <label for="date">Date de naissance</label>
+                    <input type="date">
+                    <label for="email">Nouveau email</label>
+                    <input type="email">
+                    <label for="confirmationEmail">Confirmation nouveau email</label>
+                    <input type="email">
+                    <button type="button">Sauvegarder les informations</button>
+                    <div class="retourPage" data-page="page-accueil">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <p>Retour</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Page cachée pour changer le mot de passe -->
+            <section id="page-gestion-compte-2" class="page">
+                <div class="container-cache">
+                    <h3>Changement de mot de passe</h3>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                    <label for="motDePasseActuel">Mot de passe actuel</label>
+                    <input type="password" required>
+                    <label for="nouveauMotDePasse">Nouveau mot de passe</label>
+                    <input type="password" required>
+                    <label for="confirmationNouveauMotDePasse">Confirmation nouveau mot de passe</label>
+                    <input type="password" required>
+                    <button type="button">Changer le mot de passe</button>
+                    <div class="retourPage" data-page="page-accueil">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <p>Retour</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Page cachée pour gestion des appareils -->
+            <section id="page-gestion-compte-3" class="page">
+                <div class="container-cache">
+                    <h3>Appareils associés à votre compte</h3>
+                    <div class="gestionAppareil">
+                        <p>Android TV</p>
+                        <i class="fa-solid fa-pen"></i>
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <div class="gestionAppareil">
+                        <p>user’s iPhone</p>
+                        <i class="fa-solid fa-pen"></i>
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <div class="gestionAppareil">
+                        <p>Samsung</p>
+                        <i class="fa-solid fa-pen"></i>
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <div class="retourPage" data-page="page-accueil">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <p>Retour</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Page cachée pour controle parental -->
+            <section id="page-gestion-compte-4" class="page">
+                <div class="container-cache">
+                    <h3>Contrôle parental</h3>
+                    <P id="p">Le code de contrôle parental vous aidera à mieux protéger vos enfants</P>
+                    <input id="code" type="number" inputmode="numeric" pattern="[0-9]\d{4}" length="4" placeholder=" * * * * ">
+                    <button id="saveCodeButton" type="button">Sauvegarder</button>
+                    <p id="message"></p> 
+                    <div class="retourPage" data-page="page-accueil">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <p>Retour</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <img src="/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
+        <div id="liste-footer">
+            <a href="/html/index-client.html"><p>Accueil</p></a>
+            <a href="/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
+        </div>
+        <nav>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </nav>
+        <P>Tous droits réservés © Retrotoon Group 2024</P>
+    </footer>
+    <script src="/assets/script/scriptPara.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,473 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #001D3D;
+    width: 100%;
+    font-family: "Fredoka", sans-serif;
+}
+ol,
+ul {
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #FFFAE0;
+}
+
+/*********************************Header*******************************/
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 10px;
+    padding-inline: 20px 0px;
+    background: linear-gradient( #001429, transparent);
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Styles pour le logo à gauche */
+.logo img {
+    width: 4em;
+}
+
+/* Centrage des liens de navigation */
+.nav-links {
+    display: flex;
+    justify-content:flex-start;
+  flex-grow: 1;
+}
+.nav-links i{
+    padding-right: 3px;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    display: block;
+    line-height: 45px;
+    padding: 0 14px;
+    text-decoration: none;
+    color: #FFFAE0;
+    font-size: 16px;
+    font-family: Fredoka;
+    padding-left: 50px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #EB7A57;
+}
+
+/* Alignement des icônes à droite */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.nav-icons .icon {
+    margin-left: 15px;
+    position: relative;
+
+}
+
+.nav-icons .icon i {
+    font-size: 1.5em;
+    color: #FFFAE0;
+    text-decoration: none; 
+    transition: color 0.3s;
+}
+
+.icon i:hover,
+.search-icon i:hover{
+    color: #EB7A57;
+    text-decoration: none;
+}
+
+.tab-bar {
+    display: none;
+}
+
+/*****************barre de recherche*****************/
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box {
+    transition: width 0.6s ease, border-radius 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: text;
+    background: transparent;
+    color: transparent;
+    padding-left: 40px;
+    text-indent: -5000px;
+}
+
+.search-box:focus {
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 2px #FFFAE0;
+}
+
+.search-box.active {
+    width: 300px;
+    border-radius: 20px;
+    background: #001D3D;
+    color: #FFFAE0;
+    text-indent: 0;
+    padding-left: 40px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 54%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.search-icon i {
+    color: #FFFAE0;
+    font-size: 1.5rem;
+}
+
+/* Styles pour le menu déroulant */
+.account {
+    position: relative;
+}
+
+.sub-menus {
+    position: absolute;
+    top: 144%; /* Positionner le sous-menu directement sous le parent */
+    right: 0;  /* Aligner le sous-menu avec le bord droit de l'icône */
+    width: 200px; /* Largeur du sous-menu */
+    background: #001429;
+    z-index: 99;
+    display: none; /* Masqué par défaut */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.594);
+}
+.sub-menus hr{
+    border: solid 1px #FFFAE0;
+    margin-inline: 10%;
+}
+.sub-menus.active {
+    display: block; /* Affiche le sous-menu */
+    opacity: 1; /* Assure une transition en douceur */
+    visibility: visible;
+}
+
+.sub-menus li {
+    list-style: none;
+}
+
+.sub-menus a {
+    color: #FFFAE0;
+    font-size: 16px;
+    font-family: Fredoka;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 20px 15px;
+}
+
+.sub-menus a:hover {
+    color: #EB7A57;
+}
+
+.sub-menus i {
+    padding-right: 10px; /* Espacement entre l'image et le texte */
+    font-size: 1.5rem;
+}
+
+/********************************   MAIN   ***************************************/
+.hautPage {
+    display: flex;
+padding-top: 40px;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to top, #001429, transparent);
+    margin-top: 100px;
+    justify-content: center;
+    color: #FFFAE0;
+    font-family: 'Bangers', cursive;
+    font-weight: normal;
+    font-size: 26px;
+    letter-spacing: 3px;
+}
+.containerParametre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.choixParametre {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 50px;
+    background-color: #001D3D;
+    box-shadow: 0 4px 8px black;
+    margin-bottom: 20px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    padding-left: 20px;
+    cursor: pointer;
+}
+#page-accueil{
+    width: 100%;
+    margin-left: 50%;
+}
+
+.choixParametre p {
+    margin: 0;
+    padding-left: 10px;
+}
+.choixParametre .fa-chevron-right {
+    margin-left: auto;
+    margin-right: 10px;
+}
+.page {
+    display: none;
+}
+.page.active {
+    display: block;
+}
+/*****************************   contenu cache  ******************************/
+.container-cache{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.container-cache h3{
+    display: flex;
+    justify-content: center;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-weight: normal;
+    padding-bottom: 7%;
+    text-shadow:   1px 2px black;
+    font-size: 24px;
+}
+#p{
+    display: flex;
+    justify-content: center;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-weight: normal;
+    padding-bottom: 7%;
+    font-size: 16px;
+}
+#code{
+margin-left: 45%;
+    width: 63px;
+}
+.container-cache input{
+    background-color: #001429;
+    border: none;
+    font-family: Fredoka;
+    padding: 10px;
+    width: 600px;
+    margin-bottom: 20px;
+    height: 40px;
+    border-radius: 5px;
+}
+.container-cache label{
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.container-cache  button {
+    background-color: #001D3D;
+    font-family: Fredoka;
+    color: #FFFAE0;
+    border: 1.5px solid #FFFAE0;
+    padding: 10px 10px 10px 10px;
+    border-radius: 1%;
+    transition: border-color, color 0.3s;
+    margin-left: 33%;
+    width: 200px;
+}
+.retourPage{
+    display: flex;
+    align-items: center;
+    width: 50px;
+    background-color: transparent;
+    height: 20px;
+    gap: 8px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 20px;
+    transition: color 0.3s ease-in-out;
+}
+.retourPage:hover {
+    color: #EB7A57;
+}
+.container-cache  button:hover{
+    border-color: #EB7A57;
+    color: #EB7A57;
+}
+.gestionAppareil{
+    display: flex;
+    align-items: center;
+    width: 600px;
+    height: 50px;
+    background-color: #001D3D;
+    box-shadow: 0 4px 8px black;
+    margin-bottom: 10px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    padding-left: 20px;
+}
+.gestionAppareil .fa-pen{
+    margin-left: auto;
+    margin-right: 10px;
+}
+.gestionAppareil .fa-trash-can{
+    margin-right: 10px;
+}
+/*****************************   page profil  ******************************/
+.sectionProfil{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 75px 0 50px 0;
+    gap: 20px;
+}
+.photoProfil {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+}
+.photoProfil P{
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 18px;
+    padding-top: 10px;
+}
+#Ajout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    position: relative;
+    height: 235PX;
+    width: 235PX;
+    border: solid gray 2px ;
+    border-radius: 50%;
+}
+#Ajout p {
+    position: absolute;
+    bottom: -25px;
+    font-size: 16px;
+    color: #FFFAE0;
+}
+#Ajout i {
+    font-size: 48px; /* Taille de l'icône */
+    color: gray;
+}
+.modifierProfil{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    cursor: pointer;
+}
+.hr{
+    border: solid 1px #FFFAE0;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+/*****************************   FOOTER   ******************************/
+footer {
+    height: 300px;
+    background-color: #001D3D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+footer img {
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+}
+
+#liste-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+#liste-footer p {
+    margin: 0;
+    padding: 10px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#liste-footer p:hover {
+    color: #EB7A57;
+}
+
+footer i {
+    font-size: 30px;
+    color: #FFFAE0;
+    padding: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+footer i:hover {
+    color: #EB7A57;
+}
+
+footer p {
+    color: #FFFAE0;
+    margin-top: 20px;
+    font-family: Fredoka;
+}
+footer a{
+    text-decoration: none;
+}
+/*****************************   RESPONSIVE   ******************************/

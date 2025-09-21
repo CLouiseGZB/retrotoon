@@ -1,0 +1,429 @@
+/************************general*************************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #001D3D;
+    min-height: 100vh; /* S'assure que le container prend toute la hauteur de la page */
+    margin: 0; /* Enlève les marges par défaut du body */
+
+}
+/************************general*************************/
+
+/* *************************navbar******************/
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 10px;
+    padding-inline: 20px 0px;
+    background: linear-gradient( #001429, transparent);
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Styles pour le logo à gauche */
+.logo img {
+    width: 4em;
+}
+
+/* Centrage des liens de navigation */
+.nav-links {
+    display: flex;
+    justify-content:flex-start;
+  flex-grow: 1;
+}
+.nav-links i{
+    padding-right: 3px;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    display: block;
+    line-height: 45px;
+    padding: 0 14px;
+    text-decoration: none;
+    color: #FFFAE0;
+    font-size: 16px;
+    font-family: Fredoka;
+    padding-left: 50px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #EB7A57;
+}
+
+/* Alignement des icônes à droite */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.nav-icons .icon {
+    margin-left: 15px;
+    position: relative;
+
+}
+
+.nav-icons .icon i {
+    font-size: 1.5em;
+    color: #FFFAE0;
+    text-decoration: none; 
+    transition: color 0.3s;
+}
+
+.icon i:hover,
+.search-icon i:hover{
+    color: #EB7A57;
+    text-decoration: none;
+}
+
+.tab-bar {
+    display: none;
+}
+
+/*****************barre de recherche*****************/
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box {
+    transition: width 0.6s ease, border-radius 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: text;
+    background: transparent;
+    color: transparent;
+    padding-left: 40px;
+    text-indent: -5000px;
+}
+
+.search-box:focus {
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 2px #FFFAE0;
+}
+
+.search-box.active {
+    width: 300px;
+    border-radius: 20px;
+    background: #001D3D;
+    color: #FFFAE0;
+    text-indent: 0;
+    padding-left: 40px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 54%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.search-icon i {
+    color: #FFFAE0;
+    font-size: 1.5rem;
+}
+
+/* Styles pour le menu déroulant */
+.account {
+    position: relative;
+}
+
+.sub-menus {
+    position: absolute;
+    top: 144%; /* Positionner le sous-menu directement sous le parent */
+    right: 0;  /* Aligner le sous-menu avec le bord droit de l'icône */
+    width: 200px; /* Largeur du sous-menu */
+    background: #001429;
+    z-index: 99;
+    display: none; /* Masqué par défaut */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.594);
+}
+.sub-menus hr{
+    border: solid 1px #FFFAE0;
+    margin-inline: 10%;
+}
+.sub-menus.active {
+    display: block; /* Affiche le sous-menu */
+    opacity: 1; /* Assure une transition en douceur */
+    visibility: visible;
+}
+
+.sub-menus li {
+    list-style: none;
+}
+
+.sub-menus a {
+    color: #FFFAE0;
+    font-size: 16px;
+    font-family: Fredoka;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 20px 15px;
+}
+
+.sub-menus a:hover {
+    color: #EB7A57;
+}
+
+.sub-menus i {
+    padding-right: 10px; /* Espacement entre l'image et le texte */
+    font-size: 1.5rem;
+}
+/* *************************navbar******************/
+
+/* ****************barre de recherche*********/
+/* ***************barre de recherche ******************/
+
+/* *************************menu deroulant ******************/
+/* *************************menu deroulant ******************/
+/**************titres********************/
+.containertitrepage {
+    display: flex;
+    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
+    justify-content: center; /* Centre le contenu verticalement */
+    align-items: center; /* Centre horizontalement */
+    margin-bottom: 20px;
+    background: linear-gradient(to top, #001429, transparent);
+    height: 150px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+.containertitrepage h2 a {
+    color: #EB7A57;
+    padding-left: 5px;
+    text-decoration: none;
+}
+h1 {
+    font-family: 'Bangers', cursive;
+    color: #FFFAFA;
+    font-size:40px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+ h2{
+    font-family: 'Bangers', cursive;
+    color: #FFFAFA;
+    font-size: 15px;
+ margin-top: 10px;
+ letter-spacing: 2px;
+}
+
+ h3 {
+    font-weight: 300; /* Définit une police plus fine */
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 600px;
+   
+}
+
+/************************titres*************************/
+/****************************container formulaire*****************/
+.container-formulaire{
+     display: flex;
+    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
+    justify-content: center; /* Centre le contenu verticalement */
+    align-items: center;
+}
+
+/****************************container formulaire*****************/
+/************************input*************************/
+.container-formulaire input,
+.container-formulaire textarea {
+    background-color: #001429;
+    border: none;
+    color: #FFFAFA;
+    font-weight: bold;
+    font-family: 'Fredoka', sans-serif;
+    padding: 10px;
+    width: 600px;
+    margin-bottom: 20px;
+    height: 40px;
+    /*border: solid 1px red;*/
+
+}
+.container-formulaire textarea {
+    height: 250px;
+    resize: none; /*retire le carrée en bas pour reglage de la zone de texte*/
+}
+
+.container-formulaire input.inputserie{
+    width: 30px;
+}
+
+
+/************************input*************************/
+/************************astérisques*********************/
+.container-asterisques{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.container-asterisques p {
+    font-family: 'Fredoka', sans-serif;
+    color: #FFFAFA;
+    font-size: x-small;
+    white-space: nowrap;
+    padding-right: 15px;
+    padding-top: 4px;
+    margin-bottom: 15px;
+}
+/************************astérisques*********************/
+/************************checkbox*************************/
+.checkbox-container{
+    display: flex; /* Utilise Flexbox pour l'affichage */
+    align-items: center; /* Centre les éléments verticalement */
+    
+}
+
+.checkbox-container p {
+    font-family: 'Fredoka', sans-serif;
+    color: #FFFAFA;
+    font-size: x-small;
+    white-space: nowrap;
+    padding-left: 5px;
+  
+}
+.checkbox-container input[type="checkbox"] {
+    appearance: none; /* supprime l'apparence par défaut */
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid #FFFAFA; 
+    border-radius: 3px; 
+    background-color: transparent; 
+    cursor: pointer;  
+    margin-top: 20px;
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: #FFFAFA; /* Fond lorsqu'elle est cochée */
+}
+
+/************************checkbox*************************/
+/*********************** import video ***********************/
+#upload-video{
+
+}
+/*********************** import video ***********************/
+/************************boutton*************************/
+button {
+    background-color: #001D3D;
+    font-family: 'Fredoka', sans-serif;
+    color: #FFFAE0;
+    border: none;
+    border: 1.5px solid #FFFAE0;
+    padding: 10px 10px 10px 10px;
+    border-radius: 1%;
+    transition: border-color, color 0.3s;
+    margin-bottom: 30px;
+}
+
+button:hover{
+    border-color: #EB7A57;
+    color: #EB7A57;
+}
+
+.buttonGestionVideo{
+    display: flex; 
+    justify-content: center;
+    gap: 60px;
+}
+
+/************************boutton*************************/
+.fa-solid{
+    color: #FFFAE0;
+}
+/************************boutton*************************/
+/*********************** footer *******************/
+footer {
+    height: 300px;
+    background-color: #001D3D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+footer img {
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+}
+
+#liste-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-block: 20px;
+    padding: 0;
+}
+
+#liste-footer p {
+    margin: 0;
+    padding: 10px;
+    color: #FFFAE0;
+    font-family: Fredoka;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#liste-footer p:hover {
+    color: #EB7A57;
+}
+
+footer i {
+    font-size: 30px;
+    color: #FFFAE0;
+    padding: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+footer i:hover {
+    color: #EB7A57;
+}
+
+footer p {
+    color: #FFFAE0;
+    margin-top: 20px;
+    font-family: Fredoka;
+}
+footer a{
+    text-decoration: none;
+}
+/*********************** footer *******************/
+/*********************** media queries*******************/
+/*responsive inscription/contact/connexions*/
+@media screen and (max-width:767PX) {   
+.container-formulaire input,
+.container-formulaire textarea{
+    width: 350px;
+}
+}

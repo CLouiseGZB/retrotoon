@@ -1,0 +1,210 @@
+/* ================== Carrousel (séries, films, historique) ================== */
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.viewport {
+  flex: 1;
+}
+.track {
+  display: flex;
+  gap: var(--gap);
+  padding: 6px 0 12px;
+  transition: transform .4s ease;
+  will-change: transform;
+}
+
+/* Boutons de nav */
+.nav {
+  border: 0;
+  background: rgba(0, 20, 41, .75);
+  color: #fff;
+  width: 48px;
+  height: 72px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 20, 41, .85);
+}
+.nav:active {
+  transform: scale(.98);
+}
+
+/* Carte */
+.card {
+  position: relative;
+  flex: 0 0 auto;
+  height: var(--row-h);
+  width: calc(var(--row-h) * 16 / 9); /* 16:9 */
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 20, 41, .85), 0 2px 0 1px rgba(255, 255, 255, .04);
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 22px 64px rgba(0, 20, 41, .95), 0 2px 0 1px rgba(255, 255, 255, .06);
+}
+
+/* Portrait 2:3 si pas en mode per-page */
+.card.portrait {
+  width: calc(var(--row-h) * 2 / 3);
+}
+
+/* Couches */
+.thumb,
+.gradient,
+.play {
+  position: absolute;
+  inset: 0;
+}
+.thumb {
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.gradient {
+  background: linear-gradient(to top, rgba(0, 0, 0, .68) 12%, rgba(0, 0, 0, 0) 70%);
+  z-index: 1;
+}
+.meta {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: .9rem;
+  z-index: 2;
+}
+.play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .15s;
+  z-index: 3;
+}
+.card:hover .play {
+  opacity: 1;
+}
+
+/* Play */
+.play button {
+  width: 60px;
+  height: 60px;
+  border: 0;
+  border-radius: 50%;
+  background: #EB7A57;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 16px 36px rgba(229, 9, 20, .5);
+}
+
+/* Badge rang */
+.badge-rank {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #EB7A57;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: .95rem;
+  z-index: 4;
+  box-shadow: 0 12px 32px rgba(229, 9, 20, .45);
+}
+
+/* Détails */
+.badge-age {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .24);
+  font-weight: 700;
+  font-size: .75rem;
+}
+.duration {
+  color: var(--muted);
+  font-size: .85rem;
+  white-space: nowrap;
+}
+.genres {
+  width: 100%;
+  color: var(--muted);
+  font-size: .85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Mode "X cartes par page" (active via style="--per-page:5") */
+.carousel[style*="--per-page"][data-layout="landscape"] .card {
+  height: auto;
+  width: calc((100% - var(--gap) * (var(--per-page) - 1)) / var(--per-page));
+  aspect-ratio: 16 / 9;
+}
+.carousel[style*="--per-page"][data-layout="portrait"] .card {
+  height: auto;
+  width: calc((100% - var(--gap) * (var(--per-page) - 1)) / var(--per-page));
+  aspect-ratio: 2 / 3;
+}
+
+/* Portrait plus haut si pas en per-page */
+.carousel[data-layout="portrait"]:not([style*="--per-page"]) {
+  --row-h: 60vh;
+}
+
+/* cache le badge top 10 */
+[data-carousel][data-source="history"] .badge-rank {
+  display: none !important;
+}
+
+/* Evite que le navigateur réserve le geste horizontal : on garde notre drag
+   tout en laissant le scroll vertical natif. */
+.track { touch-action: pan-y; }
+
+
+@media (max-width: 1024px) {
+    :root {
+    --row-h: 40vh;
+    --gutter: 20px;
+  }
+    .carousel[data-layout="portrait"]:not([style*="--per-page"]) {
+    --row-h: 55vh;
+  }
+  .nav {
+    width: 44px;
+    height: 66px;
+  }
+}
+
+@media (max-width: 768px) {
+    :root {
+    --row-h: 36vh;
+    --gutter: 12px;
+  }
+  /* Carrousels : 2 cartes par page */
+  [data-carousel] {
+    --per-page: 2 !important;
+    --gap: .6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --row-h: 32vh;
+  }
+  .carousel[data-layout="portrait"]:not([style*="--per-page"]) {
+    --row-h: 46vh;
+  }
+}
