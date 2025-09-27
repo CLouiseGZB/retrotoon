@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/styleform.css">
+    <link rel="stylesheet" th:href="@{/assets/css/styleform.css}">
     <link rel="icon" type="image/png" sizes="16x16"
         href="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png"> <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
         <nav id="menu">
             <!-- Logo à gauche -->
             <div class="logo">
-                <a href="/src/main/resources/templates/html/index-client.html">
+                <a th:href="@{/templates/html/index-client.html}">
                     <img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="Logo">
                 </a>
             </div>
@@ -29,7 +29,7 @@
             <ul class="nav-links">
                 <li><a href="index-client.html">Accueil</a></li>
                 <li><a href="series.html">Séries</a></li>
-                <li><a href="films.html">Films</a></li>
+                <li><a th:href="@{/templates/html/films.html}">Films</a></li>
                 <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
             </ul>
 
@@ -74,36 +74,36 @@
         
             <section class="inscription">
 
-                <form class="container-formulaire" action="/register" th:object="${user}" method="post">
-                <h3>Nom</h3>
-                <input type="text" id="nom" name="nom"  autocomplete="off" th:field="*{nom}" required>
-               
-                <h3>Prenom</h3>
-                <input type="text" id="prenom" name="Prenom" autocomplete="off" th:field="*{prenom}" required>
-               
-                <h3>Email</h3>
-                <input type="email" id="email" name="email" autocomplete="email" th:field="*{email}" required>
+                <form class="container-formulaire" th:action="@{/register}" th:object="${user}" method="post">
+                    <h3>Nom</h3>
+                    <input type="text" id="nom" th:field="*{nom}" autocomplete="off" required>
                 
-                <h3> Date de naissance</h3>
-                <input type="date" id="dateDeNaissance" name="dateDeNaissance" th:field="*{dateDeNaissance}"  required>
-          
-                <h3> Mot de passe </h3>
-                <input type="password" id="motDePasse" name="motDePasse"autocomplete="new-password" th:field="*{motDePasse}" required>
-        
-                <h3>Confirmation mot de passe </h3>
-                <input type="password" id="confirmPasseword" name="password"  autocomplete="new-password" required>
-        
-
-            <div class="checkbox-container">
-                <input type="checkbox" id="terms" name="checkbox" required>
-                <p>J'accepte les conditions générales d’utilisation.</p>
-            </div>
-       
-            <div class="boutton-container">
-                <button type="submit" onclick="inscrit()">Inscription</button>
-            </div>
-           
-        </form>
+                    <h3>Prénom</h3>
+                    <input type="text" id="prenom" th:field="*{prenom}" autocomplete="off" required>
+                
+                    <h3>Email</h3>
+                    <input type="email" id="email" th:field="*{email}" autocomplete="email" required>
+                
+                    <h3>Date de naissance</h3>
+                    <input type="date" id="dateDeNaissance" th:field="*{dateDeNaissance}" required>
+                
+                    <h3>Mot de passe</h3>
+                    <input type="password" id="motDePasse" th:field="*{motDePasse}" autocomplete="new-password" required>
+                
+                    <h3>Confirmation mot de passe</h3>
+                    <!-- Pas dans DTO, donc pas de th:field -->
+                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms" name="checkbox" required>
+                        <p>J'accepte les conditions générales d’utilisation.</p>
+                    </div>
+                
+                    <div class="boutton-container">
+                        <button type="submit">Inscription</button>
+                    </div>
+                </form>
+                
     </section>
     </main>
     <footer>
