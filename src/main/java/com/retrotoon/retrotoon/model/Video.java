@@ -1,5 +1,6 @@
 package com.retrotoon.retrotoon.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Video {
     private String titre;
     private String description;
     private String url;
-    private Date dateAjout;
+    private LocalDateTime dateAjout;
     private long nbrLikes;
     @ManyToOne
     private Categorie categorieVideo;
