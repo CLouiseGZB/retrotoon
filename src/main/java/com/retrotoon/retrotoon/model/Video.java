@@ -1,7 +1,6 @@
 package com.retrotoon.retrotoon.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

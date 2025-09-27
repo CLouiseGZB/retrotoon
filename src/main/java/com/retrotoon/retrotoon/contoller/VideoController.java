@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,16 @@ public class VideoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(video);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Video> updateVideo(@PathVariable Long id, @RequestBody VideoCreateDto updatedVideo){
+        Video video = videoServiceImpl.getVideoById(id);
+        Video updateVideo = videoServiceImpl.updateVideo(id, updatedVideo);
+        if (video == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(updateVideo);
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,5 @@
 package com.retrotoon.retrotoon.service;
 import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-
 import com.retrotoon.retrotoon.dtos.VideoCreateDto;
 import com.retrotoon.retrotoon.model.Video;
 
@@ -12,4 +9,5 @@ public interface VideoService {
     List<Video> getAllVideos();
     boolean deleteVideoById(Long id);
     Video getVideoById(Long id);
+    Video updateVideo(Long id, VideoCreateDto updateVideo);
 }

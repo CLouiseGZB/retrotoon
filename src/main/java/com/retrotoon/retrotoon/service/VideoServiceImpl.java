@@ -1,19 +1,11 @@
 package com.retrotoon.retrotoon.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.retrotoon.retrotoon.dtos.RegisterResponseDto;
-import com.retrotoon.retrotoon.dtos.UserRequestDto;
 import com.retrotoon.retrotoon.dtos.VideoCreateDto;
 import com.retrotoon.retrotoon.model.Video;
-import com.retrotoon.retrotoon.repository.RoleRepository;
 import com.retrotoon.retrotoon.repository.VideoRepository;
 
 
@@ -49,6 +41,20 @@ public class VideoServiceImpl implements VideoService{
     }
 
     @Override
+    public Video updateVideo(Long id, VideoCreateDto updatedVideo){
+        if (videoRepository.existsById(id)) {
+        return videoRepository.findById(id)
+        .map(video -> {
+            video.setTitre(updatedVideo.getTitre());
+            video.setUrl(updatedVideo.getUrl());
+            return videoRepository.save(video);
+        })
+        .orElse(null);
+        }
+        return null;
+    }
+
+    @Override
     public boolean deleteVideoById(Long id){
       if (videoRepository.existsById(id)) {
         videoRepository.deleteById(id);
@@ -56,5 +62,6 @@ public class VideoServiceImpl implements VideoService{
        }
        return false;
     }
+
     
 }
