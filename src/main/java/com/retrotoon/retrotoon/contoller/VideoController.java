@@ -21,6 +21,7 @@ import com.retrotoon.retrotoon.service.VideoServiceImpl;
 @RestController
 @RequestMapping("/videos")
 public class VideoController {
+    
     @Autowired
     VideoServiceImpl videoServiceImpl;
 
