@@ -36,7 +36,6 @@
                 <li><a href="/src/main/resources/templates/html/index-client.html">Accueil</a></li>
                 <li><a href="/src/main/resources/templates/html/series.html">Séries</a></li>
                 <li><a href="/src/main/resources/templates/html/films.html">Films</a></li>
-                <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
             </ul>
 
             <!-- Icônes à droite -->
@@ -45,14 +44,14 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                <a href="#" class="icon" style="text-decoration: none;"><i class="fi fi-rr-heart"></i></a>
+                
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
                         <i class="fi fi-sr-user"></i>
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li onclick="modeEnfant()"><a href='/src/main/resources/templates/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='/src/main/resources/templates/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
                         <hr>
                         <li><a href='/src/main/resources/templates/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
@@ -75,11 +74,7 @@
             <i class="fi fi-rr-clapperboard-play"></i>
         </a>
 
-        <a href="#">
-            <i class="fi fi-rr-heart"></i>
-        </a>
-
-        <a href="#" class="icon dropdown-arrow" id="accountToggle">
+        <a href="/src/main/resources/templates/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
             <i class="fi fi-sr-user"></i>
         </a>
     </div>
@@ -145,9 +140,8 @@
     </main>
 
     <footer>
-        <img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
+        <a href="/src/main/resources/templates/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
-            <a href="/src/main/resources/templates/html/index-client.html"><p>Accueil</p></a>
             <a href="/src/main/resources/templates/html/contact.html"><p>Nous contacter</p></a>
             <a href="/src/main/resources/templates/html/index.html#dispo"><p>Applications</p></a>
             <a href="#"><p>Conditions générales d'utilisation</p></a>

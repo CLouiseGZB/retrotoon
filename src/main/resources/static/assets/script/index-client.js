@@ -1,4 +1,3 @@
-//NAV BAR LOUISIANE
 // **sous menu
 document.addEventListener('DOMContentLoaded', () => {
     const accountToggle = document.getElementById('accountToggle');

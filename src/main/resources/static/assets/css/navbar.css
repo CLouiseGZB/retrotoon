@@ -63,7 +63,11 @@
 
 
 @media (max-width: 768px) {
-  .nav-links, .nav-icons {
+  .logo img {
+    width: 36px;    /* bon équilibre visuel */
+  }
+  
+  .nav-links, .nav-icons > :not(.search-container) {
     display: none;
   }
 
