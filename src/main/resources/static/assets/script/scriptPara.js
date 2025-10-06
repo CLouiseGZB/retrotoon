@@ -84,3 +84,16 @@ logOut.addEventListener('click', function () {
 
     window.location.href = '/html/index.html';
 })
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const user = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("loginPassword").value
+    };
+    fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {"content-Type": "application/json"},
+        body: JSON.stringify(user)
+    })
+});
