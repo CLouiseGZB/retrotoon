@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroToon - Connexion</title>
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/styleform.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+</head>
+
+<body>
+    <header>
+        <nav id="menu">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <a href="/src/main/resources/static/html/index-client.html">
+                    <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="containertitrepage">
+            <h1>Connexion</h1>
+            <h2>Vous n'êtes pas encore inscrit ? Inscrivez-vous <a href="/src/main/resources/static/html/inscription.html" id="switchToLogin"> juste ici
+                </a>.</h2>
+        </div>
+
+        <section class="connexion">
+
+            <form class="container-formulaire" id=loginForm action="#" method="post">
+                <h3>Email</h3>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+
+                <h3>Mot de passe </h3>
+                <input type="password" id="loginPassword" name="password" placelder="Mot de passe"
+                    autocomplete="new-password" required>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="rememberMe" name="checkbox">
+                <p> Se souvenir de moi.</p>
+            </div>
+
+            <div class="boutton-container">
+                <button id="loginBtn" class="boutton" type="submit" onclick="connect()">Connexion</button>
+            </div>
+        </form>
+        </section>
+    </main>
+
+   <footer>    
+        <a href="/src/main/resources/static/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+        <div id="liste-footer">
+            <a href="/src/main/resources/static/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/src/main/resources/static/html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
+        </div>
+        <nav>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </nav>
+        <P>Tous droits réservés © Retrotoon Group 2024</P>
+    </footer>
+
+    <script src="/src/main/resources/static/assets/script/scriptPara.js"></script>
+</body>
+
+</html>

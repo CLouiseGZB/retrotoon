@@ -1,18 +1,3 @@
-// Bouton mute video
-function toggleMute() {
-  const video = document.querySelector('#player video');
-  const muteButton = document.querySelector('.mute-button');
-  if (!video || !muteButton) return;
-
-  if (video.muted) {
-    video.muted = false;
-    muteButton.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-  } else {
-    video.muted = true;
-    muteButton.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-  }
-}
-
 /* ============================== CONFIG ============================== */
 const API_KEY   = 'abedd43cf8d6083e8a33eafb9cc8b3f4';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
@@ -342,7 +327,7 @@ async function buildHistoryCarousel(root){
         const duration = d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '';
         const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || 'Animation';
         const img = imageUrl(spiesSearch, layout);
-        const link = '/html/fiche-dessin-anime.html'; // page cible
+        const link = '/src/main/resources/templates/html/fiche-dessin-anime.html'; // page cible
 
         spiesHtml = cardHTML({ rank: 1, img, age, duration, genres, link }, layout);
       }

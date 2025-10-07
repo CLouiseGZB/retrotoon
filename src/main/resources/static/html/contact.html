@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/styleform.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/searchbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/sub-navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+<title>RetroToon - Contact</title>
+</head>
+
+<body>
+    <header>
+        <nav id="menu">
+            <!-- Logo à gauche -->
+            <div class="logo">
+                <a href="/src/main/resources/static/html/index-client.html">
+                    <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Liens de navigation au centre -->
+            <ul class="nav-links">
+                <li><a href="/src/main/resources/static/html/index-client.html">Accueil</a></li>
+                <li><a href="/src/main/resources/static/html/series.html">Séries</a></li>
+                <li><a href="/src/main/resources/static/html/films.html">Films</a></li>
+            </ul>
+
+            <!-- Icônes à droite -->
+            <div class="nav-icons">
+                <form class="search-container" action="/src/main/resources/static/html/resultas-barre-de-recherche.html">
+                    <input id="search-box" type="text" class="search-box" name="q" />
+                    <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
+                </form>
+                
+                <div class="account">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                        <i class="fi fi-sr-user"></i>
+                    </a>
+
+                    <ul class="sub-menus" id="accountSubMenu">
+                        <li><a href='/src/main/resources/static/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <hr>
+                        <li><a href='/src/main/resources/static/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <hr>
+                        <li><a href='/src/main/resources/static/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="tab-bar">
+        <a href="/src/main/resources/static/html/index-client.html" >
+            <i class="fi fi-sr-home"></i>
+        </a>
+        <a href="/src/main/resources/static/html/series.html">
+            <i class="fi fi-rr-tv-retro"></i>
+        </a>
+
+        <a href="/src/main/resources/static/html/films.html">
+            <i class="fi fi-rr-clapperboard-play"></i>
+        </a>
+
+        <a href="/src/main/resources/static/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
+            <i class="fi fi-sr-user"></i>
+        </a>
+    </div>
+
+    <main>
+<div class="containertitrepage">
+            <h1>Nous sommes ici pour t’aider</h1>
+            <h2>Si tu as une question ou un commentaire, notre équipe est la ! </h2>
+        </div>
+
+        <section class="contact">
+
+            <form class="container-formulaire" action="#" method="post">
+                    <h3>Votre nom</h3>
+                    <input type="text" name="last_name" value="">
+                 
+                    <h3>Votre prénom</h3>
+                    <input type="text" name="first_name"value="">
+    
+                    <h3>Votre email</h3>
+                    <input type="email" name="email" value="">
+               
+                    <h3>Votre message </h3>
+                    <textarea name="message" id=""></textarea>
+              
+              
+                <div class="boutton-container">
+                    <button type="submit">Envoyer</button>
+                </div>
+
+            </form>
+    </section>
+    </main>
+
+    <footer>    
+        <a href="/src/main/resources/static/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+        <div id="liste-footer">
+            <a href="/src/main/resources/static/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/src/main/resources/static/html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
+        </div>
+        <nav>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </nav>
+        <P>Tous droits réservés © Retrotoon Group 2024</P>
+    </footer>
+
+    <script src="/src/main/resources/static/assets/script/scriptform.js"></script>
+    <script src="/src/main/resources/static/assets/script/sub-navbar.js"></script>
+    <script src="/src/main/resources/static/assets/script/searchbar.js"></script>
+</body>
+
+</html>
