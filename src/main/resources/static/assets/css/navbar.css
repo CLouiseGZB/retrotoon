@@ -5,8 +5,8 @@
   align-items: center;
   padding-block: 10px;
   padding-inline: 20px 0;
-  background: linear-gradient(var(--bg), transparent);
-  height: var(--header-h);
+  background: linear-gradient(#000e1c, transparent);
+  height: 80px;
   position: fixed;
   top: 0;
   left: 0;

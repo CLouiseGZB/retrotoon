@@ -24,15 +24,8 @@ body {
     background-color: #001D3D;
 }
 
-/* Styles pour l'en-tête */
-.entete{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 h1{
-    margin-block: 3.5rem;
+    margin-block: 1rem;
     /* border: solid 1px red; */
     width: fit-content;
 }
@@ -47,7 +40,33 @@ hr{
     margin: 5% 10%;
 }
 
+.entete{
+  /* border: solid red 1px; */
+  /* margin-block: 8rem 6rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
+.entete-img {
+  max-width: 100%;
+  height: auto;
+  width: 600px;      /* taille de base desktop */
+  display: block;
+  /* margin: 0 auto; */
+    /* border: solid blue 1px; */
+}
+
+.entete-img-series{
+    /* border: solid 1px red; */
+    height: 300px;
+    padding-top: 1rem;
+    width: 500px;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* *********************boutons filtre******************* */
 .filter-buttons {
@@ -69,8 +88,44 @@ hr{
 }
 
 
-select:hover, select:focus,  #filter-all:hover, #filter-all:focus {
+select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:hover, .btn-reset:focus {
     border: solid 2px #EB7A57;
+}
+
+.filters-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: .5rem 0 1rem;
+}
+
+.filters-chips .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .6rem;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.filters-chips .chip .x {
+  font-weight: bold;
+  line-height: 1;
+}
+
+.btn-reset {
+    background-color: #001D3D;
+    border: solid 2px #FFFAE0;
+    color: #FFFAE0;
+    padding: 10px 20px;
+    /* margin: 5px; */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: fit-content;
 }
 
 /* ***************************carte**************** */
@@ -84,43 +139,69 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus {
 }
 
 /* Style des cartes */
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 200px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.card{
+  display: flex;
+  flex-direction: column;
+  width: 200px;                  /* taille par défaut desktop (tu l'avais déjà) */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+/* Image : même ratio partout, pas de hauteur fixe */
+.card img{
+  width: 100%;
+  height: auto;                  /* supprime les 300px et autres hauteurs fixes */
+  aspect-ratio: 2 / 3;           /* portrait constant */
+  object-fit: cover;
+  display: block;
 }
 
-/* Image de la série */
-.card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 3px;
-}
-.card img:hover{
-    border: solid 2px #EB7A57;
-}
-
-.card div{
-    display: flex;
-    justify-content: space-between;
-    padding-inline: 3px;
+/* Zone texte : hauteur normalisée pour aligner les cartes */
+.card > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-inline: 3px;
+  padding-block: 6px 8px;
+  min-height: 64px;              /* même base pour toutes */
 }
 
-/* Titre de la série */
-.card p {
-    font-size: 18px;
-    margin: 5px 0;
+/* Titre : limité à 2 lignes */
+.card p:first-child{
+  font-size: 16px;               /* même style, plus stable */
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         /* 2 lignes max */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Année : 1 ligne */
+.card p:last-child{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card p{
     color: #FFFAE0;
+    
 }
+
+/* Évite le “saut” au hover (remplace la border par un outline) */
+.card img:hover{
+  outline: 2px solid #EB7A57;
+  border-radius: 8px 8px 0 0;       /* pour suivre le contour de la carte */
+  outline-offset: -2px;
+  border: none;                  /* neutralise la border si encore appliquée */
+cursor: pointer;
+}
+
 
 #pagination{
     display: flex;
@@ -137,12 +218,35 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus {
     border: none;
     margin: 3px 9px 0 9px;
     font-size: 24px;
-    transition: color 0.3s;
+    cursor: pointer;
 }
+
 #pagination button:hover{
     color: #EB7A57;
 }
 
+/* Hover/focus sur boutons actifs */
+#pagination button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+#pagination button:focus-visible {
+  outline: 2px solid #EB7A57;   /* focus clair */
+  outline-offset: 2px;
+}
+
+/* ————— ÉTAT GRISÉ ————— */
+#pagination button:disabled {
+  opacity: 0.45;                 /* “grisé” visuel */
+  filter: grayscale(80%);        /* dé-sature l’icône */
+  cursor: not-allowed;
+  pointer-events: none;          /* non cliquable */
+  transform: none !important;    /* pas d’anim */
+}
+
+/* Griser aussi l’icône Font Awesome si besoin */
+#pagination button:disabled i {
+  color: #F6EDC2;                /* garde ta teinte mais atténuée par l’opacité */
+}
 
 .serie-card {
     display: inline-block;
@@ -163,26 +267,35 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus {
 
 
 /* responsive */
+
+
     @media (max-width: 768px) {
-        /* Cartes de séries et films */
-      
+        .entete {
+            /* border: solid blue 1px; */
+            height: 210px;      /* taille réduite pour tablettes */
+        }
+
+        .entete-img-series{
+            height: 210px;
+            width: 300px;      /* taille réduite pour tablettes */
+                  /* taille réduite pour tablettes */
+        }
+
+
+        /* Cartes de séries et films */      
         #series, #films {
             gap: 10px; /* Réduction de l'espacement */
         }
     
-        .card {
-            width: calc(50% - 10px); /* Toujours deux cartes par ligne */
-        }
-    
         .card img {
-            height: 15rem; /* Hauteur encore réduite */
+            height: auto;  /* Hauteur automatique pour s'adapter à la largeur */
         }
     
         .card p {
             font-size: 12px; /* Texte plus compact */
         }
       
-        #filter-all{
+        .btn-reset{
             padding: 0.4rem;
         }
     
@@ -190,5 +303,13 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus {
             width: 35vw;
             padding: 0.4rem;
         }
+
+        #filter-order { width: 35vw; padding: 0.4rem; }
       
       }
+
+@media (max-width: 480px) {
+    .card {width: calc(50% - 10px); /* Toujours deux cartes par ligne */
+    }
+  
+  }
