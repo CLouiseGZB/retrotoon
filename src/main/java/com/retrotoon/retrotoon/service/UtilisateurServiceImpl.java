@@ -21,8 +21,9 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 
     @Autowired
     private RoleRepository roleRepository;
-@Override
-	public ResponseEntity<RegisterResponseDto> addNewUser(UserRequestDto userRequestDto) {
+
+    @Override
+    public ResponseEntity<RegisterResponseDto> addNewUser(UserRequestDto userRequestDto) {
         if (utilisateurRepository.findByEmail(userRequestDto.getEmail())!=null) {
              return ResponseEntity.badRequest()
                 .body(RegisterResponseDto.builder()
@@ -35,13 +36,10 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     Utilisateur newUser = new Utilisateur();
     newUser.setEmail(userRequestDto.getEmail());
     newUser.setMotDePasse(userRequestDto.getMotDePasse()); 
-    //newUser.setDateDeNaissance(userRequestDto.getDateDeNaissance());
     newUser.setNom(userRequestDto.getNom());
     newUser.setPrenom(userRequestDto.getPrenom());
-    
     newUser.setRole(role);
     newUser.setDateInscription(new Date());
-
     utilisateurRepository.save(newUser);
 
    
