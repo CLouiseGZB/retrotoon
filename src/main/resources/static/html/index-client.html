@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroToon</title>
     <link rel="stylesheet" href="/src/main/resources/static/assets/css/style-client.css">
     <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
     <link rel="stylesheet" href="/src/main/resources/static/assets/css/searchbar.css">
@@ -19,28 +20,27 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
-<title>RetroToon</title>
 
 <body>
     <header>
         <nav id="menu">
             <!-- Logo à gauche -->
             <div class="logo">
-                <a href="/src/main/resources/templates/html/index-client.html">
+                <a href="/src/main/resources/static/html/index-client.html">
                     <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
                 </a>
             </div>
 
             <!-- Liens de navigation au centre -->
             <ul class="nav-links">
-                <li><a href="/src/main/resources/templates/html/index-client.html">Accueil</a></li>
-                <li><a href="/src/main/resources/templates/html/series.html">Séries</a></li>
-                <li><a href="/src/main/resources/templates/html/films.html">Films</a></li>
+                <li><a href="/src/main/resources/static/html/index-client.html">Accueil</a></li>
+                <li><a href="/src/main/resources/static/html/series.html">Séries</a></li>
+                <li><a href="/src/main/resources/static/html/films.html">Films</a></li>
             </ul>
 
             <!-- Icônes à droite -->
             <div class="nav-icons">
-                <form class="search-container" action="/src/main/resources/templates/html/resultas-barre-de-recherche.html">
+                <form class="search-container" action="/src/main/resources/static/html/resultas-barre-de-recherche.html">
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
@@ -51,11 +51,11 @@
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='/src/main/resources/templates/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='/src/main/resources/static/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
                         <hr>
-                        <li><a href='/src/main/resources/templates/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <li><a href='/src/main/resources/static/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
-                        <li><a href='/src/main/resources/templates/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                        <li><a href='/src/main/resources/static/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,18 +63,18 @@
     </header>
 
     <div class="tab-bar">
-        <a href="/src/main/resources/templates/html/index-client.html" >
+        <a href="/src/main/resources/static/html/index-client.html" >
             <i class="fi fi-sr-home"></i>
         </a>
-        <a href="/src/main/resources/templates/html/series.html">
+        <a href="/src/main/resources/static/html/series.html">
             <i class="fi fi-rr-tv-retro"></i>
         </a>
 
-        <a href="/src/main/resources/templates/html/films.html">
+        <a href="/src/main/resources/static/html/films.html">
             <i class="fi fi-rr-clapperboard-play"></i>
         </a>
 
-        <a href="/src/main/resources/templates/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
+        <a href="/src/main/resources/static/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
             <i class="fi fi-sr-user"></i>
         </a>
     </div>
@@ -140,10 +140,10 @@
     </main>
 
     <footer>
-        <a href="/src/main/resources/templates/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+        <a href="/src/main/resources/static/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
-            <a href="/src/main/resources/templates/html/contact.html"><p>Nous contacter</p></a>
-            <a href="/src/main/resources/templates/html/index.html#dispo"><p>Applications</p></a>
+            <a href="/src/main/resources/static/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/src/main/resources/static/html/index.html#dispo"><p>Applications</p></a>
             <a href="#"><p>Conditions générales d'utilisation</p></a>
             <a href="#"><p>Politique de confidentialité</p></a>
         </div>

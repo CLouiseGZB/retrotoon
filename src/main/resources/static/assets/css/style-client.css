@@ -202,7 +202,10 @@ video {
   pointer-events: auto;
 }
 
-
+/* cartes */
+.play:hover{
+  cursor: pointer;
+}
 
 
 /* ================== Responsive ================== */
