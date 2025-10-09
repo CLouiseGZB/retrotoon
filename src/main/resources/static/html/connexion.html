@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroToon-Connexion</title>
     <link rel="stylesheet" href="../assets/css/styleform.css">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="../assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -48,7 +48,8 @@
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li onclick="modeEnfant()"><a href='/src/main/resources/templates/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li onclick="modeEnfant()"><a href='/src/main/resources/templates/html/profil.html'><i
+                                    class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
                         <hr>
                         <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
@@ -73,39 +74,45 @@
     <main>
         <div class="containertitrepage">
             <h1>Connexion</h1>
-            <h2>Vous n'êtes pas encore inscrit ? Inscrivez-vous <a href="../html/connexion.html" id="switchToLogin"> juste ici
+            <h2>Vous n'êtes pas encore inscrit ? Inscrivez-vous <a href="../html/connexion.html" id="switchToLogin">
+                    juste ici
                 </a>.</h2>
         </div>
 
         <section class="connexion">
 
-            <form class="container-formulaire" id=loginForm action="#" method="post">
+            <form class="container-formulaire" id="loginForm">
                 <h3>Email</h3>
                 <input type="email" id="email" name="email" autocomplete="email" required>
 
-                <h3>Mot de passe </h3>
-                <input type="password" id="loginPassword" name="password" placeholder="Mot de passe"
-                    autocomplete="new-password" required>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="rememberMe" name="checkbox">
-                <p> Se souvenir de moi.</p>
-            </div>
+                <h3>Mot de passe</h3>
+                <input type="password" id="loginPassword" name="password" placeholder="Mot de passe" required>
 
-            <div class="boutton-container">
-                <button id="loginBtn" class="boutton" type="submit" onclick="connect()">Connexion</button>
-            </div>
-        </form>
+                <div class="boutton-container">
+                    <button id="loginBtn" class="boutton" type="submit">Connexion</button>
+                </div>
+            </form>
+
         </section>
     </main>
     <footer>
         <img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
         <div id="liste-footer">
-            <a href="../html/index-client.html"><p>Accueil</p></a>
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/index-client.html">
+                <p>Accueil</p>
+            </a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -114,7 +121,7 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-    <script src="../assets/script/scriptPara.js"></script>
+    <script src="../assets/script/connexion-form.js"></script>
 </body>
 
 </html>

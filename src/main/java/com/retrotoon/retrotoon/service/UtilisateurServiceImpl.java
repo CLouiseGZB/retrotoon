@@ -48,4 +48,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
 
+        @Override
+        public Utilisateur checkUser(String email, UserRequestDto userRequestDto) {
+                Utilisateur user = utilisateurRepository.findByEmail(userRequestDto.getEmail());
+                if (user != null && user.getMotDePasse().equals(userRequestDto.getMotDePasse())) {
+                        return user;
+                }
+                return null;
+        }
 }
