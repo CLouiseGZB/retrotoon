@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroToon-Paramètres</title>
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="/RetroToon/assets/imgParametre/Design_sans_titre-removebg-preview 2.png">
-    <link rel="stylesheet" href="/assets/css/parametre.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>RetroToon - Paramètres</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/parametre.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/searchbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/sub-navbar.css">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
 
@@ -19,52 +20,59 @@
         <nav id="menu">
             <!-- Logo à gauche -->
             <div class="logo">
-                <a href="index-client.html">
-                    <img src="/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                <a href="/src/main/resources/static/html/index-client.html">
+                    <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
                 </a>
             </div>
 
             <!-- Liens de navigation au centre -->
             <ul class="nav-links">
-                <li><a href="index-client.html">Accueil</a></li>
-                <li><a href="series.html">Séries</a></li>
-                <li><a href="films.html">Films</a></li>
-                <li><a href="#"><i class="fi fi-tr-teddy-bear"></i>Enfants</a></li>
+                <li><a href="/src/main/resources/static/html/index-client.html">Accueil</a></li>
+                <li><a href="/src/main/resources/static/html/series.html">Séries</a></li>
+                <li><a href="/src/main/resources/static/html/films.html">Films</a></li>
             </ul>
 
             <!-- Icônes à droite -->
             <div class="nav-icons">
-                <form class="search-container" action="resultas-barre-de-recherche.html">
+                <form class="search-container" action="/src/main/resources/static/html/resultas-barre-de-recherche.html">
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                <a href="#" class="icon" style="text-decoration: none;"><i class="fi fi-rr-heart"></i></a>
+                
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle">
-                        <i class="fa-solid fa-user"></i>
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                        <i class="fi fi-sr-user"></i>
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li onclick="modeEnfant()"><a href='/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='/src/main/resources/static/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
                         <hr>
-                        <li><a href='/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+                        <li><a href='/src/main/resources/static/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
-                        <li><a href='/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                        <li><a href='/src/main/resources/static/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="tab-bar">
-        <a href="index-client.html"><i class="fa-solid fa-house"></i></a>
-        <a href="#"><i class="fi fi-rr-clapperboard-play"></i></a>
-        <a href="#"><i class="fi fi-rr-tv-retro"></i></a>
-        <a href="years.html"><i class="fi fi-rr-90s-music-disc"></i></i></a>
-        <a href="#"><i class="fi fi-rr-heart"></i></a>
-        <a href="#" class="icon dropdown-arrow" id="accountToggle">
-            <i class="fa-solid fa-user"></i>
+        <a href="/src/main/resources/static/html/index-client.html" >
+            <i class="fi fi-sr-home"></i>
+        </a>
+        <a href="/src/main/resources/static/html/series.html">
+            <i class="fi fi-rr-tv-retro"></i>
+        </a>
+
+        <a href="/src/main/resources/static/html/films.html">
+            <i class="fi fi-rr-clapperboard-play"></i>
+        </a>
+
+        <a href="/src/main/resources/static/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
+            <i class="fi fi-sr-user"></i>
         </a>
     </div>
+    
     <main>
         <!----------------------SANA-------------------------------->
         <div class="hautPage">
@@ -186,12 +194,12 @@
             </section>
         </div>
     </main>
+    
     <footer>
-        <img src="/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
+        <a href="/src/main/resources/static/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
-            <a href="/html/index-client.html"><p>Accueil</p></a>
-            <a href="/html/contact.html"><p>Nous contacter</p></a>
-            <a href="/html/index.html#dispo"><p>Applications</p></a>
+            <a href="/src/main/resources/static/html/contact.html"><p>Nous contacter</p></a>
+            <a href="/src/main/resources/static/html/index.html#dispo"><p>Applications</p></a>
             <a href="#"><p>Conditions générales d'utilisation</p></a>
             <a href="#"><p>Politique de confidentialité</p></a>
         </div>
@@ -202,7 +210,10 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
+
     <script src="/assets/script/scriptPara.js"></script>
+    <script src="/src/main/resources/static/assets/script/searchbar.js"></script>
+    <script src="/src/main/resources/static/assets/script/sub-navbar.js"></script>
 </body>
 
 </html>
