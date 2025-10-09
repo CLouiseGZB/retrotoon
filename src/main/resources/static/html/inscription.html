@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroToon - Inscription</title>
-    <link rel="stylesheet" th:href="@{/src/main/resources/static/assets/css/styleform.css}">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link rel="stylesheet" href="../assets/css/styleform.css">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png"> <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,7 +18,7 @@
         <nav id="menu">
             <!-- Logo à gauche -->
             <div class="logo">
-                <a th:href="@{/src/main/resources/static/html/index-client.html}">
+                <a href="../html/index-client.html">
                     <img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="Logo">
                 </a>
             </div>
@@ -35,21 +33,21 @@
         
             <section class="inscription">
 
-                <form class="container-formulaire" th:action="@{/register}" th:object="${user}" method="post">
+                <form class="container-formulaire" id="inscriptionForm">
                     <h3>Nom</h3>
-                    <input type="text" id="nom" th:field="*{nom}" autocomplete="off" required>
+                    <input type="text" id="nom" autocomplete="off" required>
                 
                     <h3>Prénom</h3>
-                    <input type="text" id="prenom" th:field="*{prenom}" autocomplete="off" required>
+                    <input type="text" id="prenom" autocomplete="off" required>
                 
                     <h3>Email</h3>
-                    <input type="email" id="email" th:field="*{email}" autocomplete="email" required>
+                    <input type="email" id="email" autocomplete="email" required>
                 
                     <h3>Date de naissance</h3>
-                    <input type="date" id="dateDeNaissance" th:field="*{dateDeNaissance}" required>
+                    <input type="date" id="dateDeNaissance" required>
                 
                     <h3>Mot de passe</h3>
-                    <input type="password" id="motDePasse" th:field="*{motDePasse}" autocomplete="new-password" required>
+                    <input type="password" id="motDePasse" autocomplete="new-password" required>
                 
                     <h3>Confirmation mot de passe</h3>
                     <!-- Pas dans DTO, donc pas de th:field -->
@@ -82,7 +80,6 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-    
-    <script src="/RetroToon/assets/script/scriptPara"></script>
+    <script src="../assets/script/connexion-form.js"></script>
 </body>
 </html>
