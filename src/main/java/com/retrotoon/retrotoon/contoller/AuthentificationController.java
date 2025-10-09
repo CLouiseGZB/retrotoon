@@ -18,9 +18,13 @@ public class AuthentificationController {
     private UtilisateurServiceImpl utilisateurServiceImpl;
 
     @PostMapping("/register")
-    public String registerUser(UserRequestDto user) {
-        utilisateurServiceImpl.addNewUser(user);
-        return "html/index-client";
+    public ResponseEntity<String> registerUser(@RequestBody UserRequestDto userDto) {
+        boolean created = utilisateurServiceImpl.addNewUser(userDto) != null;
+        if (created) {
+            return ResponseEntity.ok("success");
+        } else {
+            return ResponseEntity.status(409).body("error");
+        }
     }
 
     @PostMapping("/login")
