@@ -29,59 +29,48 @@ loginForm.addEventListener('submit', async (e) => {
   }
 });
 
-const form = document.getElementById('inscriptionForm');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('inscriptionForm');
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nom = document.getElementById('nom').value;
-    const prenom = document.getElementById('prenom').value;
-    const email = document.getElementById('email').value;
-    const dateDeNaissance = document.getElementById('dateDeNaissance').value;
-    const motDePasse = document.getElementById('motDePasse').value;
+    const userData = {
+      nom: document.getElementById('nom').value,
+      prenom: document.getElementById('prenom').value,
+      email: document.getElementById('email').value,
+      dateDeNaissance: document.getElementById('dateDeNaissance').value,
+      motDePasse: document.getElementById('motDePasse').value
+    };
+
     const confirmPassword = document.getElementById('confirmPassword').value;
-    const termsAccepted = document.getElementById('terms').checked;
 
-    if (!termsAccepted) {
-      alert("Veuillez accepter les conditions d’utilisation.");
-      return;
-    }
-
-    if (motDePasse !== confirmPassword) {
+    if (userData.motDePasse !== confirmPassword) {
       alert("Les mots de passe ne correspondent pas.");
       return;
     }
 
-    const userData = {
-      nom,
-      prenom,
-      email,
-      dateDeNaissance,
-      motDePasse
-    };
-
     try {
-      const response = await fetch('http://localhost:8080/api/register', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
       });
 
-      if (response.ok) {
-        const text = await response.text();
-        if (text === 'success' || text.includes('index-client')) {
-          // Redirection si succès
-          window.location.href = 'index-client.html';
-        } else {
-          alert("Inscription réussie !");
-        }
-      } else if (response.status === 409) {
-        alert("Cet email est déjà utilisé.");
+      const result = await response.text();
+      console.log("Réponse backend:", result);
+
+      if (response.ok && result === 'success') {
+        alert("Inscription réussie !");
+        window.location.href = '/index-client.html'; // redirection ici
       } else {
-        alert("Erreur lors de l’inscription. Réessayez plus tard.");
+        alert("Erreur d'inscription : " + result);
       }
 
     } catch (error) {
-      console.error(error);
+      console.error("Erreur de connexion:", error);
       alert("Erreur de connexion au serveur.");
     }
   });
+});
+
