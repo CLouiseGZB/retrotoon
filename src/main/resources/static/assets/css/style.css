@@ -44,7 +44,7 @@ header::before{
   content: "";
   position: absolute;
   inset: 0;            /* top/right/bottom/left: 0 */
-  background: url("/src/main/resources/static/assets/images/Backgroung-header.jpg") center / cover no-repeat;
+  background: url("../images/Backgroung-header.jpg") center / cover no-repeat;
   z-index: -1;         /* derrière le contenu du header */
 }
 
