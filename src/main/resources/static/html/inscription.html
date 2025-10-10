@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -35,21 +35,21 @@
         
             <section class="inscription">
 
-                <form class="container-formulaire" th:action="@{/register}" th:object="${user}" method="post">
+                <form class="container-formulaire" id="inscriptionForm">
                     <h3>Nom</h3>
-                    <input type="text" id="nom" th:field="*{nom}" autocomplete="off" required>
+                    <input type="text" id="nom" autocomplete="off" required>
                 
                     <h3>Prénom</h3>
-                    <input type="text" id="prenom" th:field="*{prenom}" autocomplete="off" required>
+                    <input type="text" id="prenom" autocomplete="off" required>
                 
                     <h3>Email</h3>
-                    <input type="email" id="email" th:field="*{email}" autocomplete="email" required>
+                    <input type="email" id="email" autocomplete="email" required>
                 
                     <h3>Date de naissance</h3>
-                    <input type="date" id="dateDeNaissance" th:field="*{dateDeNaissance}" required>
+                    <input type="date" id="dateDeNaissance" required>
                 
                     <h3>Mot de passe</h3>
-                    <input type="password" id="motDePasse" th:field="*{motDePasse}" autocomplete="new-password" required>
+                    <input type="password" id="motDePasse" autocomplete="new-password" required>
                 
                     <h3>Confirmation mot de passe</h3>
                     <!-- Pas dans DTO, donc pas de th:field -->
@@ -82,7 +82,6 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-    
-    <script src="/RetroToon/assets/script/scriptPara"></script>
+    <script src="../assets/script/connexion-form.js"></script>
 </body>
 </html>

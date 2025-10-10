@@ -36,23 +36,18 @@
 
         <section class="connexion">
 
-            <form class="container-formulaire" id=loginForm action="#" method="post">
+            <form class="container-formulaire" id="loginForm">
                 <h3>Email</h3>
                 <input type="email" id="email" name="email" autocomplete="email" required>
 
-                <h3>Mot de passe </h3>
-                <input type="password" id="loginPassword" name="password" placelder="Mot de passe"
-                    autocomplete="new-password" required>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="rememberMe" name="checkbox">
-                <p> Se souvenir de moi.</p>
-            </div>
+                <h3>Mot de passe</h3>
+                <input type="password" id="loginPassword" name="password" placeholder="Mot de passe" required>
 
-            <div class="boutton-container">
-                <button id="loginBtn" class="boutton" type="submit" onclick="connect()">Connexion</button>
-            </div>
-        </form>
+                <div class="boutton-container">
+                    <button id="loginBtn" class="boutton" type="submit">Connexion</button>
+                </div>
+            </form>
+
         </section>
     </main>
 
@@ -71,8 +66,7 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-
-    <script src="../assets/script/scriptPara.js"></script>
+    <script src="../assets/script/connexion-form.js"></script>
 </body>
 
 </html>
