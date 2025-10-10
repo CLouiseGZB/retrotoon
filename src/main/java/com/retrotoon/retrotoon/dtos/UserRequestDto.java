@@ -1,4 +1,6 @@
 package com.retrotoon.retrotoon.dtos;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
