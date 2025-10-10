@@ -1,5 +1,5 @@
-///////////////////////////nav/////////////////////////////////
- // **sous menu
+// ///////////////////////////nav/////////////////////////////////
+//  // **sous menu
  document.addEventListener('DOMContentLoaded', () => {
     const accountToggle = document.getElementById('accountToggle');
     const accountSubMenu = document.getElementById('accountSubMenu');
@@ -36,113 +36,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-/////////////////////////mode enfant ////////////////////////
 
-    function modeEnfant() {
-        if (document.body.classList.contains('mode-enfant')) {
-            // Si on est en mode Enfant, on demande le mot de passe pour passer au mode Adulte
-            demanderMotDePasse();
-        } else {
-            // Sinon, on active directement le mode Enfant
-            activerModeEnfant();
-        }
+const inscriptionForm = document.getElementById('inscriptionForm');
+inscriptionForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const userData = {
+    nom: document.getElementById('nom').value,
+    prenom: document.getElementById('prenom').value,
+    email: document.getElementById('email').value,
+    dateDeNaissance: document.getElementById('dateDeNaissance').value,
+    motDePasse: document.getElementById('motDePasse').value
+  };
+
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if (userData.motDePasse !== confirmPassword) {
+    alert("Les mots de passe ne correspondent pas.");
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:8080/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+
+    const result = await response.text();
+    console.log("Réponse backend:", result);
+
+    if (response.ok && result === 'success') {
+      alert("Inscription réussie !");
+      window.location.href = 'index-client.html';
+    } else {
+      alert("Erreur d'inscription : " + result);
     }
 
-    function activerModeEnfant() {
-        document.body.classList.add('mode-enfant');
-   /*      document.querySelector('button').textContent = "Cliquez ici pour passer en mode Adulte"; */
-    }
-
-     // Fonction pour désactiver le mode Enfant (et donc passer en mode Adulte)
-     function desactiverModeEnfant() {
-        document.body.classList.remove('mode-enfant');
-     /*    document.querySelector('button').textContent = "Cliquez ici pour passer en mode Enfant"; */
-    }
-
-    // Fonction pour demander le mot de passe
-    function demanderMotDePasse() {
-        const motDePasseCorrect = localStorage.getItem('password'); /*placez par le mot de passe souhaité*/
-        const motDePasse = prompt("Veuillez entrer votre mot de passe pour passer en mode Adulte :");
-
-        if (motDePasse === motDePasseCorrect) {
-            desactiverModeEnfant();
-            alert('Le mode adulte est maintenant activé. Cliquez sur OK pour continuer ');
-            window.location.href = 'http://RetroToon/html/index.html'; 
-        } else if (motDePasse !== null) { // Si l'utilisateur n'annule pas l'invite
-            alert("Oups... Votre mot de passe est incorrect.");
-        }
-    }
-
-
-/////////////////////////mode enfant ////////////////////////
-
-///////////////////////// inscription & connexion  //////////////////////////////
-const signupForm = document.getElementById('signupForm')
-const loginForm = document.getElementById('loginForm')
-const switchToSignup = document.getElementById('switchToSignup')
-const switchToLogin = document.getElementById('switchToLogin')
-
-
-signupForm.classList.add('active');
-
-  // Basculer vers le formulaire de connexion
-  switchToLogin.addEventListener('click', function() {
-    signupForm.classList.remove('active');
-    loginForm.classList.add('active');
-  });
-
-  // Basculer vers le formulaire d'inscription
-  switchToSignup.addEventListener('click', function() {
-    loginForm.classList.remove('active');
-    signupForm.classList.add('active');
-  });
-
-
-function inscrit(){
-    const nom = document.getElementById('lastName').value;
-    const prenom = document.getElementById('firstName').value;
-    const email = document.getElementById('email').value;
-    const date = document.getElementById('birthDate').value;
-    const password = document.getElementById('password').value;
-    if (nom && prenom && email && date && password) {
-        // Stockage les informations dans localStorage
-        localStorage.setItem('nom', nom);
-        localStorage.setItem('prenom', prenom);
-        localStorage.setItem('email', email);
-        localStorage.setItem('date', date);
-        localStorage.setItem('password', password);
-        alert('Bravo ! Votre inscription réussie, bienvenue sur RetroToon'); 
-        window.location.href = 'http://127.0.0.1:5500/html/series.html';
-      } 
-      else {
-        alert('Veuillez remplir tous les champs.');
-      }
-    }
-    
-let loginMessage = document.getElementById('LoginMessage')
-//declaration de la fonction du bouton de la connexion
-
-function connect( ) {
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-   
-       // Vérifier si les champs sont vides
-       if (!email || !password) {
-        alert('Veuillez remplir tous les champs.');
-        return; // Arrêter l'exécution de la fonction si les champs ne sont pas remplis
-    }
-   
-   
-    //recuperation les donnees qui sont stockes dans le local storage
-    const storedPrenom = localStorage.getItem('prenom');
-    const storedNom = localStorage.getItem('nom')
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
-    if (email === storedEmail && password === storedPassword) {
-        alert('Bienvenue, ' + storedPrenom + ' !');
-        window.location.href = 'http://127.0.0.1:5500/html/series.html';
-      } else {
-        alert('Oups... Votre mot de passe est incorrect.');
-      }
-    }
-
+  } catch (error) {
+    console.error("Erreur de connexion:", error);
+    alert("Erreur de connexion au serveur.");
+  }
+});

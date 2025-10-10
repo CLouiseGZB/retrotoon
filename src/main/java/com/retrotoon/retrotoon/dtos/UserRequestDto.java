@@ -10,6 +10,6 @@ public class UserRequestDto {
 	private String nom;
     private String prenom;
 	private String email;
-    private Date dateDeNaissance;
+    private String dateDeNaissance;
 	private String motDePasse;
 }
