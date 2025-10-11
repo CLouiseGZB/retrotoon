@@ -1,4 +1,3 @@
-
 // **********************sous menu
 document.addEventListener('DOMContentLoaded', () => {
     const accountToggle = document.getElementById('accountToggle');

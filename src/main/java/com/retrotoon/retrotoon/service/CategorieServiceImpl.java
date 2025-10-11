@@ -18,7 +18,7 @@ public class CategorieServiceImpl implements CategorieService{
         Categorie newCategorie = new Categorie();
         newCategorie.setNom(categorie.getNom());
         for (Video v : categorie.getVideo()) {
-            v.setCategorieVideo(newCategorie); // chaque vidéo connaît sa catégorie
+            v.setCategorieVideo(newCategorie); 
         }
         newCategorie.setVideo(categorie.getVideo());
 

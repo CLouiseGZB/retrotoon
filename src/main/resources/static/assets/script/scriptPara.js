@@ -46,3 +46,44 @@ logOut.addEventListener('click', function () {
 
     window.location.href = '/html/index.html';
 })
+
+// appel API back pour modifier compte utilisateur 
+
+document.getElementById('userBtn').addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const oldEmail = document.getElementById('email').value.trim(); // ancien email (celui actuel)
+  const nouveauEmail = document.getElementById('nouveauEmail').value.trim();
+  const confirmEmail = document.getElementById('confirmEmail').value.trim();
+
+  const userData = {
+    nom: document.getElementById('nom').value.trim(),
+    prenom: document.getElementById('prenom').value.trim(),
+    dateDeNaissance: document.getElementById('dateDeNaissance').value, 
+    email: nouveauEmail
+  };
+
+  // Vérification des emails
+  if (nouveauEmail !== confirmEmail) {
+    alert("Les emails ne correspondent pas.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/modify/user/${encodeURIComponent(oldEmail)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+
+    if (response.ok) {
+      alert("Modifications enregistrées avec succès !");
+    } else if (response.status === 404) {
+      alert("Erreur : utilisateur introuvable (email actuel incorrect).");
+    } 
+  } catch (error) {
+    console.error("Erreur de connexion:", error);
+    alert("Erreur de connexion au serveur.");
+  }
+});
+
