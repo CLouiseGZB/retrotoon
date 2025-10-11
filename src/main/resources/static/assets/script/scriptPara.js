@@ -46,6 +46,7 @@ logOut.addEventListener('click', function () {
 
     window.location.href = '/html/index.html';
 })
+
 // appel API back pour modifier compte utilisateur 
 
 document.getElementById('userBtn').addEventListener('click', async (e) => {
@@ -76,19 +77,10 @@ document.getElementById('userBtn').addEventListener('click', async (e) => {
     });
 
     if (response.ok) {
-      const result = await response.json();
-      console.log("Réponse backend:", result);
       alert("Modifications enregistrées avec succès !");
     } else if (response.status === 404) {
       alert("Erreur : utilisateur introuvable (email actuel incorrect).");
-    } else if (response.status === 409) {
-      const msg = await response.text();
-      alert("Erreur : " + msg);
-    } else {
-      const msg = await response.text();
-      alert("Erreur : " + msg);
-    }
-
+    } 
   } catch (error) {
     console.error("Erreur de connexion:", error);
     alert("Erreur de connexion au serveur.");
