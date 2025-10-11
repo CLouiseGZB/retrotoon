@@ -34,4 +34,40 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 }
                 return null;
         }
+
+//         @Override
+//         public Utilisateur updateUser(String email, UserRequestDto userRequestDto){
+//         Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
+//         if (utilisateur != null) {
+//            utilisateur.setNom(userRequestDto.getNom());
+//            utilisateur.setPrenom(userRequestDto.getPrenom());
+//            utilisateur.setEmail(userRequestDto.getEmail());
+//            utilisateur.setDateDeNaissance(userRequestDto.getDateDeNaissance());
+//            utilisateur.setMotDePasse(userRequestDto.getMotDePasse());
+//            return utilisateurRepository.save(utilisateur);
+//         }
+//         return null;
+//        }
+       @Override
+       public Utilisateur updateUser(String oldEmail, UserRequestDto userRequestDto) {
+        Utilisateur utilisateur = utilisateurRepository.findByEmail(oldEmail);
+        if (utilisateur == null) {
+            return null; 
+        }
+        String nouveauEmail = userRequestDto.getEmail(); 
+        if (nouveauEmail != null && !nouveauEmail.isBlank()
+                && !nouveauEmail.equalsIgnoreCase(utilisateur.getEmail())) {
+
+            Utilisateur other = utilisateurRepository.findByEmail(nouveauEmail);
+            if (other != null) {
+                throw new IllegalArgumentException("Email déjà utilisé");
+            }
+            utilisateur.setEmail(nouveauEmail);
+        }
+
+        if (userRequestDto.getNom() != null) utilisateur.setNom(userRequestDto.getNom());
+        if (userRequestDto.getPrenom() != null) utilisateur.setPrenom(userRequestDto.getPrenom());
+        if (userRequestDto.getDateDeNaissance() != null) utilisateur.setDateDeNaissance(userRequestDto.getDateDeNaissance());
+        return utilisateurRepository.save(utilisateur);
+    }
 }

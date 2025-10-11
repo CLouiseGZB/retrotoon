@@ -113,19 +113,21 @@
 
             <!-- Page cachée de gestion du compte -->
             <section id="page-gestion-compte-1" class="page">
-                <div class="container-cache">
+                <div class="container-cache" id="updateUser">
                     <h3>Modifier mes données personnelles</h3>
                     <label for="nom">Nom</label>
-                    <input type="text">
+                    <input type="text" id="nom" required>
                     <label for="prenom">Prénom</label>
-                    <input type="text">
+                    <input type="text" id="prenom" required>
                     <label for="date">Date de naissance</label>
-                    <input type="date">
+                    <input type="date" id="dateDeNaissance" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" autocomplete="email" required>
                     <label for="email">Nouveau email</label>
-                    <input type="email">
+                    <input type="email" id="nouveauEmail" autocomplete="email" required>
                     <label for="confirmationEmail">Confirmation nouveau email</label>
-                    <input type="email">
-                    <button type="button">Sauvegarder les informations</button>
+                    <input type="email" id="confirmEmail">
+                    <button id="userBtn" type="button">Sauvegarder les informations</button>
                     <div class="retourPage" data-page="page-accueil">
                         <i class="fa-solid fa-arrow-left"></i>
                         <p>Retour</p>
