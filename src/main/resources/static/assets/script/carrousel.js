@@ -327,7 +327,7 @@ async function buildHistoryCarousel(root){
         const duration = d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '';
         const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || 'Animation';
         const img = imageUrl(spiesSearch, layout);
-        const link = '/src/main/resources/templates/html/fiche-dessin-anime.html'; // page cible
+        const link = '../html/fiche-dessin-anime.html'; // page cible
 
         spiesHtml = cardHTML({ rank: 1, img, age, duration, genres, link }, layout);
       }
