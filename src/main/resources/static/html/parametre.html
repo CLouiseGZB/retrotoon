@@ -40,18 +40,22 @@
                 </form>
                 
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
-                        <i class="fi fi-sr-user"></i>
-                    </a>
+  <button type="button"
+          class="icon dropdown-arrow"
+          data-account-toggle
+          aria-controls="accountSubMenu"
+          aria-expanded="false">
+    <i class="fi fi-sr-user"></i>
+  </button>
 
-                    <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
-                        <hr>
-                        <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
-                        <hr>
-                        <li><a href='../html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
-                    </ul>
-                </div>
+  <ul class="sub-menus" id="accountSubMenu">
+    <li><a href="../html/profil.html"><i class="fa-solid fa-user-pen"></i>Gestion profil</a></li>
+    <hr>
+    <li><a href="../html/parametre.html"><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+    <hr>
+    <li><a href="../html/index.html"><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+  </ul>
+</div>
             </div>
         </nav>
     </header>
@@ -245,9 +249,9 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-    <script src="../assets/script/scriptPara.js"></script>
-    <script src="../assets/script/searchbar.js"></script>
-    <script src="../assets/script/sub-navbar.js"></script>
+    <script src="../assets/script/scriptPara.js" defer></script>
+    <script src="../assets/script/searchbar.js" defer></script>
+    <script src="../assets/script/sub-navbar.js" defer></script>
 </body>
 
 </html>

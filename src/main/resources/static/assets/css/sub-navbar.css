@@ -37,9 +37,58 @@
   padding-right: 10px;
   font-size: 1.5rem;
 }
-.sub-menus hr {
-  border: 1px solid #FFFAE0;
-  margin-inline: 10%;
+
+/* ====== ACCOUNT  ====== */
+
+.account { 
+  position: relative; 
 }
 
-@media (max-width: 768px) {}
+.account > .icon.dropdown-arrow {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;            /* zone cliquable confortable */
+  line-height: 1;
+  cursor: pointer;
+}
+.account > .icon.dropdown-arrow i { font-size: 1.2rem; }
+.account > .icon.dropdown-arrow:focus-visible {
+  outline: 2px solid #EB7A57;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.account .sub-menus {
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  min-width: 220px;
+  max-width: 90vw;
+  background: var(--bg, #001429);
+  color: #FFFAE0;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 6px;
+  z-index: 2000;
+}
+
+/* Liens plus confortables */
+.account .sub-menus a:hover { 
+  color: #EB7A57; 
+  background-color: #001D3D;
+}
+
+.account .sub-menus i { 
+  font-size: 1.2rem; 
+}
+
+.account .sub-menus hr {
+  border: 0;
+  border-top: 1px solid #FFFAE0;
+  margin: 6px 12px;
+}
+

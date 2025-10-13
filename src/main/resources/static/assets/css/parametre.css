@@ -1,263 +1,239 @@
+/* ---------------------------------------------------------
+   Imports
+----------------------------------------------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* ---------------------------------------------------------
+   Reset / base
+----------------------------------------------------------*/
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; } /* filet anti scroll horizontal */
 body {
-    background-color: #001D3D;
-    width: 100%;
-    font-family: "Fredoka", sans-serif;
+  background-color: #001D3D;
+  font-family: "Fredoka", sans-serif;
+  color: #FFFAE0;
 }
-ol,
-ul {
-    list-style: none;
-}
-a{
-    text-decoration: none;
-    color: #FFFAE0;
+ol, ul { list-style: none; }
+a { text-decoration: none; color: #FFFAE0; }
+input { font-size: 18px; }
+
+/* ---------------------------------------------------------
+   MAIN
+----------------------------------------------------------*/
+.hautPage{
+  display:flex;
+  justify-content:center;
+  width:100%;
+  height:150px;
+  padding-top:40px;
+  background: linear-gradient(to top, #001429, transparent);
+  margin-top:100px;
+  font-family:'Bangers', cursive;
+  font-weight:normal;
+  font-size:26px;
+  letter-spacing:3px;
+  color:#FFFAE0;
 }
 
-input{
-    font-size: 18px;
-}
-/********************************   MAIN   ***************************************/
-.hautPage {
-    display: flex;
-padding-top: 40px;
-    width: 100%;
-    height: 150px;
-    background: linear-gradient(to top, #001429, transparent);
-    margin-top: 100px;
-    justify-content: center;
-    color: #FFFAE0;
-    font-family: 'Bangers', cursive;
-    font-weight: normal;
-    font-size: 26px;
-    letter-spacing: 3px;
-}
-.containerParametre {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-.choixParametre {
-    display: flex;
-    align-items: center;
-    width: 50%;
-    height: 50px;
-    background-color: #001D3D;
-    box-shadow: 0 4px 8px black;
-    margin-bottom: 20px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    padding-left: 20px;
-    cursor: pointer;
+.containerParametre{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  margin:5% 0;
+  padding: 0 16px; /* un peu d’air aux bords */
 }
 
-
-/* hover demandé */
-.choixParametre:hover,
-.gestionAppareil:hover {
-  background-color: #001429;
-  color: #EB7A57;
+.choixParametre{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  width:50%;
+  max-width:700px;
+  min-width:260px;
+  height:50px;
+  background-color:#001D3D;
+  box-shadow:0 4px 8px black;
+  margin-bottom:20px;
+  padding-left:20px;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  cursor:pointer;
 }
 
-/* assure que l’icône suit la couleur du texte */
-.choixParametre:hover i,
-.gestionAppareil:hover i {
-  color: inherit;
+/* Hover */
+.choixParametre:hover, .gestionAppareil:hover{
+  background-color:#001429;
+  color:#EB7A57;
+}
+.choixParametre:hover i, .gestionAppareil:hover i{ color:inherit; }
+
+/* ⚠️ corrige le débordement : on ne décale plus la page à 50% */
+#page-accueil{ 
+  width:100%; margin-left:0 !important; 
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
 }
 
+.choixParametre p, .choixParametre span{ margin:0; padding-left:10px; }
+.choixParametre .fa-chevron-right{ margin-left:auto; margin-right:10px; }
 
-#page-accueil{
-    width: 100%;
-    margin-left: 50%;
-}
+.page{ display:none; }
+.page.active{ display:block; }
 
-.choixParametre p, .choixParametre span {
-    margin: 0;
-    padding-left: 10px;
-}
-.choixParametre .fa-chevron-right {
-    margin-left: auto;
-    margin-right: 10px;
-}
-.page {
-    display: none;
-}
-.page.active {
-    display: block;
-}
-/*****************************   contenu cache  ******************************/
+/* ---------------------------------------------------------
+   Contenu caché (sections de formulaire)
+----------------------------------------------------------*/
 .container-cache{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+  gap: 6px;
 }
+
 .container-cache h3{
-    display: flex;
-    justify-content: center;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-weight: normal;
-    padding-bottom: 7%;
-    text-shadow:   1px 2px black;
-    font-size: 24px;
+  display:flex;
+  justify-content:center;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  font-weight:normal;
+  padding-bottom:7%;
+  text-shadow:1px 2px black;
+  font-size:24px;
 }
+
 #p{
-    display: flex;
-    justify-content: center;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-weight: normal;
-    padding-bottom: 7%;
-    font-size: 16px;
+  display:flex;
+  justify-content:center;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  font-weight:normal;
+  padding-bottom:7%;
+  font-size:16px;
 }
-#code{
-margin-left: 45%;
-    width: 63px;
-}
+
+/* input code : pas de décalage latéral */
+#code{ margin-left:0 !important; width:63px; }
+
 .container-cache input{
-    background-color: #001429;
-    color: whitesmoke;
-    border: none;
-    font-family: Fredoka;
-    padding: 10px;
-    width: 600px;
-    margin-bottom: 20px;
-    height: 40px;
-    border-radius: 5px;
+  background-color:#001429;
+  color:whitesmoke;
+  border:none;
+  font-family:Fredoka, sans-serif;
+  padding:10px;
+  width:600px;           /* base desktop */
+  max-width:92vw;        /* ne dépasse jamais l’écran */
+  margin-bottom:20px;
+  height:40px;
+  border-radius:5px;
 }
+
 .container-cache label{
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-size: 16px;
-    margin-bottom: 5px;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  font-size:16px;
+  margin-bottom:5px;
+  align-self:flex-start;
 }
-.container-cache  button {
-    height: 2.5rem;
-    width: fit-content;
-    padding: 0 1rem;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: transparent;
-    font-family: Fredoka;
-    color: #FFFAE0;
-    font-size: 18px;
-    border: 1.5px solid #FFFAE0;
-    border-radius: 3px;
-    align-self: center;
+
+.container-cache button{
+  height:2.5rem;
+  width:fit-content;
+  padding:0 1rem;
+  margin-top:10px;
+  cursor:pointer;
+  background-color:transparent;
+  font-family:Fredoka, sans-serif;
+  color:#FFFAE0;
+  font-size:18px;
+  border:1.5px solid #FFFAE0;
+  border-radius:3px;
+  align-self:center;
 }
+
+.container-cache button:hover{ border-color:#EB7A57; color:#EB7A57; }
 
 .retourPage{
-    display: flex;
-    align-items: center;
-    width: 50px;
-    background-color: transparent;
-    height: 20px;
-    gap: 8px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 20px;
+  display:flex;
+  align-items:center;
+  width:50px;
+  background-color:transparent;
+  height:20px;
+  gap:8px;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  font-size:18px;
+  cursor:pointer;
+  margin-top:10px;
+  align-self:flex-start;
 }
-.retourPage:hover {
-    color: #EB7A57;
-}
-.container-cache  button:hover{
-    border-color: #EB7A57;
-    color: #EB7A57;
-}
+.retourPage:hover{ color:#EB7A57; }
+
+/* ---------------------------------------------------------
+   Gestion appareils
+----------------------------------------------------------*/
 .gestionAppareil{
-    display: flex;
-    align-items: center;
-    width: 600px;
-    height: 50px;
-    background-color: #001D3D;
-    box-shadow: 0 4px 8px black;
-    margin-bottom: 10px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    padding-left: 20px;
+  display:flex;
+  align-items:center;
+  width:600px;          /* base desktop */
+  max-width:92vw;       /* responsive */
+  height:50px;
+  background-color:#001D3D;
+  box-shadow:0 4px 8px black;
+  margin-bottom:10px;
+  color:#FFFAE0;
+  font-family:Fredoka, sans-serif;
+  padding-left:20px;
 }
-.gestionAppareil .fa-pen{
-    margin-left: auto;
-    margin-right: 10px;
-}
-.gestionAppareil .fa-trash-can{
-    margin-right: 10px;
-}
-/*****************************   page profil  ******************************/
+.gestionAppareil .fa-pen{ margin-left:auto; margin-right:10px; }
+.gestionAppareil .fa-trash-can{ margin-right:10px; }
+
+/* ---------------------------------------------------------
+   Page profil
+----------------------------------------------------------*/
 .sectionProfil{
   display:flex; justify-content:center; align-items:center; gap:24px;
-  margin:75px 0 50px;
-  flex-wrap:wrap;
+  margin:75px 0 50px; flex-wrap:wrap;
 }
 
-.photoProfil{ 
-    display:flex; 
-    flex-direction:column; 
-    align-items:center; 
-    width:250px; 
-    text-align:center; 
-    cursor:pointer;
+.photoProfil{
+  display:flex; flex-direction:column; align-items:center;
+  width:250px; text-align:center; cursor:pointer;
 }
 
-/* Le wrapper gère la forme ronde + bordure (pas l'image) */
-/* Base commune : avatar (wrapper) ET img directe dans .photoProfil */
-.photoProfil .avatar {
-  width: 250px;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  overflow: hidden;              /* coupe proprement (utile pour <img>) */
-  border: 2px dashed gray;       /* même bordure que #Ajout par défaut */
-  background: #001429;           /* fond si PNG a de la transparence */
-  display: block;                /* supprime l'espace baseline des <img> */
-  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-  cursor: pointer;
-  object-fit: cover;             /* recadre l'image quand c'est <img> */
+/* wrapper avatar */
+.photoProfil .avatar{
+  width:250px; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+  border:2px dashed gray; background:#001429; display:block;
+  transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  cursor:pointer; object-fit:cover;
 }
 
 .photoProfil img{
-width: 250px;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  overflow: hidden;              /* coupe proprement (utile pour <img>) */
-  background: #001429;           /* fond si PNG a de la transparence */
-  display: block;                /* supprime l'espace baseline des <img> */
-  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-  cursor: pointer;
-  object-fit: cover; 
+  width:250px; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+  background:#001429; display:block;
+  transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  cursor:pointer; object-fit:cover;
 }
 
-/* Effet hover identique pour les deux */
 .photoProfil .avatar:hover,
 .photoProfil img:hover,
 .photoProfil .avatar:focus-visible,
-.photoProfil img:focus-visible {
-  box-shadow: 0 6px 16px rgba(0,0,0,.25);
-  transform: translateY(-2px);
-  border: 2px dashed #EB7A57;       /* même bordure que #Ajout par défaut */
-  outline: none;
+.photoProfil img:focus-visible{
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+  transform:translateY(-2px);
+  border:2px dashed #EB7A57;
+  outline:none;
 }
 
+.photoProfil p{ color:#FFFAE0; font-family:Fredoka,sans-serif; font-size:18px; padding-top:10px; }
 
-.photoProfil p{
-  color:#FFFAE0; font-family:Fredoka,sans-serif; font-size:18px; padding-top:10px;
-}
-
-/* Tuile “Ajouter un compte” alignée comme les autres */
 #Ajout{ width:250px; }
 #Ajout i{
   width:250px; aspect-ratio:1/1; border-radius:50%;
@@ -271,96 +247,69 @@ width: 250px;
   box-shadow:0 6px 16px rgba(0,0,0,.25);
   transform:translateY(-2px);
 }
-#Ajout p{
-  margin-top:10px; font-size:18px; color:#FFFAE0; font-family:Fredoka,sans-serif;
-}
+#Ajout p{ margin-top:10px; font-size:18px; color:#FFFAE0; font-family:Fredoka,sans-serif; }
 
 .modifierProfil{
   display:flex; justify-content:center; align-items:center; gap:8px;
   color:#FFFAE0; font-family:Fredoka,sans-serif; margin:16px 0;
 }
-.modifierProfil a{
-  color:inherit; text-decoration:none;
-}
+.modifierProfil a{ color:inherit; text-decoration:none; }
 .modifierProfil i{ color:inherit; }
-
-/* Hover orange cohérent */
 .modifierProfil:hover,
 .modifierProfil:hover a,
-.modifierProfil:hover i{
-  color:#EB7A57;
-  cursor:pointer;
-}
+.modifierProfil:hover i{ color:#EB7A57; cursor:pointer; }
 
-/* ------------ Date picker (toutes les pages) ------------ */
+/* ---------------------------------------------------------
+   Date picker
+----------------------------------------------------------*/
 #page-gestion-compte-1 input[type="date"]::-webkit-calendar-picker-indicator,
-#page-gestion-compte-2 input[type="date"]::-webkit-calendar-picker-indicator {
-  color: #FFFAFA;          /* couleur */
-  filter: invert(1);       /* force l’icône en clair */
-  font-size: 18px;         /* ajuste la taille de l’icône */
-  margin-right: 8px;       /* espace entre icône et bord droit */
-  cursor: pointer;
+#page-gestion-compte-2 input[type="date"]::-webkit-calendar-picker-indicator{
+  color:#FFFAFA; filter:invert(1); font-size:18px; margin-right:8px; cursor:pointer;
 }
-
-/* Firefox */
 #page-gestion-compte-1 input[type="date"]::-moz-calendar-picker-indicator,
-#page-gestion-compte-2 input[type="date"]::-moz-calendar-picker-indicator {
-  filter: invert(1);
-  font-size: 18px;
-  margin-right: 8px;
-  cursor: pointer;
+#page-gestion-compte-2 input[type="date"]::-moz-calendar-picker-indicator{
+  filter:invert(1); font-size:18px; margin-right:8px; cursor:pointer;
 }
 
-/* ------------ Mot de passe : bouton œil DANS l'input ------------ */
-/* Wrapper (ancre de positionnement) */
-#page-gestion-compte-2 .input-with-eye {
-  position: relative;
-}
-
-/* Réserve la place à droite, que ce soit password OU text après toggle */
+/* ---------------------------------------------------------
+   Mot de passe — bouton œil dans l’input
+----------------------------------------------------------*/
+#page-gestion-compte-2 .input-with-eye{ position:relative; width:600px; max-width:92vw; }
 #page-gestion-compte-2 .input-with-eye > input[type="password"],
-#page-gestion-compte-2 .input-with-eye > input[type="text"] {
-  padding-right: 44px;
+#page-gestion-compte-2 .input-with-eye > input[type="text"]{ padding-right:44px; width:100%; }
+#page-gestion-compte-2 .input-with-eye > input[type="password"]{ font-size:25px; letter-spacing:.2ch; }
+#page-gestion-compte-2 .input-with-eye .icon-btn{
+  position:absolute; right:8px; top:15%; transform:translateY(-50%);
+  width:36px; height:28px; display:flex; align-items:center; justify-content:center;
+  border:0; background:transparent; padding:0; cursor:pointer; color:#FFFAFA;
+}
+#page-gestion-compte-2 .input-with-eye .icon-btn i{
+  font-size:18px; line-height:1; display:block; transform:translateY(1px);
+}
+#page-gestion-compte-2 .input-with-eye .icon-btn:focus-visible{
+  outline:2px solid #EB7A57; outline-offset:-2px; border-radius:3px;
 }
 
-/* Grossit les points en mode password */
-#page-gestion-compte-2 .input-with-eye > input[type="password"] {
-  font-size: 25px;      /* ⬅️ grossit les points */
-  letter-spacing: .2ch;
+/* ---------------------------------------------------------
+   Responsive
+----------------------------------------------------------*/
+@media (max-width: 1024px){
+  .choixParametre{ width:60%; }
 }
 
-/* Bouton dans l’input — top:35% + translateY(-50%) */
-#page-gestion-compte-2 .input-with-eye .icon-btn {
-  position: absolute;
-  right: 8px;
-  top: 15%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 28px;          /* zone cliquable ; ajuste si besoin */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  color: #FFFAFA;        /* couleur de l'icône */
+@media (max-width: 768px){
+  .choixParametre,
+  .gestionAppareil,
+  .container-cache input,
+  #page-gestion-compte-2 .input-with-eye{
+    width:100%;
+    max-width:100%;
+  }
+  .containerParametre{ padding:0 16px; }
+  .hautPage{ margin-top:70px; } /* si header sticky plus compact */
 }
 
-/* Icône (Font Awesome/UIcons…) */
-#page-gestion-compte-2 .input-with-eye .icon-btn i {
-  font-size: 18px;
-  line-height: 1;
-  display: block;
-  transform: translateY(1px); /* 0px / -1px si tu la veux plus haute */
+/* (facultatif) masque toute éventuelle micro-scrollbar horizontale des navigateurs webkit */
+@supports selector(::-webkit-scrollbar){
+  body::-webkit-scrollbar:horizontal{ display:none; }
 }
-
-/* Focus visible accessibilité */
-#page-gestion-compte-2 .input-with-eye .icon-btn:focus-visible {
-  outline: 2px solid #EB7A57;
-  outline-offset: -2px;
-  border-radius: 3px;
-}
-
-
-/*****************************   RESPONSIVE   ******************************/
