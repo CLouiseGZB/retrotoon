@@ -4,53 +4,62 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background-color: #001D3D;
-    min-height: 100vh; /* S'assure que le container prend toute la hauteur de la page */
+    min-height: 100vh;
+    /* S'assure que le container prend toute la hauteur de la page */
     font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
 }
 
-input{
+input {
     font-size: 18px;
 }
+
 /************************general*************************/
 
 /**************titres********************/
 .containertitrepage {
     display: flex;
-    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
-    justify-content: center; /* Centre le contenu verticalement */
-    align-items: center; /* Centre horizontalement */
+    flex-direction: column;
+    /* Pour que H1 et H2 s'affichent l'un sous l'autre */
+    justify-content: center;
+    /* Centre le contenu verticalement */
+    align-items: center;
+    /* Centre horizontalement */
     margin-bottom: 20px;
     background: linear-gradient(to top, #001429, transparent);
     height: 150px;
     margin-top: 100px;
     margin-bottom: 50px;
 }
+
 .containertitrepage h2 a {
     color: #EB7A57;
     padding-left: 5px;
     text-decoration: none;
 }
+
 h1 {
     font-family: 'Bangers', cursive;
-    color: #FFFAFA;
-    font-size:40px;
+    color: #FFFAE0;
+    font-size: 40px;
     margin-bottom: 10px;
     letter-spacing: 2px;
 }
 
-h2{
+h2 {
     font-family: 'Bangers', cursive;
-    color: #FFFAFA;
+    color: #FFFAE0;
     font-size: 15px;
     margin-top: 10px;
     letter-spacing: 2px;
 }
 
 h3 {
-    font-weight: 300; /* Définit une police plus fine */
+    font-weight: 300;
+    /* Définit une police plus fine */
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 16px;
@@ -62,15 +71,19 @@ h3 {
 #switchToLogin:hover {
     color: #f3a289;
 }
+
 /************************titres*************************/
 
 /****************************container formulaire*****************/
-.container-formulaire{
+.container-formulaire {
     display: flex;
-    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
-    justify-content: center; /* Centre le contenu verticalement */
+    flex-direction: column;
+    /* Pour que H1 et H2 s'affichent l'un sous l'autre */
+    justify-content: center;
+    /* Centre le contenu verticalement */
     align-items: center;
 }
+
 /****************************container formulaire*****************/
 
 /************************input*************************/
@@ -87,22 +100,34 @@ h3 {
     height: 40px;
     /*border: solid 1px red;*/
 }
+
 .container-formulaire textarea {
+    background-color: #001429;
+    border: none;
+    color: #FFFAFA;
+    font-weight: bold;
+    font-family: 'Fredoka', sans-serif;
+    padding: 10px;
     height: 250px;
-    resize: none; /*retire le carré en bas pour réglage de la zone de texte*/
+    width: 600px;
+    margin-bottom: 20px;
+    resize: none;
+    /*retire le carrée en bas pour reglage de la zone de texte*/
 }
 
-.container-formulaire input.inputserie{
+.container-formulaire input.inputserie {
     width: 30px;
 }
+
 /************************input*************************/
 
 /************************astérisques*********************/
-.container-asterisques{
+.container-asterisques {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
+
 .container-asterisques p {
     font-family: 'Fredoka', sans-serif;
     color: #FFFAFA;
@@ -112,12 +137,15 @@ h3 {
     padding-top: 4px;
     margin-bottom: 15px;
 }
+
 /************************astérisques*********************/
 
 /************************checkbox*************************/
-.checkbox-container{
-    display: flex; /* Utilise Flexbox pour l'affichage */
-    align-items: center; /* Centre les éléments verticalement */
+.checkbox-container {
+    display: flex;
+    /* Utilise Flexbox pour l'affichage */
+    align-items: center;
+    /* Centre les éléments verticalement */
 }
 
 .checkbox-container p {
@@ -127,29 +155,36 @@ h3 {
     white-space: nowrap;
     padding-left: 5px;
 }
+
 .checkbox-container input[type="checkbox"] {
-    appearance: none; /* supprime l'apparence par défaut */
+    appearance: none;
+    /* supprime l'apparence par défaut */
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    border: 1.5px solid #FFFAFA; 
-    border-radius: 3px; 
-    background-color: transparent; 
-    cursor: pointer;  
+    border: 1.5px solid #FFFAFA;
+    border-radius: 3px;
+    background-color: transparent;
+    cursor: pointer;
     margin-top: 20px;
 }
 
 .checkbox-container input[type="checkbox"]:checked {
-    background-color: #FFFAFA; /* Fond lorsqu'elle est cochée */
+    background-color: #FFFAFA;
+    /* Fond lorsqu'elle est cochée */
 }
 
 .checkbox-container input[type="checkbox"]:hover {
-    border-color: #EB7A57; /* Couleur de la bordure au survol */
+    border-color: #EB7A57;
+    /* Couleur de la bordure au survol */
 }
+
 /************************checkbox*************************/
 
 /************************boutton*************************/
-#loginBtn, #inscriptionBtn, #contactBtn {
+#loginBtn,
+#inscriptionBtn,
+#contactBtn {
     height: 2.5rem;
     width: fit-content;
     padding: 0 1rem;
@@ -164,110 +199,207 @@ h3 {
     align-self: center;
 }
 
-#loginBtn:hover, #inscriptionBtn:hover, #contactBtn:hover {
+#loginBtn:hover,
+#inscriptionBtn:hover,
+#contactBtn:hover {
     border-color: #EB7A57;
     color: #EB7A57;
 }
 
-.buttonGestionVideo{
-    display: flex; 
+.buttonGestionVideo {
+    display: flex;
     justify-content: center;
     gap: 60px;
 }
+
 /************************boutton*************************/
 
-.fa-solid{
+.fa-solid {
     color: #FFFAE0;
 }
+
 /************************boutton*************************/
 
 /* icone calendrier */
 /* Chrome / Edge / Safari */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  color: #FFFAFA;          /* couleur */
-  filter: invert(1);       /* force l’icône en clair */
-  font-size: 18px;         /* ajuste la taille de l’icône */
-  margin-right: 8px;       /* espace entre icône et bord droit */
-  cursor: pointer;
+    color: #FFFAFA;
+    /* couleur */
+    filter: invert(1);
+    /* force l’icône en clair */
+    font-size: 18px;
+    /* ajuste la taille de l’icône */
+    margin-right: 8px;
+    /* espace entre icône et bord droit */
+    cursor: pointer;
 }
 
 /* Firefox */
 input[type="date"]::-moz-calendar-picker-indicator {
-  filter: invert(1);
-  font-size: 18px;
-  margin-right: 8px;
-  cursor: pointer;
+    filter: invert(1);
+    font-size: 18px;
+    margin-right: 8px;
+    cursor: pointer;
 }
 
 /* Mot de passe : bouton œil placé DANS l'input          */
 /* Wrapper d’ancrage */
 #loginForm .input-with-eye,
 #inscriptionForm .input-with-eye {
-  position: relative;
+    position: relative;
 }
 
 /* Réserve la place à droite, que ce soit password OU text après toggle */
-#loginForm .input-with-eye > input[type="password"],
-#loginForm .input-with-eye > input[type="text"],
-#inscriptionForm .input-with-eye > input[type="password"],
-#inscriptionForm .input-with-eye > input[type="text"] {
-  padding-right: 44px;
+#loginForm .input-with-eye>input[type="password"],
+#loginForm .input-with-eye>input[type="text"],
+#inscriptionForm .input-with-eye>input[type="password"],
+#inscriptionForm .input-with-eye>input[type="text"] {
+    padding-right: 44px;
 
 }
 
-#loginForm .input-with-eye > input[type="password"],
-#inscriptionForm .input-with-eye > input[type="password"]{
-  font-size: 25px;      /* ⬅️ grossit les points */
-  letter-spacing: .2ch;
+#loginForm .input-with-eye>input[type="password"],
+#inscriptionForm .input-with-eye>input[type="password"] {
+    font-size: 25px;
+    /* ⬅️ grossit les points */
+    letter-spacing: .2ch;
 }
 
 /* Bouton dans l’input — top:35% + translateY(-50%) */
 #loginForm .input-with-eye .icon-btn,
 #inscriptionForm .input-with-eye .icon-btn {
-  position: absolute;
-  right: 8px;
-  top: 35%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 28px;            /* zone cliquable ; ajuste si besoin */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  color: #FFFAFA;
+    position: absolute;
+    right: 8px;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 28px;
+    /* zone cliquable ; ajuste si besoin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    color: #FFFAFA;
 }
 
 /* Icône UIcons (petit nudge si nécessaire) */
 #loginForm .input-with-eye .icon-btn i,
 #inscriptionForm .input-with-eye .icon-btn i {
-  font-size: 18px;
-  line-height: 1;
-  display: block;
-  transform: translateY(1px); /* 0px / -1px si tu la veux plus haute */
+    font-size: 18px;
+    line-height: 1;
+    display: block;
+    transform: translateY(1px);
+    /* 0px / -1px si tu la veux plus haute */
 }
 
 /* Focus visible */
 #loginForm .input-with-eye .icon-btn:focus-visible,
 #inscriptionForm .input-with-eye .icon-btn:focus-visible {
-  outline: 2px solid #EB7A57;
-  outline-offset: -2px;
-  border-radius: 3px;
+    outline: 2px solid #EB7A57;
+    outline-offset: -2px;
+    border-radius: 3px;
 }
 
 
 /*********************** media queries*******************/
 /* responsive inscription/contact/connexions */
-@media screen and (max-width:767px) {
-    .container-formulaire input,
-    .container-formulaire textarea{
-        width: 350px;
+@media (max-width:768px) {
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    footer {
+        padding: 1rem;
+        text-align: center;
+        height: fit-content;
+    }
+
+    #liste-footer {
+        flex-direction: column;
     }
 
     /* On garde l’espace pour l’icône aussi en mobile */
-    #loginForm .input-with-eye > input[type="password"], #inscriptionForm .input-with-eye > input[type="password"] {
+    #loginForm .input-with-eye>input[type="password"],
+    #inscriptionForm .input-with-eye>input[type="password"] {
         padding-right: 44px;
+    }
+}
+
+/* à partir de 700px ou 650px il faut commencer à réduire le formulaire d'inscription */
+@media (max-width:700px) {
+
+    .container-formulaire input {
+        height: 35px;
+        width: 500px;
+    }
+
+    h3 {
+        height: 35px;
+        width: 500px;
+    }
+
+    .container-formulaire textarea {
+        width: 500px;
+    }
+}
+
+@media (max-width:631px) {
+
+    .container-formulaire input,
+    .connexion input {
+        height: 30px;
+        width: 400px;
+    }
+
+    h1 {
+        font-size: 2.1rem;
+    }
+
+    h2 {
+        font-size: 1.20rem;
+    }
+
+    h3 {
+        height: 30px;
+        width: 400px;
+    }
+
+    .container-formulaire textarea {
+        width: 400px;
+    }
+}
+
+@media (max-width:480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+}
+
+@media (max-width:426px) {
+    .container-formulaire input {
+        width: 300px;
+    }
+
+    h3 {
+        height: 25px;
+        width: 300px;
+    }
+
+    .container-formulaire textarea {
+        width: 300px;
     }
 }
