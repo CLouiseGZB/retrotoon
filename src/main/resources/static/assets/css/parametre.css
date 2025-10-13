@@ -21,6 +21,9 @@ a{
     color: #FFFAE0;
 }
 
+input{
+    font-size: 18px;
+}
 /********************************   MAIN   ***************************************/
 .hautPage {
     display: flex;
@@ -59,12 +62,28 @@ padding-top: 40px;
     padding-left: 20px;
     cursor: pointer;
 }
+
+
+/* hover demandé */
+.choixParametre:hover,
+.gestionAppareil:hover {
+  background-color: #001429;
+  color: #EB7A57;
+}
+
+/* assure que l’icône suit la couleur du texte */
+.choixParametre:hover i,
+.gestionAppareil:hover i {
+  color: inherit;
+}
+
+
 #page-accueil{
     width: 100%;
     margin-left: 50%;
 }
 
-.choixParametre p {
+.choixParametre p, .choixParametre span {
     margin: 0;
     padding-left: 10px;
 }
@@ -125,16 +144,20 @@ margin-left: 45%;
     margin-bottom: 5px;
 }
 .container-cache  button {
-    background-color: #001D3D;
+    height: 2.5rem;
+    width: fit-content;
+    padding: 0 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: transparent;
     font-family: Fredoka;
     color: #FFFAE0;
+    font-size: 18px;
     border: 1.5px solid #FFFAE0;
-    padding: 10px 10px 10px 10px;
-    border-radius: 1%;
-    transition: border-color, color 0.3s;
-    margin-left: 33%;
-    width: 200px;
+    border-radius: 3px;
+    align-self: center;
 }
+
 .retourPage{
     display: flex;
     align-items: center;
@@ -148,7 +171,6 @@ margin-left: 45%;
     cursor: pointer;
     margin-top: 10px;
     margin-left: 20px;
-    transition: color 0.3s ease-in-out;
 }
 .retourPage:hover {
     color: #EB7A57;
@@ -178,58 +200,167 @@ margin-left: 45%;
 }
 /*****************************   page profil  ******************************/
 .sectionProfil{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 75px 0 50px 0;
-    gap: 20px;
+  display:flex; justify-content:center; align-items:center; gap:24px;
+  margin:75px 0 50px;
+  flex-wrap:wrap;
 }
-.photoProfil {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    text-align: center;
+
+.photoProfil{ 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    width:250px; 
+    text-align:center; 
+    cursor:pointer;
 }
-.photoProfil P{
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-size: 18px;
-    padding-top: 10px;
+
+/* Le wrapper gère la forme ronde + bordure (pas l'image) */
+/* Base commune : avatar (wrapper) ET img directe dans .photoProfil */
+.photoProfil .avatar {
+  width: 250px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;              /* coupe proprement (utile pour <img>) */
+  border: 2px dashed gray;       /* même bordure que #Ajout par défaut */
+  background: #001429;           /* fond si PNG a de la transparence */
+  display: block;                /* supprime l'espace baseline des <img> */
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  cursor: pointer;
+  object-fit: cover;             /* recadre l'image quand c'est <img> */
 }
-#Ajout{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center; 
-    position: relative;
-    height: 235PX;
-    width: 235PX;
-    border: solid gray 2px ;
-    border-radius: 50%;
+
+.photoProfil img{
+width: 250px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;              /* coupe proprement (utile pour <img>) */
+  background: #001429;           /* fond si PNG a de la transparence */
+  display: block;                /* supprime l'espace baseline des <img> */
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  cursor: pointer;
+  object-fit: cover; 
 }
-#Ajout p {
-    position: absolute;
-    bottom: -25px;
-    font-size: 16px;
-    color: #FFFAE0;
+
+/* Effet hover identique pour les deux */
+.photoProfil .avatar:hover,
+.photoProfil img:hover,
+.photoProfil .avatar:focus-visible,
+.photoProfil img:focus-visible {
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  transform: translateY(-2px);
+  border: 2px dashed #EB7A57;       /* même bordure que #Ajout par défaut */
+  outline: none;
 }
-#Ajout i {
-    font-size: 48px; /* Taille de l'icône */
-    color: gray;
+
+
+.photoProfil p{
+  color:#FFFAE0; font-family:Fredoka,sans-serif; font-size:18px; padding-top:10px;
 }
+
+/* Tuile “Ajouter un compte” alignée comme les autres */
+#Ajout{ width:250px; }
+#Ajout i{
+  width:250px; aspect-ratio:1/1; border-radius:50%;
+  border:2px dashed gray; display:flex; align-items:center; justify-content:center;
+  font-size:64px; color:gray; background:#001429;
+  transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease, color .15s ease;
+  cursor:pointer;
+}
+#Ajout i:hover{
+  border-color:#EB7A57; color:#EB7A57;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+  transform:translateY(-2px);
+}
+#Ajout p{
+  margin-top:10px; font-size:18px; color:#FFFAE0; font-family:Fredoka,sans-serif;
+}
+
 .modifierProfil{
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    cursor: pointer;
+  display:flex; justify-content:center; align-items:center; gap:8px;
+  color:#FFFAE0; font-family:Fredoka,sans-serif; margin:16px 0;
 }
-.hr{
-    border: solid 1px #FFFAE0;
-    margin-top: 50px;
-    margin-bottom: 20px;
+.modifierProfil a{
+  color:inherit; text-decoration:none;
 }
+.modifierProfil i{ color:inherit; }
+
+/* Hover orange cohérent */
+.modifierProfil:hover,
+.modifierProfil:hover a,
+.modifierProfil:hover i{
+  color:#EB7A57;
+  cursor:pointer;
+}
+
+/* ------------ Date picker (toutes les pages) ------------ */
+#page-gestion-compte-1 input[type="date"]::-webkit-calendar-picker-indicator,
+#page-gestion-compte-2 input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #FFFAFA;          /* couleur */
+  filter: invert(1);       /* force l’icône en clair */
+  font-size: 18px;         /* ajuste la taille de l’icône */
+  margin-right: 8px;       /* espace entre icône et bord droit */
+  cursor: pointer;
+}
+
+/* Firefox */
+#page-gestion-compte-1 input[type="date"]::-moz-calendar-picker-indicator,
+#page-gestion-compte-2 input[type="date"]::-moz-calendar-picker-indicator {
+  filter: invert(1);
+  font-size: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+/* ------------ Mot de passe : bouton œil DANS l'input ------------ */
+/* Wrapper (ancre de positionnement) */
+#page-gestion-compte-2 .input-with-eye {
+  position: relative;
+}
+
+/* Réserve la place à droite, que ce soit password OU text après toggle */
+#page-gestion-compte-2 .input-with-eye > input[type="password"],
+#page-gestion-compte-2 .input-with-eye > input[type="text"] {
+  padding-right: 44px;
+}
+
+/* Grossit les points en mode password */
+#page-gestion-compte-2 .input-with-eye > input[type="password"] {
+  font-size: 25px;      /* ⬅️ grossit les points */
+  letter-spacing: .2ch;
+}
+
+/* Bouton dans l’input — top:35% + translateY(-50%) */
+#page-gestion-compte-2 .input-with-eye .icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 15%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 28px;          /* zone cliquable ; ajuste si besoin */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: #FFFAFA;        /* couleur de l'icône */
+}
+
+/* Icône (Font Awesome/UIcons…) */
+#page-gestion-compte-2 .input-with-eye .icon-btn i {
+  font-size: 18px;
+  line-height: 1;
+  display: block;
+  transform: translateY(1px); /* 0px / -1px si tu la veux plus haute */
+}
+
+/* Focus visible accessibilité */
+#page-gestion-compte-2 .input-with-eye .icon-btn:focus-visible {
+  outline: 2px solid #EB7A57;
+  outline-offset: -2px;
+  border-radius: 3px;
+}
+
 
 /*****************************   RESPONSIVE   ******************************/
