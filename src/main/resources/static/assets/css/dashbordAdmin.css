@@ -410,7 +410,7 @@ th{
     gap: 30px;
 }
 
-#titrevideo {
+.titreVideo input{
     background-color: #001429;
     border: none;
     color: #FFFAFA;

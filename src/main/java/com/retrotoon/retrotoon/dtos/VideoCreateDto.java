@@ -14,4 +14,5 @@ public class VideoCreateDto {
     private String titre;
     private String description;
     private String url;
+    private String categorie;
 }

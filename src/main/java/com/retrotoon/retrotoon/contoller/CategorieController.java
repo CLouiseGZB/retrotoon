@@ -41,24 +41,24 @@ public class CategorieController {
         return ResponseEntity.ok(categories);
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<Categorie> getById(@PathVariable Long id){
-        Categorie categorie = categorieServiceImpl.getCategorieById(id);
-        if (categorie == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(categorie);
-    }
+    // @GetMapping("/{id}")
+    // public ResponseEntity<Categorie> getByName(@PathVariable String nom){
+    //     Categorie categorie = categorieServiceImpl.g(nom);
+    //     if (categorie == null) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    //     return ResponseEntity.ok(categorie);
+    // }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Categorie> updateCategorie(@PathVariable Long id, @RequestBody Categorie updatedCategorie){
-        Categorie categorie = categorieServiceImpl.getCategorieById(id);
-        Categorie updateCategorie = categorieServiceImpl.updateCategorie(id, updatedCategorie);
-        if (categorie == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(updateCategorie);
-    }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Categorie> updateCategorie(@PathVariable String nom, @RequestBody Categorie updatedCategorie){
+    //     Categorie categorie = categorieServiceImpl.getCategorieByName(nom);
+    //     Categorie updateCategorie = categorieServiceImpl.updateCategorie(nom, updatedCategorie);
+    //     if (categorie == null) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    //     return ResponseEntity.status(HttpStatus.CREATED).body(updateCategorie);
+    // }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategorie(@PathVariable Long id){

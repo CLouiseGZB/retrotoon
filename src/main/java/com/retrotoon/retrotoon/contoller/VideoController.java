@@ -25,15 +25,15 @@ public class VideoController {
     @Autowired
     VideoServiceImpl videoServiceImpl;
 
-    @PostMapping
+    @PostMapping("/uploadVideo")
     public ResponseEntity<Video> createVideo(@RequestBody VideoCreateDto videoCreateDto){
         Video savedVideo = videoServiceImpl.addNewVideo(videoCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedVideo);
     }
     
-    @GetMapping
-    public ResponseEntity<List<Video>> getAll(){
-        List<Video> videos = videoServiceImpl.getAllVideos();
+    @GetMapping("/all")
+    public ResponseEntity<List<VideoCreateDto>> getAll(){
+        List<VideoCreateDto> videos = videoServiceImpl.getAllVideos();
         if (videos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

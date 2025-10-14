@@ -2,10 +2,14 @@ package com.retrotoon.retrotoon.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.retrotoon.retrotoon.dtos.VideoCreateDto;
+import com.retrotoon.retrotoon.model.Categorie;
 import com.retrotoon.retrotoon.model.Video;
+import com.retrotoon.retrotoon.repository.CategorieRepository;
 import com.retrotoon.retrotoon.repository.VideoRepository;
 
 
@@ -15,6 +19,9 @@ public class VideoServiceImpl implements VideoService{
 
     @Autowired
     private VideoRepository videoRepository;
+
+    @Autowired
+    private CategorieRepository categorieRepository;
     
     @Override
 	public Video addNewVideo(VideoCreateDto video){
@@ -24,12 +31,27 @@ public class VideoServiceImpl implements VideoService{
       newVideo.setDescription(video.getDescription());
       newVideo.setUrl(video.getUrl());
       newVideo.setDateAjout(LocalDateTime.now());
+      String catNom = video.getCategorie().toUpperCase().trim();
+      Categorie categorie = categorieRepository.findByNom(catNom)
+        .orElseGet(() -> {
+            Categorie newCat = new Categorie();
+            newCat.setNom(catNom);
+            return categorieRepository.save(newCat);
+        });
+      newVideo.setCategorieVideo(categorie);
       return videoRepository.save(newVideo);
     }
 
     @Override
-    public List<Video> getAllVideos(){
-        return videoRepository.findAll();
+    public List<VideoCreateDto> getAllVideos(){
+       List<Video> videos = videoRepository.findAll();
+
+    return videos.stream().map(v -> new VideoCreateDto(
+        v.getTitre(),
+        v.getDescription(),
+        v.getUrl(),
+        v.getCategorieVideo().getNom()
+    )).collect(Collectors.toList());
     }
 
     @Override

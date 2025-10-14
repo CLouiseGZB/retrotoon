@@ -23,29 +23,29 @@ document.querySelectorAll('.retourPage').forEach(element => {
     });
 });
 
-document.getElementById('saveCodeButton').addEventListener('click', function () {
-    const codeInput = document.getElementById('code').value;
-    const messageElement = document.getElementById('message');
+// document.getElementById('saveCodeButton').addEventListener('click', function () {
+//     const codeInput = document.getElementById('code').value;
+//     const messageElement = document.getElementById('message');
 
-    // Vérification que le code est composé de quatre chiffres uniquement
-    if (/^\d{4}$/.test(codeInput)) {
-        // Enregistrer le code parental dans le stockage local (ou toute autre méthode de stockage)
-        localStorage.setItem('parentalCode', codeInput);
-        messageElement.textContent = 'Code parental enregistré avec succès !';
-        messageElement.style.color = 'green';
-    } else {
-        messageElement.textContent = 'Veuillez entrer un code à 4 chiffres uniquement.';
-        messageElement.style.color = 'red';
-    }
-});
+//     // Vérification que le code est composé de quatre chiffres uniquement
+//     if (/^\d{4}$/.test(codeInput)) {
+//         // Enregistrer le code parental dans le stockage local (ou toute autre méthode de stockage)
+//         localStorage.setItem('parentalCode', codeInput);
+//         messageElement.textContent = 'Code parental enregistré avec succès !';
+//         messageElement.style.color = 'green';
+//     } else {
+//         messageElement.textContent = 'Veuillez entrer un code à 4 chiffres uniquement.';
+//         messageElement.style.color = 'red';
+//     }
+// });
 
-const logOut = document.querySelector('.choixParametre[data-page="page-gestion-compte-6"]');
-logOut.addEventListener('click', function () {
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken');
+// const logOut = document.querySelector('.choixParametre[data-page="page-gestion-compte-6"]');
+// logOut.addEventListener('click', function () {
+//     localStorage.removeItem('authToken');
+//     sessionStorage.removeItem('authToken');
 
-    window.location.href = '/html/index.html';
-})
+//     window.location.href = '/html/index.html';
+// })
 
 // appel API back pour modifier compte utilisateur 
 
