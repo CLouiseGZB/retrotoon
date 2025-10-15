@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (target) {
       target.classList.add('active');
       target.removeAttribute('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 150, behavior: 'smooth' });
     }
   };
 
@@ -96,16 +96,78 @@ document.addEventListener('click', (e) => {
 //     }
 // });
 
-const logOut = document.querySelector('.choixParametre[data-page="page-gestion-compte-6"]');
-logOut.addEventListener('click', function () {
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken');
+// Fonction de déconnexion
+async function doLogout(redirectUrl) {
+  try {
+    await fetch('/logout', { method: 'POST' });
+  } catch (e) {
+    console.warn("Impossible d'appeler /logout, redirection forcée.");
+  }
 
-    window.location.href = '../html/index.html';
-})
+  localStorage.removeItem('authToken');
+  sessionStorage.removeItem('authToken');
+
+  window.location.href = redirectUrl;
+}
+
+// Bouton de la sub-navbar
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+  doLogout('/index.html');
+});
+
+// Bouton sur compte.html
+document.getElementById('logoutBtnAccount')?.addEventListener('click', () => {
+  doLogout('/index.html');
+});
+
+// Lien "Déconnexion" dans paramètres
+document.querySelector('.choixParametre[data-page="page-gestion-compte-6"]')
+  ?.addEventListener('click', () => {
+    doLogout('../html/index.html');
+});
+
+// Map "hash" -> id de section .page
+const SECTION_HASH_MAP = {
+  // compte.html -> ./parametre.html#securite
+  securite:  'page-gestion-compte-2',
+  compte:    'page-gestion-compte-1',
+  appareils: 'page-gestion-compte-3',
+  accueil:   'page-accueil'
+};
+
+// Ouvre la section demandée par le hash (ex: #securite)
+function openFromHash() {
+  const key = (location.hash || '').replace('#', '').trim();
+  const targetId = SECTION_HASH_MAP[key];
+  if (!targetId) return;
+
+  // Utilise ta fonction existante si elle est définie
+  if (typeof afficherPage === 'function') {
+    afficherPage(targetId);
+  } else {
+    // fallback si afficherPage n'est pas dispo
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(targetId)?.classList.add('active');
+  }
+
+  // Si tu as un état “accueil flex”, assure qu'il est caché
+  const accueil = document.getElementById('page-accueil');
+  if (accueil && targetId !== 'page-accueil') {
+    accueil.classList.remove('active');
+  }
+
+  // remonter en haut pour un vrai effet "nouvelle page"
+  window.scrollTo({ top: 190, behavior: 'smooth' });
+}
+
+// 1) Au premier chargement
+document.addEventListener('DOMContentLoaded', openFromHash);
+
+// 2) Si le hash change (navigation interne)
+window.addEventListener('hashchange', openFromHash);
+
 
 // appel API back pour modifier compte utilisateur 
-
 document.getElementById('userBtn').addEventListener('click', async (e) => {
   e.preventDefault();
 

@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/styleform.css">
+    <title>RetroToon - Mon compte</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <link rel="stylesheet" href="../assets/css/compte.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/searchbar.css">
     <link rel="stylesheet" href="../assets/css/sub-navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <!-- pour logo fenetre -->
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
-    <title>RetroToon - Contact</title>
 </head>
-
 <body>
     <header>
         <nav id="menu">
@@ -43,7 +36,7 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-
+                
                 <div class="account">
                     <button type="button" class="icon dropdown-arrow" data-account-toggle aria-controls="accountSubMenu" aria-expanded="false">
                         <i class="fi fi-sr-user"></i>
@@ -94,7 +87,7 @@
     </header>
 
     <div class="tab-bar">
-        <a href="../html/index-client.html">
+        <a href="../html/index-client.html" >
             <i class="fi fi-sr-home"></i>
         </a>
         <a href="../html/series.html">
@@ -110,52 +103,75 @@
         </a>
     </div>
 
-    <main>
-        <div class="containertitrepage">
-            <h1>Nous sommes ici pour t’aider</h1>
-            <h2>Si tu as une question ou un commentaire, notre équipe est là ! </h2>
+    <div class="hautPage">
+        <h1>MON COMPTE</h1>
+    </div>
+
+    <main class="wrap">
+        <!-- Carte résumé compte -->
+        <section class="accountCard">
+        <img class="accAvatar" src="../assets/imgParametre/Adulte.png" alt="Avatar du profil actif">
+        <div class="accMeta">
+            <h2>Profil actif : Utilisateur</h2>
+            <p class="muted">utilisateur.anonyme@example.fr • Membre depuis 2024</p>
         </div>
+        </section>
 
-        <section class="contact">
+        <!-- Actions disponibles (seulement ce qui existe déjà) -->
+        <section class="actionsGrid" aria-label="Actions du compte">
+        <a class="actionCard" href="../html/profil.html">
+            <i class="fa-solid fa-user-pen"></i>
+            <div>
+            <p class="sm-hello">Gérer les profils</p class="sm-hello">
+            <div class="muted">Ajouter, renommer, enfant/adulte</div>
+            </div>
+        </a>
 
-            <form class="container-formulaire" action="#" method="post">
-                <h3>Nom</h3>
-                <input type="text" name="last_name" value="">
+        <a class="actionCard" href="../html/parametre.html#securite" >
+            <i class="fa-solid fa-key"></i>
+            <div>
+            <p class="sm-hello">Changer le mot de passe</p class="sm-hello">
+            <div class="muted">Sécuriser votre accès</div>
+            </div>
+        </a>
 
-                <h3>Prénom</h3>
-                <input type="text" name="first_name" value="">
+        <a class="actionCard" href="../html/contact.html">
+            <i class="fi fi-rr-info"></i>
+            <div>
+            <p class="sm-hello">Aide & Contact</p class="sm-hello">
+            <div class="muted">Nous contacter</div>
+            </div>
+        </a>
 
-                <h3>Adresse email</h3>
-                <input type="email" name="email" value="">
+        <button class="actionCard" type="button" id="logoutBtnAccount">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <div>
+            <p class="sm-hello">Déconnexion</p class="sm-hello">
+            <div class="muted">Quitter votre session</div>
+            </div>
+        </button>
+        </section>
 
-                <h3>Message </h3>
-                <textarea name="message" id=""></textarea>
-
-
-                <div class="boutton-container">
-                    <button type="submit" id="contactBtn">Envoyer</button>
-                </div>
-
-            </form>
+        <!-- Zone danger -->
+        <section class="dangerZone" aria-label="Zone sensible">
+        <h3 class="dangerTitle"><i class="fa-solid fa-triangle-exclamation"></i> Zone sensible</h3>
+        <div class="row">
+            <button class="btn btnDanger" type="button" id="deleteAccountBtn">
+            <i class="fa-solid fa-user-slash"></i> Supprimer mon compte
+            </button>
+            <span class="muted">Action irréversible. Vos données seront supprimées.</span>
+        </div>
         </section>
     </main>
 
-    <footer>
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
-                alt="logo"></a>
+
+    <footer>    
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
-            <a href="../html/contact.html">
-                <p>Nous contacter</p>
-            </a>
-            <a href="../html/index.html#dispo">
-                <p>Applications</p>
-            </a>
-            <a href="#">
-                <p>Conditions générales d'utilisation</p>
-            </a>
-            <a href="#">
-                <p>Politique de confidentialité</p>
-            </a>
+            <a href="../html/contact.html"><p>Nous contacter</p></a>
+            <a href="../html/index.html#dispo"><p>Applications</p></a>
+            <a href="#"><p>Conditions générales d'utilisation</p></a>
+            <a href="#"><p>Politique de confidentialité</p></a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -165,9 +181,9 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-    <script src="../assets/script/scriptform.js"></script>
-    <script src="../assets/script/sub-navbar.js"></script>
+    <script src="../assets/script/scriptPara.js"></script>
     <script src="../assets/script/searchbar.js"></script>
+    <script src="../assets/script/sub-navbar.js"></script>
 </body>
 
 </html>
