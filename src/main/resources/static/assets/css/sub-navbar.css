@@ -1,49 +1,4 @@
 /* ================== Sous-menus (compte) ================== */
-.account {
-  position: relative;
-}
-.sub-menus {
-  position: absolute;
-  top: 144%;
-  right: 0;
-  width: 200px;
-  background: var(--bg);
-  z-index: 99;
-  display: none;
-  opacity: 0;
-  visibility: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, .6);
-}
-.sub-menus.active {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-.sub-menus li {
-  list-style: none;
-}
-.sub-menus a {
-  color: #FFFAE0;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 20px 15px;
-}
-.sub-menus a:hover {
-  color: #EB7A57;
-}
-.sub-menus i {
-  padding-right: 10px;
-  font-size: 1.5rem;
-}
-
-/* ====== ACCOUNT  ====== */
-
-.account { 
-  position: relative; 
-}
-
 .account > .icon.dropdown-arrow {
   appearance: none;
   background: transparent;
@@ -63,32 +18,112 @@
   border-radius: 4px;
 }
 
-.account .sub-menus {
-  top: 100%;
+.account { position: relative; }
+
+.sub-menus {
+  position: absolute;
+  top: calc(100% + 12px);
   right: 0;
-  margin-top: 8px;
-  min-width: 220px;
-  max-width: 90vw;
-  background: var(--bg, #001429);
+  width: 320px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #001429;
   color: #FFFAE0;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.35);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px) scale(.98);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
   z-index: 2000;
 }
 
-/* Liens plus confortables */
-.account .sub-menus a:hover { 
-  color: #EB7A57; 
-  background-color: #001D3D;
+/* caret */
+.sub-menus::before {
+  content: "";
+  position: absolute;
+  top: -8px; right: 20px;
+  width: 14px; height: 14px;
+  background: #001429;
+  border-left: 1px solid rgba(255,255,255,.14);
+  border-top: 1px solid rgba(255,255,255,.14);
+  transform: rotate(45deg);
+  z-index: -1;
 }
 
-.account .sub-menus i { 
-  font-size: 1.2rem; 
+/* affichage ouvert */
+.sub-menus[aria-hidden="false"],
+.sub-menus.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
-.account .sub-menus hr {
+/* header */
+.sm-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.sm-user {
+  display: grid; grid-template-columns: 42px 1fr;
+  gap: 12px; align-items: center;
+}
+.sm-avatar {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  background: #001D3D;
+  color: #FFFAE0;
+  font-weight: 800;
+}
+.sm-hello { margin: 0; font-weight: 600; }
+.sm-myaccount {
+  display: inline-block; margin-top: 2px;
+  color: #FFFAE0; text-decoration: none; font-size: .95rem; opacity: .9;
+}
+.sm-myaccount:hover { color: #EB7A57; }
+
+/* section title */
+.sm-section {
+  padding: 10px 16px;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(255,250,224,.7);
+}
+
+/* items */
+.sm-item,
+.sm-logout {
+  width: 100%;
+  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: 24px 1fr 18px;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #FFFAE0;
+  background: transparent;
   border: 0;
-  border-top: 1px solid #FFFAE0;
-  margin: 6px 12px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
+
+.sm-item i,
+.sm-logout i { font-size: 18px; }
+.sm-chevron { opacity: .6; font-size: 12px; }
+
+/* hover */
+.sm-item:hover,
+.sm-logout:hover {
+  background: #001D3D;
+  color: #EB7A57;
+}
+
+/* séparateur */
+.sm-sep { height: 1px; background: rgba(255,255,255,.14); margin: 6px 12px; }
 

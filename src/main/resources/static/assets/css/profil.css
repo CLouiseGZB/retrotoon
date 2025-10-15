@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; } /* filet anti scroll horizontal */
+body {
+  background-color: #001D3D;
+  font-family: "Fredoka", sans-serif;
+  color: #FFFAE0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Bangers", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: #FFFAE0;
+}
+
+    main{ min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+
+    /* ==== En-tête de page ==== */
+    .hautPage{
+      display:flex; align-items:center; justify-content:center;
+      padding: 48px 16px 12px;
+    }
+    .hautPage h1{
+      margin:0; font-weight:800; letter-spacing: 3px;
+      text-align:center;
+      text-shadow: 0 2px 0 rgba(0,0,0,.25);
+    }
+
+    /* ==== Section Profils ==== */
+    .sectionProfil{
+      display:flex; justify-content:center; align-items:center;
+      gap:28px; margin:56px auto 28px; flex-wrap:wrap;
+      max-width: 1080px; padding: 0 16px;
+    }
+
+    .photoProfil{
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+      width:240px; text-align:center; cursor:pointer; user-select:none;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .photoProfil:focus-within { outline:none; }
+
+    /* Avatar (image) */
+    .photoProfil img{
+      width:240px; aspect-ratio:1/1; border-radius:24px;
+      display:block; object-fit:cover; background:#001429;
+      border:2px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    }
+    .photoProfil img:hover,
+    .photoProfil img:focus-visible{
+      transform: translateY(-3px);
+      border-color:#EB7A57;
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    }
+
+    /* Nom du profil */
+    .photoProfil p{
+      margin: 6px 0 0;
+      color:#FFFAE0; font-size:18px; font-weight:600;
+      letter-spacing:.4px;
+      transition: color .15s ease;
+    }
+    .photoProfil:hover p,
+    .photoProfil:focus-within p{ color:#EB7A57; }
+
+    /* Carte "Ajouter" */
+    #Ajout{ width:240px; }
+    #Ajout i{
+      width:240px; aspect-ratio:1/1; border-radius:24px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:64px; color:rgba(255,255,255,.55);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)) ,
+        #001D3D;
+      border:2px dashed rgba(255,255,255,.28);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      transition: color .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    #Ajout i:hover,
+    #Ajout:focus-visible i{
+      color:#EB7A57; border-color:#EB7A57;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.45);
+      outline: none;
+    }
+    #Ajout p{
+      margin-top:10px; font-size:18px; color:#FFFAE0; font-weight:600;
+    }
+
+    /* Lien Gestion des profils */
+    .modifierProfil{
+      display:flex; justify-content:center; align-items:center; gap:10px;
+      color:#FFFAE0; margin:6px 0 32px;
+    }
+    .modifierProfil a{
+      color:inherit; text-decoration:none; font-weight:700; letter-spacing:.4px;
+      border-bottom: 2px solid transparent; transition: color .18s ease, border-color .18s ease;
+    }
+    .modifierProfil i{ color:inherit; }
+    .modifierProfil:hover,
+    .modifierProfil:hover a,
+    .modifierProfil:hover i{
+      color:#EB7A57; cursor:pointer;
+    }
+    .modifierProfil:hover a{ border-color:#EB7A57; }
+
+    /* Séparateur */
+    .hr{
+      width:min(860px, 92%); margin: 10px auto 40px;
+      border:0; border-top:1px solid rgba(255,255,255,.18);
+    }
+
+    /* Micro-animations à l’arrivée */
+    @keyframes cardIn {
+      from { opacity:0; transform: translateY(8px) scale(.98); }
+      to   { opacity:1; transform: translateY(0) scale(1); }
+    }
+    .photoProfil, #Ajout { animation: cardIn .28s ease both; }
+    .sectionProfil .photoProfil:nth-child(1) { animation-delay: .05s; }
+    .sectionProfil .photoProfil:nth-child(2) { animation-delay: .10s; }
+    .sectionProfil .photoProfil:nth-child(3) { animation-delay: .15s; }
+
+    /* Responsive */
+    @media (max-width: 640px){
+      .sectionProfil{ gap:20px; margin:40px auto 18px; }
+      .photoProfil, #Ajout { width:200px; }
+      .photoProfil img, #Ajout i { width:200px; }
+    }
+    @media (max-width: 380px){
+      .photoProfil, #Ajout { width:180px; }
+      .photoProfil img, #Ajout i { width:180px; }
+    }
+
+    /* Accessibilité clavier supplémentaire */
+    .photoProfil[tabindex="0"]:focus img { border-color:#EB7A57; }
+    #Ajout[tabindex="0"]:focus i { border-color:#EB7A57; color:#EB7A57; }

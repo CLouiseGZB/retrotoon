@@ -45,18 +45,49 @@
                 </form>
 
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle" style="text-decoration: none;">
+                    <button type="button" class="icon dropdown-arrow" data-account-toggle aria-controls="accountSubMenu" aria-expanded="false">
                         <i class="fi fi-sr-user"></i>
-                    </a>
+                    </button>
 
-                    <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion
-                                profil</a></li>
-                        <hr>
-                        <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
-                        <hr>
-                        <li><a href='../html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    <ul class="sub-menus" id="accountSubMenu" role="menu" aria-hidden="true">
+                        <!-- Header carte -->
+                        <li class="sm-header" aria-hidden="true">
+                            <div class="sm-user">
+                            <div class="sm-avatar" aria-hidden="true">UA</div>
+                            <div class="sm-id">
+                                <p class="sm-hello">Bonjour <span id="smUserName">Utilisateur</span></p>
+                                <a class="sm-myaccount" href="../html/profil.html">Mon compte</a>
+                            </div>
+                            </div>
+                        </li>
+
+                        <!-- Section compte -->
+                        <li class="sm-section" aria-hidden="true">Compte</li>
+                        <li><a class="sm-item" href="../html/profil.html" role="menuitem" tabindex="-1">
+                            <i class="fa-solid fa-user-pen" aria-hidden="true"></i><span>Gestion profil</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+                        <li><a class="sm-item" href="../html/parametre.html" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-settings" aria-hidden="true"></i><span>Paramètres</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+
+                        <!-- Section aide -->
+                        <li class="sm-section" aria-hidden="true">Support</li>
+                        <li><a class="sm-item" href="../html/contact.html" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-info" aria-hidden="true"></i><span>Aide & Contact</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+
+                        <!-- Déconnexion -->
+                        <li class="sm-sep" aria-hidden="true"></li>
+                        <li>
+                            <button class="sm-logout" type="button" id="logoutBtn" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-exit" aria-hidden="true"></i><span>Déconnexion</span>
+                            </button>
+                        </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
