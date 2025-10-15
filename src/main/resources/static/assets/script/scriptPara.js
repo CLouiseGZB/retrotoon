@@ -1,20 +1,55 @@
-// Fonction pour cacher tous les pages et afficher que la page demandée
-function afficherPage(pageId) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(page => {
-        page.classList.remove('active');
+document.addEventListener('DOMContentLoaded', () => {
+  const pages = document.querySelectorAll('.page');
+
+  const showPage = (id) => {
+    pages.forEach(p => {
+      p.classList.remove('active');
+      p.setAttribute('hidden', ''); // a11y + évite les flash
     });
-    const pageActive = document.getElementById(pageId);
-    if (pageActive) {
-        pageActive.classList.add('active');
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      target.removeAttribute('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-}
-//les boutons de retour
-document.querySelectorAll('.choixParametre').forEach(element => {
-    element.addEventListener('click', () => {
-        const targetPage = element.getAttribute('data-page');
-        afficherPage(targetPage);
+  };
+
+  // Un seul écouteur pour TOUT ce qui a data-page (choix + retour)
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const id = el.getAttribute('data-page');
+      if (!id) return;
+
+      // Cas spécial: "Déconnexion" (data-page="page-gestion-compte-6" chez toi)
+      if (id === 'page-gestion-compte-6') {
+        // TODO: clear token/localStorage si tu utilises JWT
+        window.location.href = '../html/index.html';
+        return;
+      }
+
+      // Empêche la sélection de texte et évite side effects
+      e.preventDefault();
+      e.stopPropagation();
+
+      showPage(id);
     });
+
+    // Accessibilité clavier (Entrée / Espace) pour les div/btn
+    if (el.tagName !== 'A' && !el.hasAttribute('tabindex')) {
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    }
+  });
+
+  // Optionnel: démarrer proprement (assure hidden sur celles non actives)
+  pages.forEach(p => {
+    if (!p.classList.contains('active')) p.setAttribute('hidden', '');
+  });
 });
 
 // 1) SPA : clics sur éléments avec data-page ET PAS de href
