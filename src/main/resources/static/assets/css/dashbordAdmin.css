@@ -1,254 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
 /************************general*************************/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    background-color: #001D3D;
-    min-height: 100vh; /* S'assure que le container prend toute la hauteur de la page */
-    margin: 0; /* Enlève les marges par défaut du body */
 
-}
-/************************general*************************/
-
-/* *************************navbar******************/
-#menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-block: 10px;
-    padding-inline: 20px 0px;
-    background: linear-gradient( #001429, transparent);
-    height: 80px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Styles pour le logo à gauche */
-.logo img {
-    width: 4em;
-}
-
-/* Centrage des liens de navigation */
-.nav-links {
-    display: flex;
-    justify-content:flex-start;
-  flex-grow: 1;
-}
-.nav-links i{
-    padding-right: 3px;
-}
-
-.nav-links li {
-    list-style: none;
-}
-
-.nav-links a {
-    display: block;
-    line-height: 45px;
-    padding: 0 14px;
-    text-decoration: none;
-    color: #FFFAE0;
-    font-size: 16px;
-    font-family: Fredoka;
-    padding-left: 50px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #EB7A57;
-}
-
-/* Alignement des icônes à droite */
-.nav-icons {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.nav-icons .icon {
-    margin-left: 15px;
-    position: relative;
-
-}
-
-.nav-icons .icon i {
-    font-size: 1.5em;
-    color: #FFFAE0;
-    text-decoration: none; 
-    transition: color 0.3s;
-}
-
-.icon i:hover,
-.search-icon i:hover{
-    color: #EB7A57;
-    text-decoration: none;
-}
-
-.tab-bar {
-    display: none;
-}
-
-/*****************barre de recherche*****************/
-.search-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-box {
-    transition: width 0.6s ease, border-radius 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    border: none;
-    cursor: text;
-    background: transparent;
-    color: transparent;
-    padding-left: 40px;
-    text-indent: -5000px;
-}
-
-.search-box:focus {
-    border: none;
-    outline: none;
-    box-shadow: 0 0 0 2px #FFFAE0;
-}
-
-.search-box.active {
-    width: 300px;
-    border-radius: 20px;
-    background: #001D3D;
-    color: #FFFAE0;
-    text-indent: 0;
-    padding-left: 40px;
-}
-
-.search-icon {
-    position: absolute;
-    left: 10px;
-    top: 54%;
-    transform: translateY(-50%);
+a{
+    all: unset;
     cursor: pointer;
 }
 
-.search-icon i {
-    color: #FFFAE0;
-    font-size: 1.5rem;
+:root {
+    --bg: #001429;
+    --bg-alt: #001D3D;
+    --card: #0d1b2a;
+    --text: #f2f6fb;
+    --muted: #c6d2df;
+    --accent: #EB7A57;
+
+    --gap: 1rem;
+    --row-h: 45vh;
+    --header-h: 80px;
+    --title-shadow: 0 3px 10px rgba(0, 0, 0, .45);
+
+    /* marge horizontale des titres gérée par MQ */
+    --gutter: 24px;
+    /* desktop */
 }
 
-/* Styles pour le menu déroulant */
-.account {
-    position: relative;
+body {
+
+    font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-alt);
+    color: var(--text);
+
 }
 
-.sub-menus {
-    position: absolute;
-    top: 144%; /* Positionner le sous-menu directement sous le parent */
-    right: 0;  /* Aligner le sous-menu avec le bord droit de l'icône */
-    width: 200px; /* Largeur du sous-menu */
-    background: #001429;
-    z-index: 99;
-    display: none; /* Masqué par défaut */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.594);
-}
-.sub-menus hr{
-    border: solid 1px #FFFAE0;
-    margin-inline: 10%;
-}
-.sub-menus.active {
-    display: block;
-    opacity: 1; 
-    visibility: visible;
-}
+/************************general*************************/
 
-.sub-menus li {
-    list-style: none;
-}
-
-.sub-menus a {
-    color: #FFFAE0;
-    font-size: 16px;
-    font-family: Fredoka;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    padding: 20px 15px;
-}
-
-.sub-menus a:hover {
-    color: #EB7A57;
-}
-
-.sub-menus i {
-    padding-right: 10px;
-    font-size: 1.5rem;
-}
-/* *************************navbar******************/
-
-/* ****************barre de recherche*********/
-/* ***************barre de recherche ******************/
-
-/* *************************menu deroulant ******************/
-/* *************************menu deroulant ******************/
 /**************titres********************/
 .containertitrepage {
     display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
     background: linear-gradient(to top, #001429, transparent);
     height: 150px;
     margin-top: 100px;
     margin-bottom: 50px;
 }
+
 .containertitrepage h2 a {
     color: #EB7A57;
     padding-left: 5px;
     text-decoration: none;
 }
+
 h1 {
     font-family: 'Bangers', cursive;
     color: #FFFAFA;
-    font-size:40px;
+    font-size: 40px;
     margin-bottom: 10px;
     letter-spacing: 2px;
 }
 
- h2{
+h2 {
     font-family: 'Bangers', cursive;
     color: #FFFAFA;
     font-size: 15px;
- margin-top: 10px;
- letter-spacing: 2px;
+    margin-top: 10px;
+    letter-spacing: 2px;
 }
 
- h3 {
-    font-weight: 300; /* Définit une police plus fine */
+h3 {
+    font-weight: 300;
+    /* Définit une police plus fine */
     color: #FFFAE0;
-    font-family: Fredoka;
     font-size: 16px;
     margin-top: 5px;
     margin-bottom: 10px;
     text-align: left;
     width: 600px;
-  width: 100%;
-   
+    width: 100%;
+
 }
 
 /************************titres*************************/
 /*********************** menu dashbord ************************/
 .hautPage {
     display: flex;
-padding-top: 40px;
+    padding-top: 40px;
     width: 100%;
     height: 150px;
     background: linear-gradient(to top, #001429, transparent);
@@ -260,6 +105,7 @@ padding-top: 40px;
     font-size: 26px;
     letter-spacing: 3px;
 }
+
 .containerParametre {
     display: flex;
     flex-direction: column;
@@ -270,6 +116,7 @@ padding-top: 40px;
     margin-top: 5%;
     margin-bottom: 5%;
 }
+
 .choixParametre {
     display: flex;
     align-items: center;
@@ -283,7 +130,8 @@ padding-top: 40px;
     padding-left: 20px;
     cursor: pointer;
 }
-#page-accueil{
+
+#page-accueil {
     width: 100%;
     margin-left: 50%;
 }
@@ -292,33 +140,39 @@ padding-top: 40px;
     margin: 0;
     padding-left: 10px;
 }
+
 .choixParametre .fa-chevron-right {
     margin-left: auto;
     margin-right: 10px;
 }
+
 .page {
     display: none;
 }
+
 .page.active {
     display: block;
 }
+
 /*****************************   contenu cache  ******************************/
-.container-cache{
+.container-cache {
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
-.container-cache h3{
+
+.container-cache h3 {
     display: flex;
     justify-content: center;
     color: #FFFAE0;
     font-family: Fredoka;
     font-weight: normal;
     padding-bottom: 7%;
-    text-shadow:   1px 2px black;
+    text-shadow: 1px 2px black;
     font-size: 24px;
 }
-#p{
+
+#p {
     display: flex;
     justify-content: center;
     color: #FFFAE0;
@@ -327,11 +181,13 @@ padding-top: 40px;
     padding-bottom: 7%;
     font-size: 16px;
 }
-#code{
-margin-left: 45%;
+
+#code {
+    margin-left: 45%;
     width: 63px;
 }
-.container-cache input{
+
+.container-cache input {
     background-color: #001429;
     border: none;
     font-family: Fredoka;
@@ -341,14 +197,15 @@ margin-left: 45%;
     height: 40px;
     border-radius: 5px;
 }
-.container-cache label{
+
+.container-cache label {
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-.retourPage{
+.retourPage {
     display: flex;
     align-items: center;
     width: 50px;
@@ -363,14 +220,17 @@ margin-left: 45%;
     margin-left: 20px;
     transition: color 0.3s ease-in-out;
 }
+
 .retourPage:hover {
     color: #EB7A57;
 }
-.container-cache  button:hover{
+
+.container-cache button:hover {
     border-color: #EB7A57;
     color: #EB7A57;
 }
-.gestionAppareil{
+
+.gestionAppareil {
     display: flex;
     align-items: center;
     width: 600px;
@@ -382,35 +242,60 @@ margin-left: 45%;
     font-family: Fredoka;
     padding-left: 20px;
 }
-.gestionAppareil .fa-pen{
+
+.gestionAppareil .fa-pen {
     margin-left: auto;
     margin-right: 10px;
 }
-.gestionAppareil .fa-trash-can{
+
+.gestionAppareil .fa-trash-can {
     margin-right: 10px;
 }
 
 /*********************** menu dashbord ************************/
-/*********************** Liste TH ************************/
 /***********************Liste TH************************/
-
-th{
-
-    color: #FFFAE0;
-    padding: 10px 10px 10px 10px;
+.videos-table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.videos-table th {
+    background-color: #001429;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.videos-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.videos-table a {
+    color: #FFFAFA;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.videos-table a:hover {
+    text-decoration: underline;
+}
+
 /************************input/label uploadVideo*************************/
 .container-formulaire {
-    width: 80%; 
+    width: 80%;
     max-width: 600px;
-    margin: 0 auto; 
+    margin: 0 auto;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: flex-start;
     gap: 30px;
 }
 
-.titreVideo input{
+.titreVideo input {
     background-color: #001429;
     border: none;
     color: #FFFAFA;
@@ -421,8 +306,9 @@ th{
 }
 
 
-label{
-    font-weight: 300; /* Définit une police plus fine */
+label {
+    font-weight: 300;
+    /* Définit une police plus fine */
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 15px;
@@ -436,18 +322,19 @@ label{
     -webkit-appearance: none;
     width: 15px;
     height: 15px;
-    border: 1.5px solid #FFFAFA; 
-    border-radius: 3px; 
-    background-color: transparent; 
-    cursor: pointer;  
+    border: 1.5px solid #FFFAFA;
+    border-radius: 3px;
+    background-color: transparent;
+    cursor: pointer;
 }
-.inputLabel input[type="checkbox"]:checked{
+
+/* .inputLabel input[type="checkbox"]:checked {
     background-color: #FFFAFA;
-}
+} */
 
 /************************checkbox*************************/
 /************************boutton*************************/
-.custom-upload-label{
+.custom-upload-label {
     background-color: #001429;
     border: none;
     color: #FFFAFA;
@@ -457,13 +344,13 @@ label{
     height: 40px;
     cursor: pointer;
     text-align: center;
-}   
+}
 
 .button-container {
     display: flex;
     justify-content: center;
-    gap:50px; 
-    margin-top: 30px; 
+    gap: 50px;
+    margin-top: 50px;
     width: 100%;
 }
 
@@ -480,81 +367,24 @@ button {
     cursor: pointer;
 }
 
-
-button:hover{
+button:hover {
     border-color: #EB7A57;
     color: #EB7A57;
 }
 
 /************************boutton*************************/
-.fa-solid{
+.fa-solid {
     color: #FFFAE0;
 }
+
 /************************boutton*************************/
-/*********************** footer *******************/
-footer {
-    height: 300px;
-    background-color: #001D3D;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
 
-footer img {
-    width: 100px;
-    height: 100px;
-    margin-top: 20px;
-}
-
-#liste-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-block: 20px;
-    padding: 0;
-}
-
-#liste-footer p {
-    margin: 0;
-    padding: 10px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-size: 16px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-#liste-footer p:hover {
-    color: #EB7A57;
-}
-
-footer i {
-    font-size: 30px;
-    color: #FFFAE0;
-    padding: 10px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-footer i:hover {
-    color: #EB7A57;
-}
-
-footer p {
-    color: #FFFAE0;
-    margin-top: 20px;
-    font-family: Fredoka;
-}
-footer a{
-    text-decoration: none;
-}
-/*********************** footer *******************/
 /*********************** media queries*******************/
-/*responsive inscription/contact/connexions*/
-@media screen and (max-width:767PX) {   
-.container-formulaire input,
-.container-formulaire textarea{
-    width: 350px;
-}
+/* responsive inscription/contact/connexions*/
+@media screen and (max-width:767PX) {
+
+    .container-formulaire input,
+    .container-formulaire textarea {
+        width: 350px;
+    }
 }

@@ -59,11 +59,13 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(updateVideo);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVideo(@PathVariable Long id){
-        if (videoServiceImpl.deleteVideoById(id)) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteVideo(@RequestBody List<Long> ids){
+        try{
+        ids.forEach(id -> videoServiceImpl.deleteVideoById(id));
             return ResponseEntity.noContent().build();
-        }
+        }catch(Exception e){
         return ResponseEntity.notFound().build();
+        }
     }
 }

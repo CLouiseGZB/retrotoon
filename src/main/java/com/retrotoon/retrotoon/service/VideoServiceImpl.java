@@ -47,10 +47,12 @@ public class VideoServiceImpl implements VideoService{
        List<Video> videos = videoRepository.findAll();
 
     return videos.stream().map(v -> new VideoCreateDto(
+        v.getId(),
         v.getTitre(),
         v.getDescription(),
         v.getUrl(),
-        v.getCategorieVideo().getNom()
+        v.getCategorieVideo() != null ? v.getCategorieVideo().getNom() : "Non définie",
+        v.getDateAjout()
     )).collect(Collectors.toList());
     }
 
