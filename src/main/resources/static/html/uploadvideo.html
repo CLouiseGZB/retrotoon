@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="../assets/css/searchbar.css">
     <link rel="stylesheet" href="../assets/css/sub-navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
 
@@ -40,14 +43,15 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                
+
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle" style="text-decoration: none;">
                         <i class="fi fi-sr-user"></i>
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion
+                                profil</a></li>
                         <hr>
                         <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
@@ -59,7 +63,7 @@
     </header>
 
     <div class="tab-bar">
-        <a href="../html/index-client.html" >
+        <a href="../html/index-client.html">
             <i class="fi fi-sr-home"></i>
         </a>
         <a href="../html/series.html">
@@ -80,84 +84,54 @@
             <h1>Gestion des vidéos</h1>
             <h2>Ajouter une nouvelle video</h2>
         </div>
-
         <section class="uploadvideo">
-            <form class="container-formulaire" action="#" method="post">
-                <div class="titrevideo">
+            <form class="container-formulaire" id="uploadVideo">
+                <div class="titreVideo">
                     <h3>Titre de la vidéo</h3>
-                    <input type="text" id="titrevideo" name="titrevideo" autocomplete="off" required>
+                    <input type="text" id="titreVideo" required>
                 </div>
-
-                <div class="blockchamp">
-                    <h3>Public ciblé</h3>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="adulte" value="adulte">
-                        <label for="adulte">Adulte</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="enfant" value="enfant">
-                        <label for="enfant">Tous publics</label>
-                    </div>
+                <div class="titreVideo">
+                    <h3>Description de la vidéo</h3>
+                    <input type="text" id="description" required>
                 </div>
-
+                <div class="titreVideo">
+                    <h3>Url de la vidéo</h3>
+                    <input type="text" id="urlVideo" required>
+                </div>
                 <div class="blockchamp">
                     <h3>Type de contenu</h3>
                     <div class="inputLabel">
-                        <input type="checkbox" id="series" value="series">
-                        <label for="series">Series</label>
+                        <input type="radio" id="series" name="categorie" value="SERIE" required>
+                        <label for="series">Série</label>
                     </div>
                     <div class="inputLabel">
-                        <input type="checkbox" id="films" value="films">
-                        <label for="films">Films</label>
+                        <input type="radio" id="films" name="categorie" value="FILM">
+                        <label for="films">Film</label>
                     </div>
                 </div>
-
-                <div class="blockchamp">
-                    <h3>Genre</h3>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="animation" value="animation">
-                        <label for="animation">Animation</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="comedie" value="comedie">
-                        <label for="comedie">Comedie</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id=" famille" value=" famille">
-                        <label for="famille">Famille</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="ActionAventure" value="ActionAventure">
-                        <label for="ActionAventure">Action & Aventure</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="Kids" value="Kids">
-                        <label for="Kids"> Kids</label>
-                    </div>
-                    <div class="inputLabel">
-                        <input type="checkbox" id="ScienceFictionFantastique " value="ScienceFictionFantastique">
-                        <label for="ScienceFictionFantastique"> Science Fiction & Fantastique </label>
-                    </div>
-                </div>
-        
-                    <label for="upload-video" class="custom-upload-label">Importer la vidéo</label>
-                    <input type="file" id="upload-video" accept="video/*" style="display: none;" onchange="videoUpload()">
-    
                 <div class="button-container">
-                    <button type="submit" onclick="ajouterLaVideo()">Ajouter la video</button>
+                    <button type="submit">Ajouter la video</button>
                 </div>
-
             </form>
         </section>
     </main>
 
-    <footer>    
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+    <footer>
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
+                alt="logo"></a>
         <div id="liste-footer">
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -166,8 +140,7 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-
-    <script src="../assets/script/scriptform.js"></script>
+    <script src="../assets/script/uploadVideo.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
     <script src="../assets/script/searchbar.js"></script>
 </body>

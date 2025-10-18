@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="../assets/css/searchbar.css">
     <link rel="stylesheet" href="../assets/css/sub-navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
 
@@ -40,14 +43,15 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                
+
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle" style="text-decoration: none;">
                         <i class="fi fi-sr-user"></i>
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion
+                                profil</a></li>
                         <hr>
                         <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
@@ -59,7 +63,7 @@
     </header>
 
     <div class="tab-bar">
-        <a href="../html/index-client.html" >
+        <a href="../html/index-client.html">
             <i class="fi fi-sr-home"></i>
         </a>
         <a href="../html/series.html">
@@ -78,16 +82,18 @@
     <div class="hautPage">
         <h1>Dashbord Administrateur</h1>
     </div>
-    
+
     <main>
         <div class="containerParametre">
 
             <section id="page-accueil" class="page active">
+                <a href="../html/gestionVideos.html">
                 <div class="choixParametre" data-page="page-gestion-admin-1">
                     <i class="fa-solid fa-user"></i>
                     <p>Gestion des videos</p>
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
+                </a>
                 <div class="choixParametre" data-page="page-gestion-admin-2">
                     <i class="fa-solid fa-key"></i>
                     <p>Gestion comptes clients</p>
@@ -117,43 +123,43 @@
 
 
             <!-- Page cachée 1 GESTION DES VIDEOS -->
-            <section id="page-gestion-admin-1" class="page">
+            <section id="page-gestion-admin-1" class="page" >
                 <div class="container-cache">
-                    <h3>Gestion videos</h3>
+                    <!-- <h3>Gestion videos</h3>
                     <div class=" button-container">
                         <button type="submit" onclick="filtreFilms()">Films</button>
                         <button type="submit" onclick="filtreSeries()">Serie</button>
                         <button type="submit" onclick="filtreRecherche()">Rechercher</button>
                     </div>
-                        <table id="listegestionfilm">
-                            <thead>
-                                <tr>
-                                    <th>Titre</th>
-                                    <th>Catégorie</th>
-                                    <th>Genre</th>
-                                    <th>Date de mise en ligne</th>
-                                    <th>Date de mise hors ligne</th>
-                                    <th>Statut</th>
-                                    <th>Selectionner</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Les lignes seront ajoutées ici par JavaScript -->
-                            </tbody>
-                        </table>
+                    <table id="listegestionfilm" class="videos-table">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Catégorie</th>
+                                <th>Date d’ajout</th>
+                                <th>URL</th>
+                                <th>Sélectionner</th>
+                            </tr>
+                        </thead>
+                        <tbody id="videos-container">
+                         </tbody>
+                    </table>
                     <div class="button-container">
-          
-                        <button type="button" onclick="window.location.href='uploadVideo.html'">Ajouter une vidéo</button>
+
+                        <button type="button" onclick="window.location.href='uploadVideo.html'">Ajouter une
+                            vidéo</button>
                         <button type="submit" onclick="mettreHorsLigneVideo()">Mettre hors ligne</button>
                         <button type="submit" onclick="archiverVideo()">Archiver</button>
                         <button type="submit" onclick="suppimerVideo()">Supprimer</button>
-               </div>
-                    <div class="retourPage" data-page="page-accueil">
+                    </div> -->
+                     
+                </div>
+            </section></a>
+            <!-- <div class="retourPage" data-page="page-accueil">
                         <i class="fa-solid fa-arrow-left"></i>
                         <p>Retour</p>
-                    </div>
-                </div>
-            </section>
+                    </div> -->
 
             <!-- Page cachée 2 GESTION COMPTE CLIENTS -->
             <section id="page-gestion-admin-2" class="page">
@@ -166,7 +172,7 @@
                                 <th>Prenom</th>
                                 <th>Email</th>
                                 <th>Comptes</th>
-                                <th>Date de creation du compte</th> 
+                                <th>Date de creation du compte</th>
                                 <th>Statut</th>
                                 <th>Selectionner</th>
                             </tr>
@@ -179,7 +185,7 @@
                         <button type="submit" onclick="ModifierCompteClient()">Modifier</button>
                         <button type="submit" onclick="archiverClient()">Archiver</button>
                         <button type="submit" onclick="supprierCompteClient()">Supprimer</button>
-               </div>
+                    </div>
 
                     <div class="retourPage" data-page="page-accueil">
                         <i class="fa-solid fa-arrow-left"></i>
@@ -212,7 +218,7 @@
                         <button type="submit" onclick="repondreMessage()">Repondre</button>
                         <button type="submit" onclick="archiverMessage()">Archiver</button>
                         <button type="submit" onclick="supprimerMessage()">Supprimer</button>
-               </div>
+                    </div>
 
                     <div class="retourPage" data-page="page-accueil">
                         <i class="fa-solid fa-arrow-left"></i>
@@ -220,7 +226,7 @@
                     </div>
                 </div>
             </section>
-            
+
             <!-- Page cachée 4 STATISTIQUE -->
             <section id="page-gestion-admin-4" class="page">
                 <div class="container-cache">
@@ -244,13 +250,22 @@
             </section>
     </main>
 
-    <footer>    
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+    <footer>
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
+                alt="logo"></a>
         <div id="liste-footer">
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -259,7 +274,7 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
-
+    <script src="../assets/script/scriptGestionVideo.js"></script>
     <script src="../assets/script/scriptPara.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
     <script src="../assets/script/searchbar.js"></script>

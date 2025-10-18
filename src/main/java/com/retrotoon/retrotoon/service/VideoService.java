@@ -6,7 +6,7 @@ import com.retrotoon.retrotoon.model.Video;
 
 public interface VideoService {
     Video addNewVideo(VideoCreateDto video);
-    List<Video> getAllVideos();
+    List<VideoCreateDto> getAllVideos();
     Video getVideoById(Long id);
     Video updateVideo(Long id, VideoCreateDto updateVideo);
     boolean deleteVideoById(Long id);

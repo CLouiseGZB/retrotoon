@@ -25,15 +25,15 @@ public class VideoController {
     @Autowired
     VideoServiceImpl videoServiceImpl;
 
-    @PostMapping
+    @PostMapping("/uploadVideo")
     public ResponseEntity<Video> createVideo(@RequestBody VideoCreateDto videoCreateDto){
         Video savedVideo = videoServiceImpl.addNewVideo(videoCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedVideo);
     }
     
-    @GetMapping
-    public ResponseEntity<List<Video>> getAll(){
-        List<Video> videos = videoServiceImpl.getAllVideos();
+    @GetMapping("/all")
+    public ResponseEntity<List<VideoCreateDto>> getAll(){
+        List<VideoCreateDto> videos = videoServiceImpl.getAllVideos();
         if (videos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -59,11 +59,13 @@ public class VideoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(updateVideo);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVideo(@PathVariable Long id){
-        if (videoServiceImpl.deleteVideoById(id)) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteVideo(@RequestBody List<Long> ids){
+        try{
+        ids.forEach(id -> videoServiceImpl.deleteVideoById(id));
             return ResponseEntity.noContent().build();
-        }
+        }catch(Exception e){
         return ResponseEntity.notFound().build();
+        }
     }
 }
