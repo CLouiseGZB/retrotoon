@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="../assets/css/styleform.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png"> <!-- pour logo fenetre -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
 
@@ -21,8 +24,7 @@
             <!-- Logo à gauche -->
             <div class="logo">
                 <a href="../html/index-client.html">
-                    <img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
-                        alt="Logo">
+                    <img src="../assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
                 </a>
             </div>
         </nav>
@@ -31,7 +33,7 @@
     <main>
         <div class="containertitrepage">
             <h1>Création d’un nouveau compte</h1>
-            <h2>Vous êtes déjà inscrit ? Connectez-vous juste <a href="/html/connexion.html" id="switchToLogin"> ici
+            <h2>Vous êtes déjà inscrit ? Connectez-vous juste <a href="../html/connexion.html" id="switchToLogin"> ici
                 </a>.</h2>
         </div>
 
@@ -51,10 +53,21 @@
                 <input type="date" id="dateDeNaissance" required>
 
                 <h3>Mot de passe</h3>
-                <input type="password" id="motDePasse" autocomplete="new-password" required>
+                <div class="input-with-eye">
+                    <input type="password" name="password" required>
+                    <button type="button" class="icon-btn" aria-pressed="false" aria-label="Afficher le mot de passe">
+                        <i class="fi fi-rr-eye" aria-hidden="true"></i>
+                    </button>
+                </div>
 
                 <h3>Confirmation mot de passe</h3>
-                <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                <div class="input-with-eye">
+                    <input type="password" name="confirmPassword" required>
+                    <button type="button" class="icon-btn" aria-pressed="false" aria-label="Afficher le mot de passe">
+                        <i class="fi fi-rr-eye" aria-hidden="true"></i>
+                    </button>
+                </div>
+
 
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" name="checkbox" required>
@@ -67,13 +80,21 @@
             </form>
         </section>
     </main>
-    <footer>    
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+    <footer>
+        <img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo">
         <div id="liste-footer">
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -84,4 +105,5 @@
     </footer>
     <script src="../assets/script/scriptform.js"></script>
 </body>
+
 </html>

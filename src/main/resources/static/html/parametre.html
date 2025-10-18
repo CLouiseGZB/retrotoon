@@ -40,18 +40,22 @@
                 </form>
                 
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
-                        <i class="fi fi-sr-user"></i>
-                    </a>
+  <button type="button"
+          class="icon dropdown-arrow"
+          data-account-toggle
+          aria-controls="accountSubMenu"
+          aria-expanded="false">
+    <i class="fi fi-sr-user"></i>
+  </button>
 
-                    <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
-                        <hr>
-                        <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
-                        <hr>
-                        <li><a href='../html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
-                    </ul>
-                </div>
+  <ul class="sub-menus" id="accountSubMenu">
+    <li><a href="../html/profil.html"><i class="fa-solid fa-user-pen"></i>Gestion profil</a></li>
+    <hr>
+    <li><a href="../html/parametre.html"><i class="fi fi-rr-settings"></i>Paramètres</a></li>
+    <hr>
+    <li><a href="../html/index.html"><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+  </ul>
+</div>
             </div>
         </nav>
     </header>
@@ -74,7 +78,6 @@
     </div>
     
     <main>
-        <!----------------------SANA-------------------------------->
         <div class="hautPage">
             <h1>PARAMETRE DU COMPTE</h1>
         </div>
@@ -96,15 +99,17 @@
                     <p>Gestion des appareils</p>
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
-                <div class="choixParametre" data-page="page-gestion-compte-4">
+                <!-- <div class="choixParametre" data-page="page-gestion-compte-4">
                     <i class="fa-solid fa-ellipsis"></i>
                     <p>Contrôle parental</p>
                     <i class="fa-solid fa-chevron-right"></i>
-                </div>
-                <div class="choixParametre" data-page="page-gestion-compte-5">
-                    <i class="fi fi-rr-info"></i>
-                    <p>Aide & Contact</p>
-                </div>
+                </div> -->
+                <a class="choixParametre" href="../html/contact.html">
+                    <i class="fi fi-rr-info" aria-hidden="true"></i>
+                    <span>Aide & Contact</span>
+                </a>
+
+
                 <div class="choixParametre" data-page="page-gestion-compte-6">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <p>Déconnexion</p>
@@ -115,46 +120,77 @@
             <section id="page-gestion-compte-1" class="page">
                 <div class="container-cache" id="updateUser">
                     <h3>Modifier mes données personnelles</h3>
+
                     <label for="nom">Nom</label>
                     <input type="text" id="nom" required>
+
                     <label for="prenom">Prénom</label>
                     <input type="text" id="prenom" required>
-                    <label for="date">Date de naissance</label>
+
+                    <label for="dateDeNaissance">Date de naissance</label>
                     <input type="date" id="dateDeNaissance" required>
+
                     <label for="email">Email</label>
                     <input type="email" id="email" autocomplete="email" required>
-                    <label for="email">Nouveau email</label>
+
+                    <label for="nouveauEmail">Nouveau email</label>
                     <input type="email" id="nouveauEmail" autocomplete="email" required>
-                    <label for="confirmationEmail">Confirmation nouveau email</label>
+
+                    <label for="confirmEmail">Confirmation nouveau email</label>
                     <input type="email" id="confirmEmail">
+
                     <button id="userBtn" type="button">Sauvegarder les informations</button>
+
                     <div class="retourPage" data-page="page-accueil">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        <p>Retour</p>
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <p>Retour</p>
                     </div>
                 </div>
             </section>
+
 
 
             <!-- Page cachée pour changer le mot de passe -->
             <section id="page-gestion-compte-2" class="page">
                 <div class="container-cache">
                     <h3>Changement de mot de passe</h3>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" autocomplete="email" required>
+
+                    <label for="emailPwd">Email</label>
+                    <input type="email" id="emailPwd" name="email" autocomplete="email" required>
+
                     <label for="motDePasseActuel">Mot de passe actuel</label>
-                    <input type="password" required>
+                    <div class="input-with-eye">
+                    <input type="password" id="motDePasseActuel" autocomplete="current-password" required>
+                    <button class="icon-btn" type="button" aria-label="Afficher/masquer le mot de passe" data-target="motDePasseActuel">
+                        <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                    </button>
+                    </div>
+
                     <label for="nouveauMotDePasse">Nouveau mot de passe</label>
-                    <input type="password" required>
+                    <div class="input-with-eye">
+                    <input type="password" id="nouveauMotDePasse" autocomplete="new-password" required>
+                    <button class="icon-btn" type="button" aria-label="Afficher/masquer le nouveau mot de passe" data-target="nouveauMotDePasse">
+                        <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                    </button>
+                    </div>
+
                     <label for="confirmationNouveauMotDePasse">Confirmation nouveau mot de passe</label>
-                    <input type="password" required>
+                    <div class="input-with-eye">
+                    <input type="password" id="confirmationNouveauMotDePasse" autocomplete="new-password" required>
+                    <button class="icon-btn" type="button" aria-label="Afficher/masquer la confirmation du mot de passe" data-target="confirmationNouveauMotDePasse">
+                        <i class="fa-regular fa-eye" aria-hidden="true"></i>
+                    </button>
+                    </div>
+
                     <button type="button">Changer le mot de passe</button>
+
                     <div class="retourPage" data-page="page-accueil">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        <p>Retour</p>
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <p>Retour</p>
                     </div>
                 </div>
             </section>
+
             <!-- Page cachée pour gestion des appareils -->
             <section id="page-gestion-compte-3" class="page">
                 <div class="container-cache">
@@ -181,11 +217,11 @@
                 </div>
             </section>
             <!-- Page cachée pour controle parental -->
-            <section id="page-gestion-compte-4" class="page">
+            <!-- <section id="page-gestion-compte-4" class="page">
                 <div class="container-cache">
                     <h3>Contrôle parental</h3>
                     <P id="p">Le code de contrôle parental vous aidera à mieux protéger vos enfants</P>
-                    <input id="code" type="number" inputmode="numeric" pattern="[0-9]\d{4}" length="4" placeholder=" * * * * ">
+                    <input id="code" type="number" inputmode="numeric" pattern="[0-9]\d{4}" placeholder=" * * * * " maxlength="4">
                     <button id="saveCodeButton" type="button">Sauvegarder</button>
                     <p id="message"></p> 
                     <div class="retourPage" data-page="page-accueil">
@@ -193,7 +229,7 @@
                         <p>Retour</p>
                     </div>
                 </div>
-            </section>
+            </section> -->
         </div>
     </main>
     
@@ -213,9 +249,9 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-    <script src="/assets/script/scriptPara.js"></script>
-    <script src="../assets/script/searchbar.js"></script>
-    <script src="../assets/script/sub-navbar.js"></script>
+    <script src="../assets/script/scriptPara.js" defer></script>
+    <script src="../assets/script/searchbar.js" defer></script>
+    <script src="../assets/script/sub-navbar.js" defer></script>
 </body>
 
 </html>

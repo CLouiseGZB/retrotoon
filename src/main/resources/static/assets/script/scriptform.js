@@ -38,3 +38,19 @@ inscriptionForm.addEventListener('submit', async (e) => {
     alert("Erreur de connexion au serveur.");
   }
 });
+
+// oeil mot de passe
+document.querySelectorAll('.input-with-eye').forEach(wrap => {
+  const input = wrap.querySelector('input[type="password"], input[type="text"]'); // le champ
+  const btn   = wrap.querySelector('.icon-btn');
+  const icon  = btn?.querySelector('i');
+  if (!input || !btn) return;
+
+  btn.addEventListener('click', () => {
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    btn.setAttribute('aria-pressed', String(show));
+    btn.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+    if (icon) icon.className = show ? 'fi fi-rs-crossed-eye' : 'fi fi-rr-eye';
+  });
+});

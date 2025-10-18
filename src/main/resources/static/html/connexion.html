@@ -41,7 +41,13 @@
                 <input type="email" id="email" name="email" autocomplete="email" required>
 
                 <h3>Mot de passe</h3>
-                <input type="password" id="loginPassword" name="password" placeholder="Mot de passe" required>
+                <div class="input-with-eye">
+                    <input type="password" id="loginPassword" name="password" required>
+                    <button type="button" id="togglePwd" class="icon-btn"
+                            aria-pressed="false" aria-label="Afficher le mot de passe">
+                        <i class="fi fi-rr-eye" aria-hidden="true"></i>
+                    </button>
+                    </div>
 
                 <div class="boutton-container">
                     <button id="loginBtn" class="boutton" type="submit">Connexion</button>

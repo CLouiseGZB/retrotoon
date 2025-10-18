@@ -221,55 +221,37 @@ video {
   h3 {
     font-size: 1.25rem;
   }
+
+  #player{
+    height: 70vh;
+    height: 70svh;
+    min-height: 60vh;   /* garde un minimum confortable */
+  }
+  .overlay-content{
+    padding: 32px;
+  }
+  .overlay-content img{ width: 20rem; }
+  .overlay-content p{ font-size: 1.05rem; max-width: 520px; }
+  .overlay-content button{ padding: 8px 16px; }
 }
 
 @media (max-width: 768px) {
   
 
   /* ----- Player demi-écran en mobile ----- */
-  #player {
-    height: 70vh !important;
-    height: 70dvh !important;
-    min-height: 70vh !important;
-    min-height: 70dvh !important;
+  .overlay-content p{
+    display: none;
   }
-  /* La vidéo & l’overlay suivent la hauteur du player */
-  #player .hero-video,
-  #player > video,
-  #player .overlay-content {
-    height: 100% !important;
+  /* petit ajustement du layout */
+  .overlay-content{
+    /* align-items: center;
+    text-align: center; */
+    padding: 20px;
   }
-
-
-  /* Player / hero (mobile) */
-  .entete img {
-    width: 90vw;
-  }
-  /* cacher la description en mobile */
-  #player .overlay-content p {
-    display: none !important;
-  }
-  .overlay-content {
-    padding: 16px;
-    z-index: 10;
-  }
-  .overlay-content img {
-    width: 50vw;
-    margin-bottom: 20px;
-  }
-  #overlay-button button {
-    padding: 5px 15px;
-    margin: 5px;
-    font-size: .8rem;
-  }
-  .overlay-content button {
-    padding: 0;
-  }
-  .mute-button {
-    position: absolute;
-    font-size: .8rem;
-    height: 1rem;
-    width: 1.3rem;
+  #overlay-button{
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   /* Titres (marges avec --gutter) */
@@ -300,6 +282,16 @@ video {
   h2 {
     font-size: 1rem;
   }
+
+  #player{
+    height: 45vh;
+    height: 45svh;
+    min-height: 40vh;
+  }
+  .overlay-content{ padding: 14px; }
+  .overlay-content img{ width: 12rem; }
+  .overlay-content p{ font-size: 0.95rem; margin-bottom: 12px; }
+  .overlay-content button{ padding: 7px 12px; }
 }
 
 /* ================== Petites utilitaires optionnelles ================== */
