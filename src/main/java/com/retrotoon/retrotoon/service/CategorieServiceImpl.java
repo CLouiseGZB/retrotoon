@@ -31,26 +31,25 @@ public class CategorieServiceImpl implements CategorieService{
         return categorieRepository.findAll();
     }
 
-    // @Override
-    // public Categorie getCategorieByName(String nom){
-    //     Categorie categorie = categorieRepository.findByNom(nom);
-    //     if (categorie != null) {
-    //         return categorieRepository.findByNom(nom);
-    //     }
-    //     return null;
-    // }
+    @Override
+    public Categorie getCategorieByName(String nom){
+        Categorie categorie = categorieRepository.findByNom(nom);
+        if (categorie != null) {
+            return categorieRepository.findByNom(nom);
+        }
+        return null;
+    }
     
-    // @Override
-    // public Categorie updateCategorie(String nom, Categorie categories){
-    //     Optional<Categorie> categorie = categorieRepository.findByNom(nom);
-    //     if (categorie == null) {
-    //     return null;
-    //     }
-    //         categorie.setNom(categories.getNom());
-    //         categorie.setVideo(categories.getVideo());
-    //         return categorieRepository.save(categorie);
-
-    // }
+    @Override
+    public Categorie updateCategorie(String nom, Categorie categories){
+        Categorie categorie = categorieRepository.findByNom(nom);
+        if (categorie != null) {
+            categorie.setNom(categories.getNom());
+            categorie.setVideo(categories.getVideo());
+            return categorieRepository.save(categorie);
+        }
+        return null;
+    }
 
     @Override
     public boolean deleteCategorieById(Long id){

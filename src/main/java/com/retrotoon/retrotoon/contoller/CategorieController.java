@@ -1,13 +1,13 @@
 package com.retrotoon.retrotoon.contoller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.retrotoon.retrotoon.model.Categorie;
+import com.retrotoon.retrotoon.repository.CategorieRepository;
 import com.retrotoon.retrotoon.service.CategorieServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +22,9 @@ public class CategorieController {
 
     @Autowired
     CategorieServiceImpl categorieServiceImpl;
+
+    @Autowired
+    CategorieRepository categorieRepository;
 
     @PostMapping
     public ResponseEntity<Categorie> createCatgorie(@RequestBody Categorie categorie){
@@ -47,15 +50,15 @@ public class CategorieController {
     //     return ResponseEntity.ok(categorie);
     // }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Categorie> updateCategorie(@PathVariable String nom, @RequestBody Categorie updatedCategorie){
-    //     Categorie categorie = categorieServiceImpl.getCategorieByName(nom);
-    //     Categorie updateCategorie = categorieServiceImpl.updateCategorie(nom, updatedCategorie);
-    //     if (categorie == null) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    //     return ResponseEntity.status(HttpStatus.CREATED).body(updateCategorie);
-    // }
+    @PutMapping("/{id}")
+    public ResponseEntity<Categorie> updateCategorie(@PathVariable String nom, @RequestBody Categorie updatedCategorie){
+        Categorie categorie = categorieRepository.findByNom(nom);
+        Categorie updateCategorie = categorieServiceImpl.updateCategorie(nom, updatedCategorie);
+        if (categorie == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(updateCategorie);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategorie(@PathVariable Long id){
