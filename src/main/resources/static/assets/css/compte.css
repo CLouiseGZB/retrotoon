@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; } /* filet anti scroll horizontal */
+body {
+  background-color: #001D3D;
+  font-family: "Fredoka", sans-serif;
+  color: #FFFAE0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Bangers", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: #FFFAE0;
+}
+
+    main{ min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+
+    /* ==== En-tête de page ==== */
+.hautPage h1 {
+    text-align: center;
+    color: #FFFAE0;
+    font-family: 'Bangers', cursive;   /* ou Fredoka si tu préfères */
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 42px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 0 rgba(0,0,0,.25);
+    align-self: center;
+}
+
+.hautPage{
+    display:flex;
+    justify-content:center;
+    width:100%;
+    height:200px;
+    padding-top:40px;
+    background: linear-gradient(to top, #001429, transparent);
+    /* margin-top:100px; */
+    font-family:'Bangers', cursive;
+    font-weight:normal;
+    font-size:26px;
+    letter-spacing:3px;
+    color:#FFFAE0;
+  /* border: solid 1px #FFFAE0; */
+}
+    a{color:inherit;text-decoration:none}
+
+    /* ====== En-tête du compte ====== */
+
+    @media (max-width:768px){ .hautPage h1{ font-size:30px; letter-spacing:2px } }
+    @media (max-width:480px){ .hautPage h1{ font-size:24px; letter-spacing:1px } }
+
+    .wrap{max-width:920px;margin:0 auto;padding:16px}
+
+    /* ====== Carte compte ====== */
+    .accountCard{
+      display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:center;
+      background:#001D3D; border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:16px;
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+    }
+    .accAvatar{
+        width:72px; 
+        height:72px;
+        border-radius:100%;
+        object-fit:cover;
+        border:2px solid rgba(255,255,255,.18);
+        background:#001429
+    }
+    
+    .accMeta h2{
+        margin:0 0 6px;
+        font-size:20px
+    }
+    
+    .accMeta p{
+        margin:0;
+        opacity:.85;
+        font-size:14px
+    }
+
+    /* ====== Grille d’actions ====== */
+    .actionsGrid{
+      margin-top:18px;
+      display:grid; gap:12px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width:640px){ .actionsGrid{ grid-template-columns:1fr } }
+
+    /* style commun pour TOUTES les cartes (a + button) */
+.actionCard{
+  display:flex; align-items:center; gap:12px;
+  padding:16px; border-radius:14px;
+  background:#001D3D;
+  border:1px solid rgba(255,255,255,.14);
+  color:#FFFAE0;                 /* << force la couleur */
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.actionCard i{ color:inherit; font-size:20px; }
+
+/* ancre : rien de spécial */
+a.actionCard{ text-decoration:none; }
+
+/* bouton : neutraliser le style par défaut */
+button.actionCard{
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  /* si un reset t’oblige, décommente la ligne suivante */
+  /* color:#FFFAE0 !important; */
+}
+
+/* hover (identique pour a + button) */
+.actionCard:hover{
+  background:#001429;
+  border-color:#EB7A57;
+  color:#EB7A57;
+}
+
+
+    /* ====== Zone Danger ====== */
+    .dangerZone{
+      margin-top:18px;
+      background:#1a0f12; border:1px solid rgba(235,122,87,.5); border-radius:14px; padding:16px;
+    }
+    .dangerTitle{ margin:0 0 10px; color:#EB7A57; font-size:16px; font-weight:700 }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.18);
+      background:#001429; color:#FFFAE0; cursor:pointer;
+    }
+    .btn:hover{ background:#001D3D; color:#EB7A57; border-color:#EB7A57 }
+    .btn i{ font-size:16px }
+    .btnDanger{
+      border-color:#EB7A57; color:#EB7A57; background:transparent;
+    }
+    .btnDanger:hover{
+      background:#2b1111; color:#ff9b80; border-color:#ff9b80;
+    }
+
+    /* Petits textes */
+    .muted{ opacity:.9; font-size:14px }

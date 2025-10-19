@@ -11,7 +11,10 @@
   line-height: 1;
   cursor: pointer;
 }
-.account > .icon.dropdown-arrow i { font-size: 1.2rem; }
+.account > .icon.dropdown-arrow i { 
+  font-size: 1.2rem; 
+}
+
 .account > .icon.dropdown-arrow:focus-visible {
   outline: 2px solid #EB7A57;
   outline-offset: 2px;
@@ -55,8 +58,7 @@
 }
 
 /* affichage ouvert */
-.sub-menus[aria-hidden="false"],
-.sub-menus.active {
+.sub-menus[aria-hidden="false"], .sub-menus.active {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
@@ -79,12 +81,21 @@
   color: #FFFAE0;
   font-weight: 800;
 }
-.sm-hello { margin: 0; font-weight: 600; }
-.sm-myaccount {
-  display: inline-block; margin-top: 2px;
-  color: #FFFAE0; text-decoration: none; font-size: .95rem; opacity: .9;
+.sm-hello { 
+  margin: 0; font-weight: 600; 
 }
-.sm-myaccount:hover { color: #EB7A57; }
+
+.sm-myaccount {
+  display: inline-block; 
+  margin-top: 2px;
+  color: #FFFAE0; 
+  text-decoration: none; 
+  font-size: .95rem; 
+  opacity: .9;
+}
+.sm-myaccount:hover { 
+  color: #EB7A57; 
+}
 
 /* section title */
 .sm-section {
@@ -113,17 +124,25 @@
   cursor: pointer;
 }
 
-.sm-item i,
-.sm-logout i { font-size: 18px; }
-.sm-chevron { opacity: .6; font-size: 12px; }
+.sm-item i, .sm-logout i { 
+  font-size: 18px; 
+}
+
+.sm-chevron { 
+  opacity: .6; 
+  font-size: 12px; 
+}
 
 /* hover */
-.sm-item:hover,
-.sm-logout:hover {
+.sm-item:hover, .sm-logout:hover {
   background: #001D3D;
   color: #EB7A57;
 }
 
 /* séparateur */
-.sm-sep { height: 1px; background: rgba(255,255,255,.14); margin: 6px 12px; }
+.sm-sep { 
+  height: 1px; 
+  background: rgba(255,255,255,.14); 
+  margin: 6px 12px; 
+}
 

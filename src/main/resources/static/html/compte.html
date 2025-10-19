@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroToon</title>
-    <link rel="stylesheet" href="../assets/css/style-client.css">
+    <title>RetroToon - Mon compte</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
+    <link rel="stylesheet" href="../assets/css/compte.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/searchbar.css">
     <link rel="stylesheet" href="../assets/css/sub-navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="stylesheet" href="../assets/css/carrousel.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <!-- pour logo fenetre -->
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
-
 <body>
     <header>
         <nav id="menu">
@@ -94,67 +86,70 @@
         </nav>
     </header>
 
-    <main>
-        <section id="player">
-            <video autoplay muted loop playsinline>
-                <source src="../assets/images/Shrek 4-Extrait.mp4" type="video/mp4">
-            </video>
-            
-            <div class="overlay-content">
-                <img src="../assets/images/Shrek4.png" alt="logo_titre_shrek4">
-                <p>Après avoir vaincu un méchant dragon, sauvé une belle princesse et le royaume de ses parents, que peut encore faire un ogre malodorant et mal léché ? Domestiqué, assagi, Shrek a perdu jusqu'à l'envie de rugir et regrette le bon vieux temps où il semait la terreur dans le royaume. Aujourd'hui, tel une idole déchue, il se contente de signer des autographes à tour de bras. Trop triste.</p>
-                <div id="overlay-button">
-                    <button><i class="fa-solid fa-play"></i> Lecture</button>
-                    <button><i class="fi fi-rr-info"></i> Plus d'info</button>
-                </div>
 
-                <button class="mute-button" onclick="toggleMute()">
-                    <i class="fa-solid fa-volume-high"></i>
-                </button>
-            </div>
+    <div class="hautPage">
+        <h1>MON COMPTE</h1>
+    </div>
+
+    <main class="wrap">
+        <!-- Carte résumé compte -->
+        <section class="accountCard">
+        <img class="accAvatar" src="../assets/imgParametre/Adulte.png" alt="Avatar du profil actif">
+        <div class="accMeta">
+            <h2>Profil actif : Utilisateur</h2>
+            <p class="muted">utilisateur.anonyme@example.fr • Membre depuis 2024</p>
+        </div>
         </section>
 
-        <section class="section">
-            <h2>
-                Reprendre
-            </h2>
-            <h2>Historique de lecture</h2>
-            <div class="carousel" data-carousel data-source="history" data-layout="landscape" style="--per-page:5">
-            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
-            <div class="viewport"><div class="track" data-track></div></div>
-            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+        <!-- Actions disponibles (seulement ce qui existe déjà) -->
+        <section class="actionsGrid" aria-label="Actions du compte">
+        <a class="actionCard" href="../html/profil.html">
+            <i class="fa-solid fa-user-pen"></i>
+            <div>
+            <p class="sm-hello">Gérer les profils</p class="sm-hello">
+            <div class="muted">Ajouter, renommer, enfant/adulte</div>
             </div>
-            
-        </section>
-        
+        </a>
 
-        <section id="film" class="section">
-            <h2>
-                Films
-            </h2>
-            <div class="carousel" data-carousel data-type="movie" data-layout="portrait" style="--per-page:5">
-            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
-            <div class="viewport"><div class="track" data-track></div></div>
-            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+        <a class="actionCard" href="../html/parametre.html#securite" >
+            <i class="fa-solid fa-key"></i>
+            <div>
+            <p class="sm-hello">Changer le mot de passe</p class="sm-hello">
+            <div class="muted">Sécuriser votre accès</div>
             </div>
-              
-        </section>
+        </a>
 
-        <section class="section">
-            <h2>
-                Séries
-            </h2>
-            <div class="carousel" data-carousel data-type="tv" data-layout="portrait" style="--per-page:5">
-            <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
-            <div class="viewport"><div class="track" data-track></div></div>
-            <button class="nav next" aria-label="Suivant" data-next>❯</button>
+        <a class="actionCard" href="../html/contact.html">
+            <i class="fi fi-rr-info"></i>
+            <div>
+            <p class="sm-hello">Aide & Contact</p class="sm-hello">
+            <div class="muted">Nous contacter</div>
             </div>
+        </a>
 
+        <button class="actionCard" type="button" id="logoutBtnAccount">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <div>
+            <p class="sm-hello">Déconnexion</p class="sm-hello">
+            <div class="muted">Quitter votre session</div>
+            </div>
+        </button>
         </section>
 
+        <!-- Zone danger -->
+        <section class="dangerZone" aria-label="Zone sensible">
+        <h3 class="dangerTitle"><i class="fa-solid fa-triangle-exclamation"></i> Zone sensible</h3>
+        <div class="row">
+            <button class="btn btnDanger" type="button" id="deleteAccountBtn">
+            <i class="fa-solid fa-user-slash"></i> Supprimer mon compte
+            </button>
+            <span class="muted">Action irréversible. Vos données seront supprimées.</span>
+        </div>
+        </section>
     </main>
 
-    <footer>
+
+    <footer>    
         <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
             <a href="../html/contact.html"><p>Nous contacter</p></a>
@@ -200,7 +195,8 @@
   </div>
 </div>
 
-    <script src="../assets/script/carrousel.js" defer></script>
+
+    <script src="../assets/script/scriptPara.js"></script>
     <script src="../assets/script/searchbar.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
 </body>
