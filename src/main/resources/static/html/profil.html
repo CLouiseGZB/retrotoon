@@ -87,23 +87,6 @@
             </div>
         </nav>
     </header>
-
-    <div class="tab-bar">
-        <a href="../html/index-client.html" >
-            <i class="fi fi-sr-home"></i>
-        </a>
-        <a href="../html/series.html">
-            <i class="fi fi-rr-tv-retro"></i>
-        </a>
-
-        <a href="../html/films.html">
-            <i class="fi fi-rr-clapperboard-play"></i>
-        </a>
-
-        <a href="../html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
-            <i class="fi fi-sr-user"></i>
-        </a>
-    </div>
     
     <main>
         <div class="hautPage">
@@ -146,6 +129,36 @@
         </nav>
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
+
+    <!-- Tab bar -->
+<div class="tab-bar">
+  <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
+  <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
+  <a href="../html/films.html"><i class="fi fi-rr-clapperboard-play"></i></a>
+  <button type="button" id="tabAccountBtn">
+    <i class="fi fi-sr-user"></i>
+  </button>
+</div>
+
+<!-- Drawer (menu latéral) -->
+<div class="drawer-backdrop" id="accountDrawer">
+  <div class="drawer-card">
+    <button class="drawer-close" aria-label="Fermer">&times;</button>
+    <h3>Mon compte</h3>
+    <a class="drawer-item" href="../html/compte.html">
+      <i class="fa-solid fa-user"></i><span>Mon profil</span>
+    </a>
+    <a class="drawer-item" href="../html/parametre.html">
+      <i class="fi fi-rr-settings"></i><span>Paramètres</span>
+    </a>
+    <a class="drawer-item" href="../html/profil.html">
+      <i class="fa-solid fa-user-pen"></i><span>Gestion des profils</span>
+    </a>
+    <button class="drawer-item" id="logoutBtn">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
+    </button>
+  </div>
+</div>
 
     <script src="/assets/script/scriptPara.js"></script>
     <script src="../assets/script/searchbar.js"></script>

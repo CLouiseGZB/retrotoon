@@ -59,3 +59,37 @@
     }
   });
 })();
+
+
+(function(){
+  const btn = document.getElementById('tabAccountBtn');
+  const drawer = document.getElementById('accountDrawer');
+  const closeBtn = drawer?.querySelector('.drawer-close');
+
+  if (!btn || !drawer) return;
+
+  const open = () => drawer.classList.add('show');
+  const close = () => drawer.classList.remove('show');
+
+  btn.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+
+  // fermer si on clique à l’extérieur
+  drawer.addEventListener('click', (e) => {
+    if (!e.target.closest('.drawer-card')) close();
+  });
+
+  // fermer avec ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+
+  // logout
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+    fetch('/logout', { method:'POST' }).finally(() => {
+      window.location.href = '../html/index.html';
+    });
+  });
+})();

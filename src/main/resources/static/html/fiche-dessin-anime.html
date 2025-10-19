@@ -36,7 +36,7 @@
             <!-- Icônes à droite -->
             <div class="nav-icons">
                 <form class="search-container" action="../html/resultas-barre-de-recherche.html">
-                    <input id="search-box" type="text" class="search-box" name="q" />
+                    <input id="search-box" type="text" class="search-box" name="q"/>
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
                 
@@ -52,7 +52,7 @@
                             <div class="sm-avatar" aria-hidden="true">UA</div>
                             <div class="sm-id">
                                 <p class="sm-hello">Bonjour <span id="smUserName">Utilisateur</span></p>
-                                <a class="sm-myaccount" href="../html/compte.htm">Mon compte</a>
+                                <a class="sm-myaccount" href="../html/compte.html">Mon compte</a>
                             </div>
                             </div>
                         </li>
@@ -88,23 +88,6 @@
             </div>
         </nav>
     </header>
-
-    <div class="tab-bar">
-        <a href="../html/index-client.html" >
-            <i class="fi fi-sr-home"></i>
-        </a>
-        <a href="../html/series.html">
-            <i class="fi fi-rr-tv-retro"></i>
-        </a>
-
-        <a href="../html/films.html">
-            <i class="fi fi-rr-clapperboard-play"></i>
-        </a>
-
-        <a href="../html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
-            <i class="fi fi-sr-user"></i>
-        </a>
-    </div>
 
     <main>
         <section id="principal-video">
@@ -236,11 +219,41 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-    <script src="/assets/script/fiche-dessin-anime.js"></script>
-    <script src="/assets/script/scripts-fiche-dessin-anime/favorite-and-like-buttons.js"></script>
-    <script src="/assets/script/scripts-fiche-dessin-anime/comment-section.js"></script>
+    <!-- Tab bar -->
+<div class="tab-bar">
+  <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
+  <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
+  <a href="../html/films.html"><i class="fi fi-rr-clapperboard-play"></i></a>
+  <button type="button" id="tabAccountBtn">
+    <i class="fi fi-sr-user"></i>
+  </button>
+</div>
+
+<!-- Drawer (menu latéral) -->
+<div class="drawer-backdrop" id="accountDrawer">
+  <div class="drawer-card">
+    <button class="drawer-close" aria-label="Fermer">&times;</button>
+    <h3>Mon compte</h3>
+    <a class="drawer-item" href="../html/compte.html">
+      <i class="fa-solid fa-user"></i><span>Mon profil</span>
+    </a>
+    <a class="drawer-item" href="../html/parametre.html">
+      <i class="fi fi-rr-settings"></i><span>Paramètres</span>
+    </a>
+    <a class="drawer-item" href="../html/profil.html">
+      <i class="fa-solid fa-user-pen"></i><span>Gestion des profils</span>
+    </a>
+    <button class="drawer-item" id="logoutBtn">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
+    </button>
+  </div>
+</div>
+
+    <script src="../assets/script/fiche-dessin-anime.js"></script>
+    <script src="../assets/script/scripts-fiche-dessin-anime/favorite-and-like-buttons.js"></script>
+    <script src="../assets/script/scripts-fiche-dessin-anime/comment-section.js"></script>
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-    <script src="/assets/script/scripts-fiche-dessin-anime/video-player-with-plyr.js"></script>
+    <script src="../assets/script/scripts-fiche-dessin-anime/video-player-with-plyr.js"></script>
     <script src="../assets/script/searchbar.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
 </body>

@@ -61,6 +61,88 @@
   display: none;
 }
 
+/* Backdrop (fond sombre) */
+/* ===== Drawer (menu latéral) – thème identique à la sub-navbar ===== */
+
+/* Backdrop */
+.drawer-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: none;
+  z-index: 4000; /* > tab-bar (1000) */
+}
+.drawer-backdrop.show{ display: block; }
+
+/* Carte latérale (panneau) */
+.drawer-card{
+  position: fixed;
+  top: 0; right: 0;
+  width: 300px; max-width: 86%;
+  height: 100%;
+  background: #001429;                 /* même fond */
+  color: #FFFAE0;                       /* même texte */
+  border-left: 1px solid rgba(255,255,255,.14); /* même bordure */
+  border-radius: 14px 0 0 14px;         /* arrondis cohérents */
+  box-shadow: 0 14px 40px rgba(0,0,0,.35);      /* même ombre */
+  padding: 12px;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .18s ease;
+}
+.drawer-backdrop.show .drawer-card{ transform: translateX(0); }
+
+/* Titre + bouton fermer */
+.drawer-close{
+  appearance: none; background: transparent; border: 0;
+  color: inherit; font-size: 1.8rem; line-height: 1;
+  padding: 6px; align-self: flex-end; cursor: pointer;
+  border-radius: 6px;
+}
+.drawer-close:focus-visible{
+  outline: 2px solid #EB7A57; outline-offset: 2px;
+}
+
+.drawer-card h3{
+  margin: 4px 8px 8px; font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: rgba(255,250,224,.9);
+}
+
+/* Items (liens + boutons) */
+.drawer-item{
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 10px;
+  color: #FFFAE0; background: transparent;
+  border: 0; text-decoration: none; font: inherit; cursor: pointer;
+  border-radius: 10px;
+}
+.drawer-item i{ font-size: 18px; color: inherit; }
+.drawer-item:hover{
+  background: #001D3D;                 /* hover fond sub-navbar */
+  color: #EB7A57;                      /* hover texte sub-navbar */
+}
+.drawer-item:focus-visible{
+  outline: 2px solid #EB7A57; outline-offset: 2px;
+}
+
+/* Séparateur optionnel (même style que .sm-sep) */
+.drawer-sep{
+  height: 1px;
+  background: rgba(255,255,255,.14);
+  margin: 6px 8px;
+}
+
+/* Bouton “Déconnexion” (si tu veux le démarquer un peu) */
+.drawer-item.logout{
+  border-top: 1px solid rgba(255,255,255,.14);
+  margin-top: 6px;
+  padding-top: 14px;
+}
+
+
+
 
 @media (max-width: 768px) {
   .logo img {
@@ -83,9 +165,20 @@
     padding: 10px 0;
     z-index: 1000;
   }
-  .tab-bar a {
+  .tab-bar a, .tab-bar button {
     color: #001D3D;
     font-size: 1.5rem;
     text-decoration: none;
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+  }
+
+    main, body {
+    padding-bottom: 70px; /* hauteur approximative de la tab-bar */
   }
 }
