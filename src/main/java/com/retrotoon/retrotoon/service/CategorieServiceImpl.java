@@ -1,6 +1,7 @@
 package com.retrotoon.retrotoon.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.retrotoon.retrotoon.model.Categorie;
@@ -31,23 +32,21 @@ public class CategorieServiceImpl implements CategorieService{
     }
 
     @Override
-    public Categorie getCategorieById(Long id){
-        if (categorieRepository.existsById(id)) {
-            return categorieRepository.findById(id).orElse(null);
+    public Categorie getCategorieByName(String nom){
+        Categorie categorie = categorieRepository.findByNom(nom);
+        if (categorie != null) {
+            return categorieRepository.findByNom(nom);
         }
         return null;
     }
     
     @Override
-    public Categorie updateCategorie(Long id, Categorie categorie){
-        if (categorieRepository.existsById(id)) {
-        return categorieRepository.findById(id)
-        .map(categories -> {
-            categories.setNom(categorie.getNom());
-            categories.setVideo(categorie.getVideo());
+    public Categorie updateCategorie(String nom, Categorie categories){
+        Categorie categorie = categorieRepository.findByNom(nom);
+        if (categorie != null) {
+            categorie.setNom(categories.getNom());
+            categorie.setVideo(categories.getVideo());
             return categorieRepository.save(categorie);
-        })
-        .orElse(null);
         }
         return null;
     }
