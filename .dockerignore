@@ -1,0 +1,16 @@
+# Dossiers à ignorer
+target/
+.git/
+.idea/
+.vscode/
+
+# Fichiers spécifiques
+.gitignore
+Dockerfile
+docker-compose.yml
+
+# Fichiers système
+*.log
+*.iml
+.DS_Store
+Thumbs.db
