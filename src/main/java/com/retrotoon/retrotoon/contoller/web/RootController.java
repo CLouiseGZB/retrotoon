@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RootController {
-    // Sert index.html depuis /static pour la racine
-    @GetMapping({"/"})
-    public String index() {
-        return "forward:/index.html";
+    @GetMapping("/")        
+    public String home() { 
+        return "forward:/index.html"; 
+    }
+
+    @GetMapping("/app")     
+    public String app()  { 
+        return "forward:/html/index-client.html"; 
     }
 }
 
