@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroToon</title>
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/style-client.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/navbar.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/searchbar.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/sub-navbar.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/footer.css">
-    <link rel="stylesheet" href="/src/main/resources/static/assets/css/carrousel.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png">
+    <link rel="stylesheet" href="../assets/css/style-client.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/searchbar.css">
+    <link rel="stylesheet" href="../assets/css/sub-navbar.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/carrousel.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
     <!-- pour logo fenetre -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
@@ -26,67 +26,82 @@
         <nav id="menu">
             <!-- Logo à gauche -->
             <div class="logo">
-                <a href="/src/main/resources/static/html/index-client.html">
-                    <img src="/src/main/resources/static/assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
+                <a href="../html/index-client.html">
+                    <img src="../assets/images/Design_sans_titre-removebg-preview 4.png" alt="Logo">
                 </a>
             </div>
 
             <!-- Liens de navigation au centre -->
             <ul class="nav-links">
-                <li><a href="/src/main/resources/static/html/index-client.html">Accueil</a></li>
-                <li><a href="/src/main/resources/static/html/series.html">Séries</a></li>
-                <li><a href="/src/main/resources/static/html/films.html">Films</a></li>
+                <li><a href="../html/index-client.html">Accueil</a></li>
+                <li><a href="../html/series.html">Séries</a></li>
+                <li><a href="../html/films.html">Films</a></li>
             </ul>
 
             <!-- Icônes à droite -->
             <div class="nav-icons">
-                <form class="search-container" action="/src/main/resources/static/html/resultas-barre-de-recherche.html">
+                <form class="search-container" action="../html/resultas-barre-de-recherche.html">
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
                 
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                    <button type="button" class="icon dropdown-arrow" data-account-toggle aria-controls="accountSubMenu" aria-expanded="false">
                         <i class="fi fi-sr-user"></i>
-                    </a>
+                    </button>
 
-                    <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='/src/main/resources/static/html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
-                        <hr>
-                        <li><a href='/src/main/resources/static/html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
-                        <hr>
-                        <li><a href='/src/main/resources/static/html/index.html'><i class="fi fi-rr-exit"></i>Déconnexion</a></li>
+                    <ul class="sub-menus" id="accountSubMenu" role="menu" aria-hidden="true">
+                        <!-- Header carte -->
+                        <li class="sm-header" aria-hidden="true">
+                            <div class="sm-user">
+                            <div class="sm-avatar" aria-hidden="true">UA</div>
+                            <div class="sm-id">
+                                <p class="sm-hello">Bonjour <span id="smUserName">Utilisateur</span></p>
+                                <a class="sm-myaccount" href="../html/compte.htm">Mon compte</a>
+                            </div>
+                            </div>
+                        </li>
+
+                        <!-- Section compte -->
+                        <li class="sm-section" aria-hidden="true">Compte</li>
+                        <li><a class="sm-item" href="../html/profil.html" role="menuitem" tabindex="-1">
+                            <i class="fa-solid fa-user-pen" aria-hidden="true"></i><span>Gestion profil</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+                        <li><a class="sm-item" href="../html/parametre.html" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-settings" aria-hidden="true"></i><span>Paramètres</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+
+                        <!-- Section aide -->
+                        <li class="sm-section" aria-hidden="true">Support</li>
+                        <li><a class="sm-item" href="../html/contact.html" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-info" aria-hidden="true"></i><span>Aide & Contact</span>
+                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                        </a></li>
+
+                        <!-- Déconnexion -->
+                        <li class="sm-sep" aria-hidden="true"></li>
+                        <li>
+                            <button class="sm-logout" type="button" id="logoutBtn" role="menuitem" tabindex="-1">
+                            <i class="fi fi-rr-exit" aria-hidden="true"></i><span>Déconnexion</span>
+                            </button>
+                        </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="tab-bar">
-        <a href="/src/main/resources/static/html/index-client.html" >
-            <i class="fi fi-sr-home"></i>
-        </a>
-        <a href="/src/main/resources/static/html/series.html">
-            <i class="fi fi-rr-tv-retro"></i>
-        </a>
-
-        <a href="/src/main/resources/static/html/films.html">
-            <i class="fi fi-rr-clapperboard-play"></i>
-        </a>
-
-        <a href="/src/main/resources/static/html/parametre.html" class="icon dropdown-arrow" id="accountToggle">
-            <i class="fi fi-sr-user"></i>
-        </a>
-    </div>
-
     <main>
         <section id="player">
-            <video autoplay muted loop playsinline>
-                <source src="/src/main/resources/static/assets/images/Shrek 4, il était une fin - Extrait ＂Le contrat＂ [VF｜HD] (online-video-cutter.com).mp4" type="video/mp4">
+            <video autoplay loop playsinline>
+                <source src="../assets/images/Shrek 4-Extrait.mp4" type="video/mp4">
             </video>
             
             <div class="overlay-content">
-                <img src="/src/main/resources/static/assets/images/Shrek4.png" alt="logo_titre_shrek4">
+                <img src="../assets/images/Shrek4.png" alt="logo_titre_shrek4">
                 <p>Après avoir vaincu un méchant dragon, sauvé une belle princesse et le royaume de ses parents, que peut encore faire un ogre malodorant et mal léché ? Domestiqué, assagi, Shrek a perdu jusqu'à l'envie de rugir et regrette le bon vieux temps où il semait la terreur dans le royaume. Aujourd'hui, tel une idole déchue, il se contente de signer des autographes à tour de bras. Trop triste.</p>
                 <div id="overlay-button">
                     <button><i class="fa-solid fa-play"></i> Lecture</button>
@@ -140,10 +155,10 @@
     </main>
 
     <footer>
-        <a href="/src/main/resources/static/html/index-client.html"><img src="/src/main/resources/static/assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
         <div id="liste-footer">
-            <a href="/src/main/resources/static/html/contact.html"><p>Nous contacter</p></a>
-            <a href="/src/main/resources/static/html/index.html#dispo"><p>Applications</p></a>
+            <a href="../html/contact.html"><p>Nous contacter</p></a>
+            <a href="../html/index.html#dispo"><p>Applications</p></a>
             <a href="#"><p>Conditions générales d'utilisation</p></a>
             <a href="#"><p>Politique de confidentialité</p></a>
         </div>
@@ -155,12 +170,41 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-      <div id="debug" class="debug" hidden></div>
+<!-- Tab bar -->
+<div class="tab-bar">
+  <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
+  <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
+  <a href="../html/films.html"><i class="fi fi-rr-clapperboard-play"></i></a>
+  <button type="button" id="tabAccountBtn">
+    <i class="fi fi-sr-user"></i>
+  </button>
+</div>
 
+<!-- Drawer (menu latéral) -->
+<div class="drawer-backdrop" id="accountDrawer">
+  <div class="drawer-card">
+    <button class="drawer-close" aria-label="Fermer">&times;</button>
+    <h3>Mon compte</h3>
+    <a class="drawer-item" href="../html/compte.html">
+      <i class="fa-solid fa-user"></i><span>Mon profil</span>
+    </a>
+    <a class="drawer-item" href="../html/parametre.html">
+      <i class="fi fi-rr-settings"></i><span>Paramètres</span>
+    </a>
+    <a class="drawer-item" href="../html/profil.html">
+      <i class="fa-solid fa-user-pen"></i><span>Gestion des profils</span>
+    </a>
+    <button class="drawer-item" id="logoutBtn">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
+    </button>
+  </div>
+</div>
 
-    <script src="/src/main/resources/static/assets/script/carrousel.js" defer></script>
-    <script src="/src/main/resources/static/assets/script/searchbar.js"></script>
-    <script src="/src/main/resources/static/assets/script/sub-navbar.js"></script>
+    <script src="../assets/script/index-client.js"></script>
+    <script src="../assets/script/carrousel.js" defer></script>
+    <script src="../assets/script/searchbar.js"></script>
+    <script src="../assets/script/sub-navbar.js"></script>
+
 </body>
 
 </html>

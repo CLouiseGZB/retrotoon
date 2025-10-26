@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroToon - Films</title>
+    <title>RetroToon - Mon compte</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
-    <link rel="stylesheet" href="../assets/css/series-films.css">
+    <link rel="stylesheet" href="../assets/css/compte.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/searchbar.css">
     <link rel="stylesheet" href="../assets/css/sub-navbar.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
 </head>
-
 <body>
     <header>
         <nav id="menu">
@@ -88,52 +86,68 @@
         </nav>
     </header>
 
-    <main>
-        <div class="entete">
-            <h1>
-                <img class="entete-img" src="../assets/images/films.png" alt="">
-            </h1>
+
+    <div class="hautPage">
+        <h1>MON COMPTE</h1>
+    </div>
+
+    <main class="wrap">
+        <!-- Carte résumé compte -->
+        <section class="accountCard">
+        <img class="accAvatar" src="../assets/imgParametre/Adulte.png" alt="Avatar du profil actif">
+        <div class="accMeta">
+            <h2>Profil actif : Utilisateur</h2>
+            <p class="muted">utilisateur.anonyme@example.fr • Membre depuis 2024</p>
         </div>
+        </section>
 
-        <div class="filter-buttons">
-                <button id="filters-reset" class="btn-reset" type="button" aria-label="Réinitialiser tous les filtres">
-                    Effacer les filtres
-                </button>
-            <select name="genre" id="filter-genre" class="select-button">
-                <option value="" selected>Genre<i class="fa-solid fa-chevron-down"></i></option>
-                <option value="35">Comédie</option>
-                <option value="28,12">Action & Aventure</option>
-                <option value="878,14">Science-Fiction & Fantastique</option>
-                <option value="18">Drame</option>
-            </select>
+        <!-- Actions disponibles (seulement ce qui existe déjà) -->
+        <section class="actionsGrid" aria-label="Actions du compte">
+        <a class="actionCard" href="../html/profil.html">
+            <i class="fa-solid fa-user-pen"></i>
+            <div>
+            <p class="sm-hello">Gérer les profils</p class="sm-hello">
+            <div class="muted">Ajouter, renommer, enfant/adulte</div>
+            </div>
+        </a>
 
-            <select name="annees" id="filter-annees" class="select-button">
-                <option value="" selected>Années<i class="fa-solid fa-chevron-down"></i></option>
-                <option value="1970-01-01,1979-12-31">70's</option>
-                <option value="1980-01-01,1989-12-31">80's</option>
-                <option value="1990-01-01,1999-12-31">90's</option>
-                <option value="2000-01-01,2009-12-31">00's</option>
-            </select>
+        <a class="actionCard" href="../html/parametre.html#securite" >
+            <i class="fa-solid fa-key"></i>
+            <div>
+            <p class="sm-hello">Changer le mot de passe</p class="sm-hello">
+            <div class="muted">Sécuriser votre accès</div>
+            </div>
+        </a>
 
-            <select name="ordre" id="filter-order" class="select-button" aria-label="Ordre de tri">
-                <option value="pop" selected>Popularité</option>
-                <option value="az">A → Z</option>
-                <option value="za">Z → A</option>
-            </select>
+        <a class="actionCard" href="../html/contact.html">
+            <i class="fi fi-rr-info"></i>
+            <div>
+            <p class="sm-hello">Aide & Contact</p class="sm-hello">
+            <div class="muted">Nous contacter</div>
+            </div>
+        </a>
 
-            <div id="active-filters" class="filters-chips" aria-live="polite"></div>
+        <button class="actionCard" type="button" id="logoutBtnAccount">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <div>
+            <p class="sm-hello">Déconnexion</p class="sm-hello">
+            <div class="muted">Quitter votre session</div>
+            </div>
+        </button>
+        </section>
 
+        <!-- Zone danger -->
+        <section class="dangerZone" aria-label="Zone sensible">
+        <h3 class="dangerTitle"><i class="fa-solid fa-triangle-exclamation"></i> Zone sensible</h3>
+        <div class="row">
+            <button class="btn btnDanger" type="button" id="deleteAccountBtn">
+            <i class="fa-solid fa-user-slash"></i> Supprimer mon compte
+            </button>
+            <span class="muted">Action irréversible. Vos données seront supprimées.</span>
         </div>
-
-        <div id="films"></div>
-
-        <div id="pagination">
-            <button id="prev-page-films"><i class="fa-solid fa-arrow-left"></i></button>
-            <span id="current-page-films">Page 1</span>
-            <button id="next-page-films"><i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-
+        </section>
     </main>
+
 
     <footer>    
         <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
@@ -151,7 +165,7 @@
         <P>Tous droits réservés © Retrotoon Group 2024</P>
     </footer>
 
-    <!-- Tab bar -->
+<!-- Tab bar -->
 <div class="tab-bar">
   <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
   <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
@@ -181,9 +195,10 @@
   </div>
 </div>
 
-    <script src="../assets/script/films.js"></script>
-    <script src="../assets/script/sub-navbar.js"></script>
+
+    <script src="../assets/script/scriptPara.js"></script>
     <script src="../assets/script/searchbar.js"></script>
+    <script src="../assets/script/sub-navbar.js"></script>
 </body>
 
 </html>

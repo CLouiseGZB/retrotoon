@@ -7,8 +7,8 @@ public interface CategorieService {
 
     Categorie addNewCategorie(Categorie categorie);
     List<Categorie> getAllCategories();
-    Categorie getCategorieById(Long id);
-    Categorie updateCategorie(Long id, Categorie categorie);
+    Categorie getCategorieByName(String nom);
+    Categorie updateCategorie(String nom, Categorie categorie);
     boolean deleteCategorieById(Long id);
     
 }

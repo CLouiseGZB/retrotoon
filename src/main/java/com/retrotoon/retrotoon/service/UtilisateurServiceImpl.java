@@ -1,52 +1,69 @@
 package com.retrotoon.retrotoon.service;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.retrotoon.retrotoon.dtos.RegisterResponseDto;
 import com.retrotoon.retrotoon.dtos.UserRequestDto;
-import com.retrotoon.retrotoon.model.Role;
 import com.retrotoon.retrotoon.model.Utilisateur;
-import com.retrotoon.retrotoon.repository.RoleRepository;
 import com.retrotoon.retrotoon.repository.UtilisateurRepository;
 
-
 @Service
-public class UtilisateurServiceImpl implements UtilisateurService{
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
+public class UtilisateurServiceImpl implements UtilisateurService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+        @Autowired
+        private UtilisateurRepository utilisateurRepository;
 
-    @Override
-    public ResponseEntity<RegisterResponseDto> addNewUser(UserRequestDto userRequestDto) {
-        if (utilisateurRepository.findByEmail(userRequestDto.getEmail())!=null) {
-             return ResponseEntity.badRequest()
-                .body(RegisterResponseDto.builder()
-                        .message("Erreur : l'utilisateur existe déjà")
-                        .build());
-    }
+        @Autowired
+        private PasswordEncoder passwordEncoder;
 
-    Role role = roleRepository.findByNomIgnoreCase("UTILISATEUR");
+        @Override
+        public Utilisateur addNewUser(UserRequestDto userRequestDto) {
+                if (utilisateurRepository.findByEmail(userRequestDto.getEmail()) == null) {
+                        Utilisateur newUser = new Utilisateur();
+                        newUser.setNom(userRequestDto.getNom());
+                        newUser.setPrenom(userRequestDto.getPrenom());
+                        newUser.setEmail(userRequestDto.getEmail());
+                        newUser.setDateDeNaissance(userRequestDto.getDateDeNaissance());
+                        String encodedPassword = passwordEncoder.encode(userRequestDto.getMotDePasse());
+                        newUser.setMotDePasse(encodedPassword);
+                        return utilisateurRepository.save(newUser);
+                }
+            return null;
+        }
 
-    Utilisateur newUser = new Utilisateur();
-    newUser.setEmail(userRequestDto.getEmail());
-    newUser.setMotDePasse(userRequestDto.getMotDePasse()); 
-    newUser.setNom(userRequestDto.getNom());
-    newUser.setPrenom(userRequestDto.getPrenom());
-    newUser.setRole(role);
-    newUser.setDateInscription(new Date());
-    utilisateurRepository.save(newUser);
+        @Override
+        public Utilisateur checkUser(String email, UserRequestDto userRequestDto) {
+                Utilisateur user = utilisateurRepository.findByEmail(email);
+                boolean motDePasseValid = passwordEncoder.matches(userRequestDto.getMotDePasse(), user.getMotDePasse());
+                if (motDePasseValid) {
+                        return user;
+                }
+                return null;
+        }
 
-   
-    RegisterResponseDto response = RegisterResponseDto.builder()
-            .message("Inscription réussie !")
-            .build();
+        @Override
+        public Utilisateur updateUser(String oldEmail, UserRequestDto userRequestDto) {
+                Utilisateur utilisateur = utilisateurRepository.findByEmail(oldEmail);
+                if (utilisateur == null) {
+                        return null;
+                }
+                String nouveauEmail = userRequestDto.getEmail();
+                if (nouveauEmail != null && !nouveauEmail.isBlank()
+                                && !nouveauEmail.equalsIgnoreCase(utilisateur.getEmail())) {
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+                        Utilisateur other = utilisateurRepository.findByEmail(nouveauEmail);
+                        if (other != null) {
+                                throw new IllegalArgumentException("Email déjà utilisé");
+                        }
+                        utilisateur.setEmail(nouveauEmail);
+                }
+
+                if (userRequestDto.getNom() != null)
+                        utilisateur.setNom(userRequestDto.getNom());
+                if (userRequestDto.getPrenom() != null)
+                        utilisateur.setPrenom(userRequestDto.getPrenom());
+                if (userRequestDto.getDateDeNaissance() != null)
+                        utilisateur.setDateDeNaissance(userRequestDto.getDateDeNaissance());
+                return utilisateurRepository.save(utilisateur);
         }
 }

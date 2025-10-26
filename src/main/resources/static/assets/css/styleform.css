@@ -4,254 +4,95 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background-color: #001D3D;
-    min-height: 100vh; /* S'assure que le container prend toute la hauteur de la page */
-    margin: 0; /* Enlève les marges par défaut du body */
+    min-height: 100vh;
+    /* S'assure que le container prend toute la hauteur de la page */
+    font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
 }
+
+input {
+    font-size: 18px;
+}
+
 /************************general*************************/
 
-/* *************************navbar******************/
-#menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-block: 10px;
-    padding-inline: 20px 0px;
-    background: linear-gradient( #001429, transparent);
-    height: 80px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Styles pour le logo à gauche */
-.logo img {
-    width: 4em;
-}
-
-/* Centrage des liens de navigation */
-.nav-links {
-    display: flex;
-    justify-content:flex-start;
-  flex-grow: 1;
-}
-.nav-links i{
-    padding-right: 3px;
-}
-
-.nav-links li {
-    list-style: none;
-}
-
-.nav-links a {
-    display: block;
-    line-height: 45px;
-    padding: 0 14px;
-    text-decoration: none;
-    color: #FFFAE0;
-    font-size: 16px;
-    font-family: Fredoka;
-    padding-left: 50px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #EB7A57;
-}
-
-/* Alignement des icônes à droite */
-.nav-icons {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.nav-icons .icon {
-    margin-left: 15px;
-    position: relative;
-
-}
-
-.nav-icons .icon i {
-    font-size: 1.5em;
-    color: #FFFAE0;
-    text-decoration: none; 
-    transition: color 0.3s;
-}
-
-.icon i:hover,
-.search-icon i:hover{
-    color: #EB7A57;
-    text-decoration: none;
-}
-
-.tab-bar {
-    display: none;
-}
-
-/*****************barre de recherche*****************/
-.search-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-box {
-    transition: width 0.6s ease, border-radius 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    border: none;
-    cursor: text;
-    background: transparent;
-    color: transparent;
-    padding-left: 40px;
-    text-indent: -5000px;
-}
-
-.search-box:focus {
-    border: none;
-    outline: none;
-    box-shadow: 0 0 0 2px #FFFAE0;
-}
-
-.search-box.active {
-    width: 300px;
-    border-radius: 20px;
-    background: #001D3D;
-    color: #FFFAE0;
-    text-indent: 0;
-    padding-left: 40px;
-}
-
-.search-icon {
-    position: absolute;
-    left: 10px;
-    top: 54%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-.search-icon i {
-    color: #FFFAE0;
-    font-size: 1.5rem;
-}
-
-/* Styles pour le menu déroulant */
-.account {
-    position: relative;
-}
-
-.sub-menus {
-    position: absolute;
-    top: 144%; /* Positionner le sous-menu directement sous le parent */
-    right: 0;  /* Aligner le sous-menu avec le bord droit de l'icône */
-    width: 200px; /* Largeur du sous-menu */
-    background: #001429;
-    z-index: 99;
-    display: none; /* Masqué par défaut */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.594);
-}
-.sub-menus hr{
-    border: solid 1px #FFFAE0;
-    margin-inline: 10%;
-}
-.sub-menus.active {
-    display: block; /* Affiche le sous-menu */
-    opacity: 1; /* Assure une transition en douceur */
-    visibility: visible;
-}
-
-.sub-menus li {
-    list-style: none;
-}
-
-.sub-menus a {
-    color: #FFFAE0;
-    font-size: 16px;
-    font-family: Fredoka;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    padding: 20px 15px;
-}
-
-.sub-menus a:hover {
-    color: #EB7A57;
-}
-
-.sub-menus i {
-    padding-right: 10px; /* Espacement entre l'image et le texte */
-    font-size: 1.5rem;
-}
-/* *************************navbar******************/
-
-/* ****************barre de recherche*********/
-/* ***************barre de recherche ******************/
-
-/* *************************menu deroulant ******************/
-/* *************************menu deroulant ******************/
 /**************titres********************/
 .containertitrepage {
     display: flex;
-    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
-    justify-content: center; /* Centre le contenu verticalement */
-    align-items: center; /* Centre horizontalement */
-    margin-bottom: 20px;
-    background: linear-gradient(to top, #001429, transparent);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: 150px;
+    background: linear-gradient(to top, #001429, transparent);
     margin-top: 100px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    font-family: 'Bangers', cursive;
+    font-weight: normal;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: #FFFAE0;
 }
+
+h1 {
+    margin: 0;
+    text-align: center;
+    color: #FFFAE0;
+    font-family: 'Bangers', cursive;
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 42px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .25);
+    align-self: center;
+}
+
+h2 {
+    font-family: 'Bangers', cursive;
+    color: #FFFAE0;
+    font-size: 15px;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
 .containertitrepage h2 a {
     color: #EB7A57;
     padding-left: 5px;
     text-decoration: none;
 }
-h1 {
-    font-family: 'Bangers', cursive;
-    color: #FFFAFA;
-    font-size:40px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-}
 
- h2{
-    font-family: 'Bangers', cursive;
-    color: #FFFAFA;
-    font-size: 15px;
- margin-top: 10px;
- letter-spacing: 2px;
-}
-
- h3 {
-    font-weight: 300; /* Définit une police plus fine */
+h3 {
+    font-weight: 300;
+    /* Définit une police plus fine */
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 16px;
     margin-bottom: 10px;
     text-align: left;
     width: 600px;
-   
+}
+
+#switchToLogin:hover {
+    color: #f3a289;
 }
 
 /************************titres*************************/
+
 /****************************container formulaire*****************/
-.container-formulaire{
-     display: flex;
-    flex-direction: column; /* Pour que H1 et H2 s'affichent l'un sous l'autre */
-    justify-content: center; /* Centre le contenu verticalement */
+.container-formulaire {
+    display: flex;
+    flex-direction: column;
+    /* Pour que H1 et H2 s'affichent l'un sous l'autre */
+    justify-content: center;
+    /* Centre le contenu verticalement */
     align-items: center;
 }
 
 /****************************container formulaire*****************/
+
 /************************input*************************/
 .container-formulaire input,
 .container-formulaire textarea {
@@ -265,165 +106,309 @@ h1 {
     margin-bottom: 20px;
     height: 40px;
     /*border: solid 1px red;*/
-
 }
+
 .container-formulaire textarea {
+    background-color: #001429;
+    border: none;
+    color: #FFFAFA;
+    font-weight: bold;
+    font-family: 'Fredoka', sans-serif;
+    padding: 10px;
     height: 250px;
-    resize: none; /*retire le carrée en bas pour reglage de la zone de texte*/
+    width: 600px;
+    margin-bottom: 20px;
+    resize: none;
+    /*retire le carrée en bas pour reglage de la zone de texte*/
 }
 
-.container-formulaire input.inputserie{
+.container-formulaire input.inputserie {
     width: 30px;
 }
 
-
 /************************input*************************/
+
 /************************astérisques*********************/
-.container-asterisques{
+.container-asterisques {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
+
 .container-asterisques p {
     font-family: 'Fredoka', sans-serif;
     color: #FFFAFA;
-    font-size: x-small;
+    font-size: smaller;
     white-space: nowrap;
     padding-right: 15px;
     padding-top: 4px;
     margin-bottom: 15px;
 }
+
 /************************astérisques*********************/
+
 /************************checkbox*************************/
-.checkbox-container{
-    display: flex; /* Utilise Flexbox pour l'affichage */
-    align-items: center; /* Centre les éléments verticalement */
-    
+.checkbox-container {
+    display: flex;
+    /* Utilise Flexbox pour l'affichage */
+    align-items: center;
+    /* Centre les éléments verticalement */
 }
 
 .checkbox-container p {
     font-family: 'Fredoka', sans-serif;
     color: #FFFAFA;
-    font-size: x-small;
+    font-size: 15px;
     white-space: nowrap;
     padding-left: 5px;
-  
 }
+
 .checkbox-container input[type="checkbox"] {
-    appearance: none; /* supprime l'apparence par défaut */
+    appearance: none;
+    /* supprime l'apparence par défaut */
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    border: 1.5px solid #FFFAFA; 
-    border-radius: 3px; 
-    background-color: transparent; 
-    cursor: pointer;  
+    border: 1.5px solid #FFFAFA;
+    border-radius: 3px;
+    background-color: transparent;
+    cursor: pointer;
     margin-top: 20px;
 }
 
 .checkbox-container input[type="checkbox"]:checked {
-    background-color: #FFFAFA; /* Fond lorsqu'elle est cochée */
+    background-color: #FFFAFA;
+    /* Fond lorsqu'elle est cochée */
+}
+
+.checkbox-container input[type="checkbox"]:hover {
+    border-color: #EB7A57;
+    /* Couleur de la bordure au survol */
 }
 
 /************************checkbox*************************/
-/*********************** import video ***********************/
-#upload-video{
 
-}
-/*********************** import video ***********************/
 /************************boutton*************************/
-button {
-    background-color: #001D3D;
-    font-family: 'Fredoka', sans-serif;
+#loginBtn,
+#inscriptionBtn,
+#contactBtn,
+#resetBtn {
+    height: 2.5rem;
+    width: fit-content;
+    padding: 0 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    font-family: Fredoka;
     color: #FFFAE0;
-    border: none;
+    font-size: 18px;
     border: 1.5px solid #FFFAE0;
-    padding: 10px 10px 10px 10px;
-    border-radius: 1%;
-    transition: border-color, color 0.3s;
-    margin-bottom: 30px;
+    border-radius: 3px;
+    align-self: center;
 }
 
-button:hover{
+#loginBtn:hover,
+#inscriptionBtn:hover,
+#contactBtn:hover,
+#resetBtn:hover {
     border-color: #EB7A57;
     color: #EB7A57;
 }
 
-.buttonGestionVideo{
-    display: flex; 
+.buttonGestionVideo {
+    display: flex;
     justify-content: center;
     gap: 60px;
 }
 
 /************************boutton*************************/
-.fa-solid{
+
+.fa-solid {
     color: #FFFAE0;
 }
+
 /************************boutton*************************/
-/*********************** footer *******************/
-footer {
-    height: 300px;
-    background-color: #001D3D;
+
+/* icone calendrier */
+/* Chrome / Edge / Safari */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #FFFAFA;
+    /* couleur */
+    filter: invert(1);
+    /* force l’icône en clair */
+    font-size: 18px;
+    /* ajuste la taille de l’icône */
+    margin-right: 8px;
+    /* espace entre icône et bord droit */
+    cursor: pointer;
+}
+
+/* Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+    filter: invert(1);
+    font-size: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* Mot de passe : bouton œil placé DANS l'input          */
+/* Wrapper d’ancrage */
+#loginForm .input-with-eye,
+#inscriptionForm .input-with-eye {
+    position: relative;
+}
+
+/* Réserve la place à droite, que ce soit password OU text après toggle */
+#loginForm .input-with-eye>input[type="password"],
+#loginForm .input-with-eye>input[type="text"],
+#inscriptionForm .input-with-eye>input[type="password"],
+#inscriptionForm .input-with-eye>input[type="text"] {
+    padding-right: 44px;
+
+}
+
+#loginForm .input-with-eye>input[type="password"],
+#inscriptionForm .input-with-eye>input[type="password"] {
+    font-size: 25px;
+    /* ⬅️ grossit les points */
+    letter-spacing: .2ch;
+}
+
+/* Bouton dans l’input — top:35% + translateY(-50%) */
+#loginForm .input-with-eye .icon-btn,
+#inscriptionForm .input-with-eye .icon-btn {
+    position: absolute;
+    right: 8px;
+    top: 35%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 28px;
+    /* zone cliquable ; ajuste si besoin */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 100%;
-}
-
-footer img {
-    width: 100px;
-    height: 100px;
-    margin-top: 20px;
-}
-
-#liste-footer {
-    display: flex;
-    flex-direction: row;
     justify-content: center;
-    margin-block: 20px;
+    border: 0;
+    background: transparent;
     padding: 0;
-}
-
-#liste-footer p {
-    margin: 0;
-    padding: 10px;
-    color: #FFFAE0;
-    font-family: Fredoka;
-    font-size: 16px;
     cursor: pointer;
-    transition: color 0.3s;
+    color: #FFFAFA;
 }
 
-#liste-footer p:hover {
-    color: #EB7A57;
+/* Icône UIcons (petit nudge si nécessaire) */
+#loginForm .input-with-eye .icon-btn i,
+#inscriptionForm .input-with-eye .icon-btn i {
+    font-size: 18px;
+    line-height: 1;
+    display: block;
+    transform: translateY(1px);
+    /* 0px / -1px si tu la veux plus haute */
 }
 
-footer i {
-    font-size: 30px;
-    color: #FFFAE0;
-    padding: 10px;
-    cursor: pointer;
-    transition: color 0.3s;
+/* Focus visible */
+#loginForm .input-with-eye .icon-btn:focus-visible,
+#inscriptionForm .input-with-eye .icon-btn:focus-visible {
+    outline: 2px solid #EB7A57;
+    outline-offset: -2px;
+    border-radius: 3px;
 }
 
-footer i:hover {
-    color: #EB7A57;
-}
 
-footer p {
-    color: #FFFAE0;
-    margin-top: 20px;
-    font-family: Fredoka;
-}
-footer a{
-    text-decoration: none;
-}
-/*********************** footer *******************/
 /*********************** media queries*******************/
-/*responsive inscription/contact/connexions*/
-@media screen and (max-width:767PX) {   
-.container-formulaire input,
-.container-formulaire textarea{
-    width: 350px;
+/* responsive inscription/contact/connexions */
+@media (max-width:768px) {
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    footer {
+        padding: 1rem;
+        text-align: center;
+        height: fit-content;
+    }
+
+    #liste-footer {
+        flex-direction: column;
+    }
+
+    /* On garde l’espace pour l’icône aussi en mobile */
+    #loginForm .input-with-eye>input[type="password"],
+    #inscriptionForm .input-with-eye>input[type="password"] {
+        padding-right: 44px;
+    }
 }
+
+/* à partir de 700px ou 650px il faut commencer à réduire le formulaire d'inscription */
+@media (max-width:700px) {
+
+    .container-formulaire input {
+        height: 35px;
+        width: 500px;
+    }
+
+    h3 {
+        height: 35px;
+        width: 500px;
+    }
+
+    .container-formulaire textarea {
+        width: 500px;
+    }
+}
+
+@media (max-width:631px) {
+
+    .container-formulaire input,
+    .connexion input {
+        height: 30px;
+        width: 400px;
+    }
+
+    h1 {
+        font-size: 2.1rem;
+    }
+
+    h2 {
+        font-size: 1.20rem;
+    }
+
+    h3 {
+        height: 30px;
+        width: 400px;
+    }
+
+    .container-formulaire textarea {
+        width: 400px;
+    }
+}
+
+@media (max-width:480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+}
+
+@media (max-width:426px) {
+    .container-formulaire input {
+        width: 300px;
+    }
+
+    h3 {
+        height: 25px;
+        width: 300px;
+    }
+
+    .container-formulaire textarea {
+        width: 300px;
+    }
 }

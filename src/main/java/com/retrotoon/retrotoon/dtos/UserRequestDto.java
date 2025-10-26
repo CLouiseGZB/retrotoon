@@ -1,4 +1,5 @@
 package com.retrotoon.retrotoon.dtos;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

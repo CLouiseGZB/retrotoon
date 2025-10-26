@@ -1,6 +1,9 @@
 package com.retrotoon.retrotoon.model;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +25,7 @@ public class Video {
     private LocalDateTime dateAjout;
     private long nbrLikes;
     @ManyToOne
+    @JsonBackReference 
     private Categorie categorieVideo;
 
     //@ManyToMany

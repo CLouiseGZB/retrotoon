@@ -81,6 +81,12 @@ h2 {
     /* border: 1px solid green; */
 }
 
+/* Icône (le triangle “Play”) */
+.plyr__control--overlaid svg {
+    width: 40px;
+    height: 40px;
+}
+
 /************ DESCRIPTION ************/
 #description p {
     font-family: "Fredoka", sans-serif;

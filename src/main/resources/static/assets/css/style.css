@@ -44,49 +44,13 @@ header::before{
   content: "";
   position: absolute;
   inset: 0;            /* top/right/bottom/left: 0 */
-  background: url("/src/main/resources/static/assets/images/Backgroung-header.jpg") center / cover no-repeat;
+  background: url("../images/Backgroung-header.jpg") center / cover no-repeat;
   z-index: -1;         /* derrière le contenu du header */
 }
-
-/* Mobile : header = 70% de la hauteur de l’écran */
-@media (max-width: 768px){
-  header{
-    height: 70vh;
-    height: 70dvh;
-    min-height: 70vh;
-    min-height: 70dvh;
-  }
-}
-
 
 hr {
     border: solid 1px #FFFAE0;
     margin-inline: 10%;
-}
-
-.tab-bar {
-    display: none;
-}
-
-/* Styles pour la barre de navigation */
-#menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-block: 10px;
-    padding-inline: 20px 0px;
-    background: linear-gradient( #001429, transparent);
-    height: 80px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Styles pour le logo à gauche */
-.logo img {
-    width: 4em;
 }
 
 /* ********************bouton et titre header********* */
@@ -114,6 +78,10 @@ header{
     font-size: 42px;
 }
 
+h1 {
+  margin: 1rem !important;         /* écrase toute marge résiduelle */
+}
+
 .entete-index button {
     height: 2.5rem;
     width: 7rem;
@@ -125,7 +93,6 @@ header{
     font-size: 18px;
     border: 1.5px solid #FFFAE0;
     border-radius: 3px;
-    transition: border-color, color 0.3s;
 }
 
 .entete-index button:hover {
@@ -156,105 +123,7 @@ header{
 }
 
 .entete-index span a:hover{
-    color: #E28B70;
-}
-/* ************carrousel 10*********** */
-
-
-
-/*****************carrousel***********/
-h2 {
-    font-size: 3rem;
-    margin: 50px;
-}
-
-.carousel {
-    position: relative;
-    width: 100;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 24rem;
-    overflow: hidden;
-    padding: 0 5rem;
-    display: flex;
-    align-items: center;
-    /* border: solid 1px orange; */
-}
-
-.carousel-container {
-    display: flex;
-    transition: transform 0.1s ease-in-out;
-    will-change: transform;
-    justify-content: space-around;
-    gap: 100px;
-}
-
-.carousel-slide {
-    position: relative;
-    width: 200px;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.1s ease-in-out;
-}
-
-.number-image {
-    position: absolute;
-    width: 200px; 
-    height: 300px;
-    z-index: 1;
-    opacity: 0.8; 
-    right:  110px; 
-    
-}
-
-.main-image {
-    width: 200px; 
-    height: 300px;
-    z-index: 2; 
-    border: 2px solid #001429; 
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.5s, box-shadow 0.5s;
-}
-.main-image:hover{
-    transform: scale(1.2);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    border: #EB7A57 solid 1px;
-    cursor: pointer;
-}
-
-.carousel-control {
-    color: #FFFAE0;
-    font-size: 7.5rem;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    border: none;
-    width: 5%;
-    background-color: #001d3d13;
-}
-
-.prev {
-    left: -10px;
-}
-.next {
-    right: -10px;
-}
-
-.carousel-control:hover {
-    color: #EB7A57;
-}
-
-.top10 hr {
-    border: #FFFAE0 solid 1px;
-    margin-top: 100px;
-    margin-bottom: 20px;
+    color: #f3a289;
 }
 
 /* *****************plateformes******************* */
@@ -275,5 +144,78 @@ h2 {
     letter-spacing: 2px;
 }
 
+/* Mobile : header = 70% de la hauteur de l’écran */
+/* @media (max-width: 768px){
+  header{
+    height: 70vh;
+    height: 70dvh;
+    min-height: 70vh;
+    min-height: 70dvh;
+  }
+} */
 
+/* ── Laptops / tablettes paysage ───────────────────────── */
+@media (max-width: 1024px){
+  header{
+    /* on n’impose plus 100vh */
+    height: auto;
+    min-height: 60vh;     /* moins imposant */
+    min-height: 60svh;    /* mieux sur mobiles récents */
+    padding: 24px 16px;   /* un peu d’air */
+  }
 
+  .entete-index h1{ 
+    font-size:52px; line-height:1; 
+}
+}
+
+/* ── Tablette / mobile large ───────────────────────────── */
+@media (max-width: 768px){
+  header{
+    height: auto;
+    min-height: 50vh;
+    min-height: 50svh;
+    padding: 20px 16px;
+  }
+
+  .entete-index h1{ 
+    font-size:40px; 
+}
+
+.entete-index p{ 
+    font-size: 16px; 
+    text-align: center;
+}
+  .entete-index button{ height: 44px; min-width: 140px; font-size: 16px; }
+
+  .entete-index{ gap:12px; width: 94vw; }
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+@media (max-width: 480px){
+  header{
+    height: auto;         /* laisse la hauteur suivre le contenu */
+    min-height: 40vh;     /* header compact */
+    min-height: 40svh;
+    padding: 16px 12px;
+  }
+
+   .entete-index h1{ 
+    font-size:32px; 
+}
+
+.entete-index p{ 
+    font-size: 15px; padding: 0 8px; 
+}
+
+  .entete-index button{ 
+    height: 42px; 
+    min-width: 128px; 
+    font-size: 15px; 
+}
+
+  .entete-index{ 
+    gap:10px; 
+    width: 96vw; 
+}
+}
