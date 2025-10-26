@@ -14,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.retrotoon.retrotoon.dtos.VideoCreateDto;
+import com.retrotoon.retrotoon.model.Categorie;
 import com.retrotoon.retrotoon.model.Video;
+import com.retrotoon.retrotoon.repository.CategorieRepository;
 import com.retrotoon.retrotoon.repository.VideoRepository;
 import com.retrotoon.retrotoon.service.VideoServiceImpl;
 
@@ -22,6 +24,9 @@ public class VideoServiceImplTest {
 
     @Mock
     private VideoRepository videoRepository;
+
+    @Mock
+    private CategorieRepository categorieRepository;
 
     @InjectMocks
     private VideoServiceImpl videoService;
@@ -37,20 +42,21 @@ public class VideoServiceImplTest {
         dto.setTitre("Video1");
         dto.setDescription("video comedy");
         dto.setUrl("http://test.com/video.mp4");
+        dto.setCategorie("Film");
 
-        Video videoToSave = new Video();
-        videoToSave.setTitre(dto.getTitre());
-        videoToSave.setDescription(dto.getDescription());
-        videoToSave.setUrl(dto.getUrl());
-        videoToSave.setDateAjout(LocalDateTime.now());
+        Categorie cat = new Categorie();
+        cat.setId(0);
+        cat.setNom("FILM");
 
-         when(videoRepository.save(any(Video.class))).thenAnswer(invocation -> {
+        when(categorieRepository.findByNom("FILM")).thenReturn(cat);
+
+        when(videoRepository.save(any(Video.class))).thenAnswer(invocation -> {
             Video v = invocation.getArgument(0);
-            v.setId(1L); // Simuler que JPA génère un ID
+            v.setId(1L); 
             return v;
         });
 
-         Video savedVideo = videoService.addNewVideo(dto);
+        Video savedVideo = videoService.addNewVideo(dto);
 
         // Assert (vérifier le résultat)
         assertThat(savedVideo).isNotNull();
@@ -59,8 +65,10 @@ public class VideoServiceImplTest {
         assertThat(savedVideo.getDescription()).isEqualTo("video comedy");
         assertThat(savedVideo.getUrl()).isEqualTo("http://test.com/video.mp4");
         assertThat(savedVideo.getDateAjout()).isNotNull();
+        assertThat(savedVideo.getCategorieVideo().getNom()).isEqualTo("FILM");
 
         // Vérifier que save() a bien été appelé 1 fois
+        verify(categorieRepository).findByNom("FILM");
         verify(videoRepository, times(1)).save(any(Video.class));
     }
 
