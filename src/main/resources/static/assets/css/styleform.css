@@ -23,30 +23,31 @@ input {
 .containertitrepage {
     display: flex;
     flex-direction: column;
-    /* Pour que H1 et H2 s'affichent l'un sous l'autre */
     justify-content: center;
-    /* Centre le contenu verticalement */
     align-items: center;
-    /* Centre horizontalement */
-    margin-bottom: 20px;
-    background: linear-gradient(to top, #001429, transparent);
+    width: 100%;
     height: 150px;
+    background: linear-gradient(to top, #001429, transparent);
     margin-top: 100px;
-    margin-bottom: 50px;
-}
-
-.containertitrepage h2 a {
-    color: #EB7A57;
-    padding-left: 5px;
-    text-decoration: none;
+    margin-bottom: 20px;
+    font-family: 'Bangers', cursive;
+    font-weight: normal;
+    font-size: 26px;
+    letter-spacing: 3px;
+    color: #FFFAE0;
 }
 
 h1 {
-    font-family: 'Bangers', cursive;
+    margin: 0;
+    text-align: center;
     color: #FFFAE0;
-    font-size: 40px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    font-family: 'Bangers', cursive;
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 42px;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .25);
+    align-self: center;
 }
 
 h2 {
@@ -55,6 +56,12 @@ h2 {
     font-size: 15px;
     margin-top: 10px;
     letter-spacing: 2px;
+}
+
+.containertitrepage h2 a {
+    color: #EB7A57;
+    padding-left: 5px;
+    text-decoration: none;
 }
 
 h3 {
@@ -131,7 +138,7 @@ h3 {
 .container-asterisques p {
     font-family: 'Fredoka', sans-serif;
     color: #FFFAFA;
-    font-size: x-small;
+    font-size: smaller;
     white-space: nowrap;
     padding-right: 15px;
     padding-top: 4px;
@@ -184,7 +191,8 @@ h3 {
 /************************boutton*************************/
 #loginBtn,
 #inscriptionBtn,
-#contactBtn {
+#contactBtn,
+#resetBtn {
     height: 2.5rem;
     width: fit-content;
     padding: 0 1rem;
@@ -201,7 +209,8 @@ h3 {
 
 #loginBtn:hover,
 #inscriptionBtn:hover,
-#contactBtn:hover {
+#contactBtn:hover,
+#resetBtn:hover {
     border-color: #EB7A57;
     color: #EB7A57;
 }
