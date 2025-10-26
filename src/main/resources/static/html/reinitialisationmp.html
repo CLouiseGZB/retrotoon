@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroToon</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styleform.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/searchbar.css">
@@ -38,14 +42,15 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                
+
                 <div class="account">
-                    <a href="#" class="icon dropdown-arrow" id="accountToggle"  style="text-decoration: none;">
+                    <a href="#" class="icon dropdown-arrow" id="accountToggle" style="text-decoration: none;">
                         <i class="fi fi-sr-user"></i>
                     </a>
 
                     <ul class="sub-menus" id="accountSubMenu">
-                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion profil</a></li>
+                        <li><a href='../html/profil.html'><i class="fa-solid fa-user-pen text-dark-emphasis"></i>Gestion
+                                profil</a></li>
                         <hr>
                         <li><a href='../html/parametre.html'><i class="fi fi-rr-settings"></i>Paramètres</a></li>
                         <hr>
@@ -57,7 +62,7 @@
     </header>
 
     <div class="tab-bar">
-        <a href="../html/index-client.html" >
+        <a href="../html/index-client.html">
             <i class="fi fi-sr-home"></i>
         </a>
         <a href="../html/series.html">
@@ -74,36 +79,47 @@
     </div>
 
     <main>
-            <div class="containertitrepage">
-                <h1>Réinitialisation du mot de passe</h1>
-            </div>
+        <div class="containertitrepage">
+            <h1>Réinitialisation du mot de passe</h1>
+        </div>
 
-            <section class="reinitialisationmp">
+        <section class="reinitialisationmp">
 
-                <form class="container-formulaire" action="#" method="post">
-      
+            <form class="container-formulaire" action="#" method="post">
+
                 <h3>Email</h3>
                 <input type="email" id="email" name="email" autocomplete="email" required>
-          
-         
-            <div class="container-asterisques">
-                <p> * Si, vous avez un compte vous allez recevoir un mail de réinitialisation de mot de passe dans quelques instants. </p>
-            </div>
-           
-            <div class="boutton-container">
-                <button type="submit" onclick="reinitialisermp()">Réinitialiser  votre mot de passe </button>
-            </div>
-          
+
+
+                <div class="container-asterisques">
+                    <p> * Si, vous avez un compte vous allez recevoir un mail de réinitialisation de mot de passe dans
+                        quelques instants. </p>
+                </div>
+
+                <div class="boutton-container">
+                    <button type="submit" onclick="reinitialisermp()" id="resetBtn">Réinitialiser votre mot de passe
+                    </button>
+                </div>
+
         </section>
         </form>
     </main>
-    <footer>    
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+    <footer>
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
+                alt="logo"></a>
         <div id="liste-footer">
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
