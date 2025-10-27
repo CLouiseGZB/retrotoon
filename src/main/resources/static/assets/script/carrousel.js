@@ -52,6 +52,27 @@ function imageUrl(item, layout) {
   }
 }
 
+/* ---------- Détection & choix du meilleur titre à afficher ---------- */
+const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
+
+function pickDisplayTitle(details, type, fallback='') {
+  // 1) Essayer une traduction FR fournie par TMDB
+  const translations = details?.translations?.translations || [];
+  const fr = translations.find(t => t.iso_639_1 === 'fr');
+  const en = translations.find(t => t.iso_639_1 === 'en');
+  const frTitle = type === 'movie' ? fr?.data?.title : fr?.data?.name;
+  const enTitle = type === 'movie' ? en?.data?.title : en?.data?.name;
+
+  if (frTitle && frTitle.trim()) return frTitle.trim();
+
+  // 2) Sinon, si le fallback est en japonais, préférer EN si dispo
+  const base = (fallback || '').trim();
+  if (JAPANESE_RE.test(base) && enTitle && enTitle.trim()) return enTitle.trim();
+
+  // 3) Sinon, garder fallback (déjà localisé via language=fr-FR si dispo)
+  return base;
+}
+
 /* ============================ TMDB (DATA) =========================== */
 const DATE_FROM = '1980-01-01';
 const DATE_TO   = '2010-12-31';
@@ -72,7 +93,10 @@ async function getList(type, genreId = '16', limit = 10) {
 }
 
 async function getDetails(type, id) {
-  const append = type === 'movie' ? 'release_dates' : 'content_ratings';
+  // ➜ On ajoute "translations" pour récupérer les titres FR/EN
+  const append = type === 'movie'
+    ? 'release_dates,translations'
+    : 'content_ratings,translations';
   try { return await api(`/${type}/${id}`, { append_to_response: append }); }
   catch { return null; }
 }
@@ -83,7 +107,7 @@ async function searchTv(query){
 }
 
 /* ============================ TEMPLATES ============================= */
-function cardHTML({ rank, img, age, duration, genres, link }, layout) {
+function cardHTML({ title, rank, img, age, duration, genres, link }, layout) {
   const portrait = layout === 'portrait' ? 'portrait' : '';
   const bg = img ? `style="background-image:url('${img}')"` : `style="background-image:linear-gradient(135deg,#555,#333)"`;
   const linkAttr = link ? ` data-link="${link}"` : '';
@@ -95,13 +119,17 @@ function cardHTML({ rank, img, age, duration, genres, link }, layout) {
       <div class="play"><button aria-label="Lire" class="js-play"${linkAttr}>
         <svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7-11-7z" fill="currentColor"/></svg>
       </button></div>
+
+      <!-- Une seule div .meta avec tout dedans -->
       <div class="meta">
+        <span class="title">${title || ''}</span>
         <span class="badge-age">${age || 'NR'}</span>
         <span class="duration">${duration || ''}</span>
         <div class="genres">${genres || ''}</div>
       </div>
     </article>`;
 }
+
 
 /* ====================== HISTORIQUE (localStorage) ======================= */
 const HISTORY_KEY = 'vod_history';
@@ -141,12 +169,10 @@ function attachCarousel(root){
   const viewport = root.querySelector('.viewport');
   const prevBtn  = root.querySelector('[data-prev]');
   const nextBtn  = root.querySelector('[data-next]');
-
   if (!track) return;
 
   let index = 0, dragging = false, startX = 0, startIndex = 0, delta = 0;
-
-  const CLICK_THRESHOLD = 6; // px : en-dessous, on considère que c'est un clic
+  const CLICK_THRESHOLD = 6;
 
   const gap = () => parseFloat(getComputedStyle(track).gap) || 0;
   const cardSize = () => {
@@ -161,7 +187,6 @@ function attachCarousel(root){
     const cssVal = parseFloat(getComputedStyle(root).getPropertyValue('--per-page'));
     return Number.isFinite(cssVal) && cssVal > 0 ? Math.round(cssVal) : 0;
   };
-
   const visible = () => {
     const p = perPageSetting();
     if (p > 0) return p;
@@ -170,7 +195,6 @@ function attachCarousel(root){
     const w = (viewport || root).clientWidth;
     return Math.max(1, Math.floor((w + 0.1) / size));
   };
-
   const maxIndex = () => Math.max(0, count() - visible());
 
   function clamp(){ const m = maxIndex(); if(index<0) index=0; if(index>m) index=m; return m; }
@@ -198,57 +222,44 @@ function attachCarousel(root){
 
   track.addEventListener('pointerdown', (e) => {
     dragging = true;
-    // NOTE: on NE capture PAS le pointeur → laisse le navigateur générer un vrai "click"
     startX = e.clientX;
     startIndex = index;
     delta = 0;
     render(0,false);
   });
-
   track.addEventListener('pointermove', (e) => {
     if (!dragging) return;
     delta = startX - e.clientX;
     render(delta,false);
   });
-
   function endDrag(e){
     if (!dragging) return;
     const moved = Math.abs(delta);
-
     dragging = false;
-
-    // Si on n’a presque pas bougé → on force un "click" sur la cible
     if (moved < CLICK_THRESHOLD) {
       const target = e.target.closest('.js-play, .card');
       if (target) {
         target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-        return; // on ne déclenche pas de slide
+        return;
       }
     }
-
-    // Sinon, c’est un slide
     const cs = cardSize() || 1;
     index = Math.round(startIndex + (delta / cs));
     clamp();
     render(0,true);
   }
-
   track.addEventListener('pointerup', endDrag);
   track.addEventListener('pointercancel', endDrag);
 
   window.addEventListener('resize', () => { clamp(); render(0,true); });
-
-  // Assure le 1er rendu après mise en page
   requestAnimationFrame(() => { clamp(); render(0,true); });
 }
 
-
-
 /* ======================== BUILD TMDB CARROUSEL ======================= */
 async function buildCarousel(root){
-  const type     = root.getAttribute('data-type')   || 'movie';      // movie | tv
-  const layout   = root.getAttribute('data-layout') || 'landscape';  // landscape | portrait
-  const genreId  = root.getAttribute('data-genre')  || '16';         // 16 = Animation
+  const type     = root.getAttribute('data-type')   || 'movie';
+  const layout   = root.getAttribute('data-layout') || 'landscape';
+  const genreId  = root.getAttribute('data-genre')  || '16';
   const track    = root.querySelector('[data-track]');
 
   const list = await getList(type, genreId, 10);
@@ -262,12 +273,13 @@ async function buildCarousel(root){
       : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
     const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || (type==='tv' ? 'Animation' : '');
     const img = imageUrl(item, layout);
-    const link = ''; // plus de forçage ici
 
-    return cardHTML({ rank: i+1, img, age, duration, genres, link }, layout);
+    const baseTitle = d?.title || d?.name || item.title || item.name || '';
+    const title = pickDisplayTitle(d, type, baseTitle);
+
+    return cardHTML({ title, rank: i+1, img, age, duration, genres, link: '' }, layout);
   }).join('');
 
-  // Écouteur délégué: clic ▶️ ou clic carte → historique
   const cards = Array.from(track.querySelectorAll('.card'));
   function record(i) {
     const d = details[i];
@@ -276,7 +288,6 @@ async function buildCarousel(root){
       ? minutesToText(d?.runtime)
       : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
     const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
-
     pushHistory({
       id: list[i].id,
       type,
@@ -295,18 +306,14 @@ async function buildCarousel(root){
     if (i < 0) return;
 
     if (e.target.closest('.js-play')) {
-      e.preventDefault();
-      e.stopPropagation();
-      record(i);
-      return;
+      e.preventDefault(); e.stopPropagation();
+      record(i); return;
     }
     record(i);
   });
 
   attachCarousel(root);
-
 }
-
 
 /* ==================== BUILD & REFRESH HISTORIQUE ==================== */
 async function buildHistoryCarousel(root){
@@ -314,10 +321,10 @@ async function buildHistoryCarousel(root){
   const track  = root.querySelector('[data-track]');
   const list   = getHistory();
 
-  // -- Injection "Totally Spies!" UNIQUEMENT dans l'historique --
+  const isClientPage = location.pathname.includes('/html/index-client.html');
+
   let spiesHtml = '';
   try {
-    // si déjà présent dans l'historique → pas d’injection
     const spiesSearch = await searchTv('Totally Spies');
     if (spiesSearch) {
       const already = list.some(x => x.type === 'tv' && x.id === spiesSearch.id);
@@ -327,16 +334,18 @@ async function buildHistoryCarousel(root){
         const duration = d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '';
         const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || 'Animation';
         const img = imageUrl(spiesSearch, layout);
-        const link = '../html/fiche-dessin-anime.html'; // page cible
 
-        spiesHtml = cardHTML({ rank: 1, img, age, duration, genres, link }, layout);
+        const baseTitle = d?.name || spiesSearch.name || '';
+        const title = pickDisplayTitle(d, 'tv', baseTitle);
+
+        const link = isClientPage ? '/html/fiche-dessin-anime.html' : '';
+        spiesHtml = cardHTML({ title, rank: 1, img, age, duration, genres, link }, layout);
       }
     }
   } catch (e) {
     console.warn('Injection Totally Spies: échec silencieux', e);
   }
 
-  // -- Rendu de l’historique --
   let histHtml = '';
   if (!list.length && !spiesHtml) {
     histHtml = `<div style="padding:20px;color:#cbd5e1">Aucun élément dans l’historique. Cliquez sur ▶️ sur une carte pour l’ajouter.</div>`;
@@ -344,18 +353,19 @@ async function buildHistoryCarousel(root){
     histHtml = list.slice(0, 20).map((h, i) => {
       const img = histImageUrl(h, layout);
       return cardHTML({
+        title: h.title || '',
         rank: i+1,
         img,
         age: h.age || 'NR',
         duration: h.duration || '',
-        genres: h.genres || ''
+        genres: h.genres || '',
+        link: ''
       }, layout);
     }).join('');
   }
 
   track.innerHTML = spiesHtml + histHtml;
 
-  // Historique: si une carte a un data-link (Totally Spies) → navigation
   track.addEventListener('click', (e) => {
     const card = e.target.closest('.card');
     if (!card) return;
@@ -370,7 +380,6 @@ async function refreshHistoryCarousel(){
   const root = document.querySelector('[data-carousel][data-source="history"]');
   if (root) await buildHistoryCarousel(root);
 }
-
 
 /* ======================= MIXTE (Films + Séries) ======================= */
 async function getMixedList(genreId = '16', limit = 10) {
@@ -425,7 +434,11 @@ async function buildMixedCarousel(root){
       : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
     const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || 'Animation';
     const img = imageUrl(it, layout);
-    return cardHTML({ rank: i+1, img, age, duration, genres, link: '' }, layout);
+
+    const baseTitle = d?.title || d?.name || '';
+    const title = pickDisplayTitle(d, it.type, baseTitle);
+
+    return cardHTML({ title, rank: i+1, img, age, duration, genres, link: '' }, layout);
   }).join('');
 
   const buttons = track.querySelectorAll('.js-play');
@@ -462,18 +475,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // 1) Carrousel MIXTE (films + séries)
+  // MIXTE
   const mixedRoots = document.querySelectorAll('[data-carousel][data-type="mixed"]');
   for (const root of mixedRoots) {
     await buildMixedCarousel(root);
   }
 
-  // 2) Carrousels TMDB standards (movie / tv)
+  // TMDB standards (movie / tv)
   const carousels = document.querySelectorAll('[data-carousel]:not([data-source="history"]):not([data-type="mixed"])');
   for (const root of carousels) {
     await buildCarousel(root);
   }
 
-  // 3) Carrousel Historique
+  // Historique
   refreshHistoryCarousel();
 });
