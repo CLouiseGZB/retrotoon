@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetroToon - Tottaly Spies</title>
+    <title>RetroToon - Totally Spies</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
     <link rel="stylesheet" href="../assets/css/fiche-dessin-anime.css">
@@ -197,14 +195,15 @@
             </section>
             <section id="nos-suggestions">
                 <h2>Nos suggestions</h2>
-                <div class="carousel" data-carousel data-type="mixed" data-layout="portrait" style="--per-page:5">
+                <div class="carousel" data-carousel data-source="suggestion" data-topic="totally-spies" data-layout="landscape" data-step="3">
                     <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
                     <div class="viewport">
-                        <div class="track" data-track></div>
+                    <div class="track" data-track></div>
                     </div>
                     <button class="nav next" aria-label="Suivant" data-next>❯</button>
                 </div>
             </section>
+
         </div>
     </main>
 
@@ -274,7 +273,7 @@
     <script src="../assets/script/scripts-fiche-dessin-anime/api-fiche-dessin-anime.js"></script>
     <script src="../assets/script/searchbar.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
-    <script src="../assets/script/carrousel.js"></script>
+    <script src="../assets/script/carrouselSuggestion.js" defer></script>
 </body>
 
 </html>

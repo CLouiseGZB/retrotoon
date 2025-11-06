@@ -1,80 +1,75 @@
-/* ================== Carrousel (séries, films, historique) ================== */
+/* ================== CARROUSEL — BASE ================== */
 .carousel {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: .5rem;
 }
 .viewport {
   flex: 1;
+  overflow: hidden;
 }
 .track {
   display: flex;
-  gap: var(--gap);
-  padding: 6px 0 12px;
-  transition: transform .4s ease;
+  gap: 0.8rem;
+  padding: 6px 0 12px 0;
+  transition: transform 0.4s ease;
   will-change: transform;
+  margin-right: -0.6rem; /* évite l’espace après la dernière carte */
 }
 
-/* Boutons de nav */
+/* ================= FLÈCHES DE NAVIGATION ================= */
 .nav {
-  border: 0;
-  background: rgba(0, 20, 41, .75);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  border: none;
+  background: rgba(0, 20, 41, 0.75);
   color: #fff;
-  width: 48px;
-  height: 72px;
   border-radius: 12px;
   display: grid;
   place-items: center;
   cursor: pointer;
-  box-shadow: 0 12px 32px rgba(0, 20, 41, .85);
+  box-shadow: 0 10px 28px rgba(0, 20, 41, 0.65);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
-.nav:active {
-  transform: scale(.98);
-}
+.nav:hover { background: rgba(255, 255, 255, 0.15); }
+.nav:active { transform: translateY(-50%) scale(0.96); }
+.nav.prev { left: 8px; }
+.nav.next { right: 8px; }
 
-/* Carte */
+/* Taille responsive des flèches */
+@media (min-width: 1025px) { .nav { width: 48px; height: 72px; } }
+@media (max-width: 1024px) { .nav { width: 44px; height: 66px; } }
+@media (max-width: 767px)  { .nav { width: 38px; height: 54px; } }
+@media (max-width: 479px)  { .nav { width: 34px; height: 48px; } }
+
+/* ================= CARTES ================= */
 .card {
   position: relative;
   flex: 0 0 auto;
-  height: var(--row-h);
-  width: calc(var(--row-h) * 16 / 9); /* 16:9 */
-  background: var(--card);
+  width: 19%;
+  aspect-ratio: 16 / 9;
+  background: #0a1a2a;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 16px 48px rgba(0, 20, 41, .85), 0 2px 0 1px rgba(255, 255, 255, .04);
-  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 16px 48px rgba(0, 20, 41, 0.85), 0 2px 0 1px rgba(255,255,255,0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 .card:hover {
   transform: scale(1.06);
-  box-shadow: 0 22px 64px rgba(0, 20, 41, .95), 0 2px 0 1px rgba(255, 255, 255, .06);
+  box-shadow: 0 22px 64px rgba(0,20,41,0.95), 0 2px 0 1px rgba(255,255,255,0.06);
 }
 
-/* Portrait 2:3 si pas en mode per-page */
-.card.portrait {
-  width: calc(var(--row-h) * 2 / 3);
-}
+/* Portrait (2:3) */
+.card.portrait { aspect-ratio: 2 / 3; }
 
-.card .meta .title { 
-  font-weight: 700;  /* avant 600 */
-}
-.card .meta .badge-age {
-  font-weight: 800;  /* rend le badge bien lisible */
-}
-
-/* Couches */
-.thumb,
-.gradient,
-.play {
-  position: absolute;
-  inset: 0;
-}
-.thumb {
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
+/* Couches internes */
+.thumb, .gradient, .play { position: absolute; inset: 0; }
+.thumb { background-size: cover; background-position: center; z-index: 0; }
 .gradient {
-  background: linear-gradient(to top, rgba(0, 0, 0, .68) 12%, rgba(0, 0, 0, 0) 70%);
+  background: linear-gradient(to top, rgba(0,0,0,0.68) 12%, rgba(0,0,0,0) 70%);
   z-index: 1;
 }
 .meta {
@@ -86,7 +81,7 @@
   gap: 10px;
   align-items: center;
   flex-wrap: wrap;
-  font-size: .9rem;
+  font-size: 0.9rem;
   z-index: 2;
 }
 .play {
@@ -94,23 +89,21 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity .15s;
+  transition: opacity 0.15s;
   z-index: 3;
 }
-.card:hover .play {
-  opacity: 1;
-}
+.card:hover .play { opacity: 1; }
 
-/* Play */
+/* Bouton Play */
 .play button {
   width: 60px;
   height: 60px;
-  border: 0;
+  border: none;
   border-radius: 50%;
-  background: #EB7A57;
+  background: #eb7a57;
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 16px 36px rgba(229, 9, 20, .5);
+  box-shadow: 0 16px 36px rgba(229,9,20,0.5);
 }
 
 /* Badge rang */
@@ -121,97 +114,122 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #EB7A57;
+  background: #eb7a57;
   color: #fff;
   display: grid;
   place-items: center;
   font-weight: 800;
-  font-size: .95rem;
+  font-size: 0.95rem;
   z-index: 4;
-  box-shadow: 0 12px 32px rgba(229, 9, 20, .45);
+  box-shadow: 0 12px 32px rgba(229,9,20,0.45);
 }
 
-/* Détails */
+/* Détails texte */
+.title, .year { color: #fff; }
 .badge-age {
   padding: 2px 6px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, .12);
-  border: 1px solid rgba(255, 255, 255, .24);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.24);
   font-weight: 700;
-  font-size: .75rem;
+  font-size: 0.75rem;
+  color: #fff;
 }
-.duration {
-  color: var(--muted);
-  font-size: .85rem;
+.duration, .genres {
+  color: #fff;
+  font-size: 0.85rem;
   white-space: nowrap;
-}
-.genres {
-  width: 100%;
-  color: var(--muted);
-  font-size: .85rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-/* Mode "X cartes par page" (active via style="--per-page:5") */
-.carousel[style*="--per-page"][data-layout="landscape"] .card {
-  height: auto;
-  width: calc((100% - var(--gap) * (var(--per-page) - 1)) / var(--per-page));
+/* ================= LANDSCAPE (Films / Séries) ================= */
+.carousel[data-layout="landscape"] .track { gap: 0.8rem; }
+.carousel[data-layout="landscape"] .card:not(.portrait) {
+  width: 32%;
   aspect-ratio: 16 / 9;
 }
-.carousel[style*="--per-page"][data-layout="portrait"] .card {
-  height: auto;
-  width: calc((100% - var(--gap) * (var(--per-page) - 1)) / var(--per-page));
-  aspect-ratio: 2 / 3;
+
+/* ================= HISTORY ================= */
+.carousel[data-source="history"] .track { gap: 12px; }
+.carousel[data-source="history"] .card {
+  width: 44%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
 }
 
-/* Portrait plus haut si pas en per-page */
-.carousel[data-layout="portrait"]:not([style*="--per-page"]) {
-  --row-h: 60vh;
+[data-carousel][data-source="history"] .badge-rank, [data-carousel][data-source="suggestion"] .badge-rank {
+  display: none;
 }
 
-/* cache le badge top 10 */
-[data-carousel][data-source="history"] .badge-rank {
-  display: none !important;
+/* ================= TABLETTE (768–1024) ================= */
+@media (max-width: 1024px) and (min-width: 768px) {
+  /* Landscape : 2 cartes visibles */
+  .carousel[data-layout="landscape"] .card:not(.portrait) {
+    width: 48%;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* History : 2 cartes également */
+  .carousel[data-source="history"] .card {
+    width: 48%;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Portrait : 3 cartes visibles */
+  .carousel[data-layout="portrait"] .card {
+    width: 31.5%;
+    aspect-ratio: 2 / 3;
+  }
+
+  .card { border-radius: 14px; }
+  .badge-rank { width: 30px; height: 30px; border-radius: 8px; font-size: .85rem; top: 6px; left: 6px; }
+  .play button { width: 50px; height: 50px; }
+  .meta { left: 8px; right: 8px; bottom: 8px; font-size: .9rem; gap: 6px; }
+  .title { font-size: 1rem; }
+  .year, .duration, .genres, .badge-age { font-size: .82rem; }
+  .gradient { background: linear-gradient(to top, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0) 68%); }
 }
 
-/* Evite que le navigateur réserve le geste horizontal : on garde notre drag
-   tout en laissant le scroll vertical natif. */
-.track { touch-action: pan-y; }
+/* ================= MOBILE (≤ 767) ================= */
+@media (max-width: 767px) {
+  .carousel[data-layout="landscape"] .track { gap: 3%; padding: 0.5rem 0; margin-right: 0; }
+  .carousel[data-layout="landscape"] .card:not(.portrait) { width: 100%; aspect-ratio: 16 / 9; }
+  .carousel[data-source="history"] .card { width: 100%; aspect-ratio: 16 / 9; }
 
-
-@media (max-width: 1024px) {
-    :root {
-    --row-h: 40vh;
-    --gutter: 20px;
-  }
-    .carousel[data-layout="portrait"]:not([style*="--per-page"]) {
-    --row-h: 55vh;
-  }
-  .nav {
-    width: 44px;
-    height: 66px;
-  }
+  .card { border-radius: 12px; }
+  .badge-rank { width: 26px; height: 26px; border-radius: 7px; font-size: .8rem; top: 6px; left: 6px; }
+  .play button { width: 44px; height: 44px; }
+  .meta { left: 8px; right: 8px; bottom: 8px; font-size: .88rem; gap: 5px; }
+  .title { font-size: .95rem; }
+  .year, .duration, .genres, .badge-age { font-size: .8rem; }
+  .gradient { background: linear-gradient(to top, rgba(0,0,0,0.75) 28%, rgba(0,0,0,0) 70%); }
 }
 
-@media (max-width: 768px) {
-    :root {
-    --row-h: 36vh;
-    --gutter: 12px;
-  }
-  /* Carrousels : 2 cartes par page */
-  [data-carousel] {
-    --per-page: 2 !important;
-    --gap: .6rem;
-  }
+/* ================= PETIT MOBILE (≤ 479) ================= */
+@media (max-width: 479px) {
+  .carousel[data-layout="landscape"] .card:not(.portrait) { width: 100%; }
+  .carousel[data-source="history"] .card { width: 100%; }
+  .carousel[data-layout="portrait"] .card { width: 48%; aspect-ratio: 2 / 3.3; }
+
+  .card { border-radius: 10px; }
+  .badge-rank { width: 24px; height: 24px; border-radius: 6px; font-size: .75rem; top: 5px; left: 5px; }
+  .play button { width: 40px; height: 40px; }
+  .meta { left: 7px; right: 7px; bottom: 7px; font-size: .84rem; gap: 4px; }
+  .title { font-size: .9rem; }
+  .year, .duration, .genres, .badge-age { font-size: .78rem; }
 }
 
-@media (max-width: 480px) {
-  :root {
-    --row-h: 32vh;
-  }
-  .carousel[data-layout="portrait"]:not([style*="--per-page"]) {
-    --row-h: 46vh;
-  }
+/* ==================== PORTRAIT — RESTAURATION ORIGINE ==================== */
+.carousel[data-layout="portrait"] .card { aspect-ratio: 2 / 3; }
+
+@media (min-width: 1025px) {
+  .carousel[data-layout="portrait"] .card { width: 19% !important; }
+  .carousel[data-layout="portrait"] { height: auto !important; }
+}
+@media (max-width: 767px) {
+  .carousel[data-layout="portrait"] { height: auto; }
+}
+@media (max-width: 479px) {
+  .carousel[data-layout="portrait"] { height: auto; }
 }
