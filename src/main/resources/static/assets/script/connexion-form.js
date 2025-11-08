@@ -3,8 +3,10 @@ const errorMessage = document.getElementById('error');
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+
   const email = document.getElementById('email').value;
   const password = document.getElementById('loginPassword').value;
+
   try {
     const response = await fetch('http://localhost:8080/api/login', {
       method: 'POST',
@@ -12,27 +14,42 @@ loginForm.addEventListener('submit', async (e) => {
       body: JSON.stringify({ email, motDePasse: password })
     });
 
-    if (response.ok) {
-      const text = await response.text();
-      if (text === 'success') {
-        window.location.href = 'index-client.html';
+    const text = await response.text();
+
+    if (response.ok && text === "success") {
+      let role = "USER";
+      try {
+        const localPart = email.split('@')[0] || "";
+        if (localPart.toLowerCase().includes('admin')) {
+          role = "ADMIN";
+        }
+      } catch (e) {
+        console.warn("Impossible d'extraire la partie locale de l'email :", e);
+      }
+
+      localStorage.setItem("email", email);
+      localStorage.setItem("role", role);
+
+      if (role === "ADMIN") {
+        window.location.href = "dashbordAdmin.html";
       } else {
-        errorMessage.textContent = "Erreur inattendue.";
+        window.location.href = "index-client.html";
       }
     } else {
       errorMessage.textContent = "Email ou mot de passe incorrect.";
     }
 
   } catch (err) {
+    console.error("Erreur :", err);
     errorMessage.textContent = "Erreur de connexion au serveur.";
-    console.error(err);
   }
 });
 
+
 // oeil mot de passe
 const input = document.getElementById('loginPassword');
-const btn   = document.getElementById('togglePwd');
-const icon  = btn.querySelector('i');
+const btn = document.getElementById('togglePwd');
+const icon = btn.querySelector('i');
 
 btn.addEventListener('click', () => {
   const willShow = input.type === 'password';

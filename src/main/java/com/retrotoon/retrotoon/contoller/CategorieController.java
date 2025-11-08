@@ -41,14 +41,14 @@ public class CategorieController {
         return ResponseEntity.ok(categories);
     }
     
-    // @GetMapping("/{id}")
-    // public ResponseEntity<Categorie> getByName(@PathVariable String nom){
-    //     Categorie categorie = categorieServiceImpl.g(nom);
-    //     if (categorie == null) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    //     return ResponseEntity.ok(categorie);
-    // }
+    @GetMapping("/{id}")
+    public ResponseEntity<Categorie> getByName(@PathVariable String nom){
+        Categorie categorie = categorieServiceImpl.getCategorieByName(nom);
+        if (categorie == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categorie);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Categorie> updateCategorie(@PathVariable String nom, @RequestBody Categorie updatedCategorie){

@@ -27,8 +27,4 @@ public class Video {
     @ManyToOne
     @JsonBackReference 
     private Categorie categorieVideo;
-
-    //@ManyToMany
-    //private List<Genre> genreVideo;
-
 }
