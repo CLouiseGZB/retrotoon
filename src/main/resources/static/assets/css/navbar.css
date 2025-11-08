@@ -170,7 +170,7 @@
     font-size: 1.5rem;
     text-decoration: none;
     width: 48px;
-    height: 48px;
+    height: 35px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -178,7 +178,7 @@
     border: none;
   }
 
-    main, body {
+    body {
     padding-bottom: 70px; /* hauteur approximative de la tab-bar */
   }
 }
