@@ -89,7 +89,7 @@
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
     fetch('/logout', { method:'POST' }).finally(() => {
-      window.location.href = '../html/index.html';
+      window.location.href = '../index.html';
     });
   });
 })();
