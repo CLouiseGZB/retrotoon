@@ -1,11 +1,12 @@
 package com.retrotoon.retrotoon.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,8 +27,8 @@ public class Utilisateur {
     private String dateDeNaissance;
     private String motDePasse;
     private String photoProfil;
-    private Date dateInscription;
-    @ManyToOne
+    private LocalDateTime dateInscription;
+    @Enumerated(EnumType.STRING)
     private Role role;
     
 

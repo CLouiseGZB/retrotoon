@@ -36,7 +36,11 @@ body {
     font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-alt);
     color: var(--text);
+    overflow-x: hidden;
 
+}
+input {
+    font-size: 18px;
 }
 
 /************************general*************************/
@@ -78,7 +82,6 @@ h2 {
 
 h3 {
     font-weight: 300;
-    /* Définit une police plus fine */
     color: #FFFAE0;
     font-size: 16px;
     margin-top: 5px;
@@ -191,6 +194,7 @@ h3 {
     background-color: #001429;
     border: none;
     font-family: Fredoka;
+    font-weight: normal;
     padding: 10px;
     width: 600px;
     margin-bottom: 20px;
@@ -299,16 +303,21 @@ h3 {
     background-color: #001429;
     border: none;
     color: #FFFAFA;
-    font-weight: bold;
+    font-weight: normal;
     font-family: 'Fredoka', sans-serif;
     width: 600px;
     height: 40px;
+
+
+
+    padding: 10px;
+ 
+    margin-bottom: 20px;
 }
 
 
 label {
     font-weight: 300;
-    /* Définit une police plus fine */
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 15px;
@@ -328,9 +337,6 @@ label {
     cursor: pointer;
 }
 
-/* .inputLabel input[type="checkbox"]:checked {
-    background-color: #FFFAFA;
-} */
 
 /************************checkbox*************************/
 /************************boutton*************************/

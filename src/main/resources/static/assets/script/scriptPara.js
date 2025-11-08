@@ -80,22 +80,6 @@ document.addEventListener('click', (e) => {
 
 
 
-// document.getElementById('saveCodeButton').addEventListener('click', function () {
-//     const codeInput = document.getElementById('code').value;
-//     const messageElement = document.getElementById('message');
-
-//     // Vérification que le code est composé de quatre chiffres uniquement
-//     if (/^\d{4}$/.test(codeInput)) {
-//         // Enregistrer le code parental dans le stockage local (ou toute autre méthode de stockage)
-//         localStorage.setItem('parentalCode', codeInput);
-//         messageElement.textContent = 'Code parental enregistré avec succès !';
-//         messageElement.style.color = 'green';
-//     } else {
-//         messageElement.textContent = 'Veuillez entrer un code à 4 chiffres uniquement.';
-//         messageElement.style.color = 'red';
-//     }
-// });
-
 // Fonction de déconnexion
 async function doLogout(redirectUrl) {
   try {
@@ -197,6 +181,7 @@ document.getElementById('userBtn').addEventListener('click', async (e) => {
 
     if (response.ok) {
       alert("Modifications enregistrées avec succès !");
+      window.location.href = "parametre.html";
     } else if (response.status === 404) {
       alert("Erreur : utilisateur introuvable (email actuel incorrect).");
     } 
