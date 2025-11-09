@@ -1,34 +1,42 @@
-// ===============================
-// small-search.js — UI petite barre (ouvre/ferme + submit)
-// ===============================
+/****
+ * Petite barre de recherche :
+ * - Ouvre/ferme l’input au clic sur la loupe
+ * - Lance la recherche (filtre 'all') sur Entrée ou submit
+ * - Se ferme au clic extérieur ou via Échap
+ ****/
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.search-container'); // wrapper petite barre
-  const icon      = container?.querySelector('.search-icon');   // icône loupe
-  const input     = document.getElementById('search-box');       // <input id="search-box">
-  const form      = document.getElementById('searchForm');       // (optionnel) <form id="searchForm">
+  /* ========================= Références DOM ========================= */
+  const container = document.querySelector('.search-container');
+  const icon      = container?.querySelector('.search-icon');
+  const input     = document.getElementById('search-box');
+  const form      = document.getElementById('searchForm');
 
   if (!container || !icon || !input) return;
 
+  /* ========================= Contrôles UI ========================= */
+  /*** 
+   * Ouvre la zone de recherche et donne le focus. 
+   ***/
   function openSearch() {
     input.classList.add('active');
     input.focus();
   }
+  /** Ferme la zone de recherche et retire le focus. */
   function closeSearch() {
     input.classList.remove('active');
     input.blur();
   }
 
-  // Empêche que le clic dans le container soit considéré "extérieur"
+  /* ========================= Écouteurs UI ========================= */
   container.addEventListener('click', (e) => e.stopPropagation());
 
-  // Loupe : toggle
   icon.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     input.classList.contains('active') ? closeSearch() : openSearch();
   });
 
-  // Enter -> lance recherche (ALL par défaut)
+  /* ========================= Navigation (recherche) ========================= */
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -43,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Submit du formulaire (si tu as un bouton)
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -58,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Fermer au clic extérieur
+  /* ========================= Fermeture (extérieur / Échap) ========================= */
   document.addEventListener('click', () => closeSearch());
 
-  // Fermer avec Échap
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeSearch();
   });
 });
+

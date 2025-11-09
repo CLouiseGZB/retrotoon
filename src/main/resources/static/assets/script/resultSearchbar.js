@@ -1,32 +1,41 @@
 // ===============================
-// recherche.js — Grande barre + TMDB + Résultats + Filtres
+// Grande barre de recherche avec TMDB + Résultats + Filtres
 // ===============================
 
-// --- Clé TMDB ---
+/* =========== Clé TMDB ======= */
 const API_KEY = 'abedd43cf8d6083e8a33eafb9cc8b3f4';
 
-// --- Références DOM (grande barre & résultats) ---
-const form = document.getElementById('searchForm');                     // <form id="searchForm">
-const largeSearchBox = document.getElementById('large-search-box');     // <input id="large-search-box">
-const largeSearchButton = document.getElementById('large-search-button');// bouton de la grande barre
-const results = document.getElementById('results');
+/* ========================= Références DOM (grande barre & résultats) ========================= */
+const form               = document.getElementById('searchForm');
+const largeSearchBox     = document.getElementById('large-search-box');
+const largeSearchButton  = document.getElementById('large-search-button');
+const results            = document.getElementById('results');
 
-// Filtres (boutons sur la page résultats)
-const filterAllButton = document.getElementById('filter-all');
+/* =============================== Filtres (page résultats) =============================== */
+const filterAllButton       = document.getElementById('filter-all');
 const filterAnimationButton = document.getElementById('filter-animation');
-const filterMoviesButton = document.getElementById('filter-movies');
+const filterMoviesButton    = document.getElementById('filter-movies');
 
-// --- État ---
+/* ======================================== État ======================================== */
 let _imageBaseUrl, _imageSizes;
-let filterType = 'all'; // filtre par défaut
+let filterType = 'all';
 
-// ===============================
-// Utils URL & text
-// ===============================
+/* =============================== Utils URL & text =============================== */
+/****
+ * Lit un paramètre de la query string de l’URL courante.
+ * @param {string} name - Nom du paramètre
+ * @returns {string|null} Valeur ou null si absent
+ ****/
 function getQueryParam(name) {
   return new URLSearchParams(window.location.search).get(name);
 }
 
+/****
+ * Met à jour les query params (query, filter) puis navigue vers la nouvelle URL.
+ * @param {string} [query] - Terme de recherche
+ * @param {string} [filter] - Filtre actif ('all' | 'movies' | 'animation')
+ * @returns {void}
+ ****/
 function setQueryParamsAndGo(query, filter) {
   const url = new URL(window.location.href);
   if (query !== undefined && query !== null) {
@@ -37,35 +46,62 @@ function setQueryParamsAndGo(query, filter) {
   if (filter) url.searchParams.set('filter', filter);
   window.location.href = url.toString();
 }
-// Expose pour d'autres scripts éventuels (ex. petite barre)
 window.setQueryParamsAndGo = setQueryParamsAndGo;
 
+/****
+ * Met la première lettre d’une chaîne en majuscule.
+ * @param {string} str
+ * @returns {string}
+ ****/
 function capitalizeFirst(str) {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// ===============================
-// TMDB helpers (comme sur les carrousels)
-// ===============================
+/* =============================== TMDB helpers =============================== */
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE  = 'https://image.tmdb.org/t/p';
 
+/****
+ * Construit une URL TMDB avec clé API et langue FR.
+ * @param {string} path
+ * @param {object} [params={}]
+ * @returns {string}
+ ****/
 function tmdbUrl(path, params = {}) {
   const p = new URLSearchParams({ api_key: API_KEY, language: 'fr-FR', ...params });
   return `${TMDB_BASE}${path}?${p.toString()}`;
 }
+
+/****
+ * Effectue un appel fetch vers TMDB et renvoie le JSON.
+ * @param {string} path
+ * @param {object} params
+ * @throws {Error} Si HTTP != 2xx
+ * @returns {Promise<object>}
+ ****/
 async function api(path, params) {
   const res = await fetch(tmdbUrl(path, params));
   if (!res.ok) throw new Error(`TMDB ${res.status} @ ${path}`);
   return res.json();
 }
 
+/****
+ * Convertit des minutes en texte (ex: 95 -> "1h35").
+ * @param {number} m
+ * @returns {string}
+ ****/
 function minutesToText(m) {
   if (!m || m <= 0) return '';
   const h = Math.floor(m / 60), min = m % 60;
   return h ? `${h}h${String(min).padStart(2,'0')}` : `${min}m`;
 }
+
+/****
+ * Convertit une certification en badge d’âge.
+ * @param {string} cert
+ * @returns {string}
+ ****/
 function certToBadge(cert) {
   const c = (cert || '').toUpperCase().trim();
   if (!c) return 'NR';
@@ -78,6 +114,13 @@ function certToBadge(cert) {
   if (['18','-18','NC-17'].includes(c)) return '18+';
   return c;
 }
+
+/****
+ * Récupère la certification FR/US à partir des détails.
+ * @param {object} details
+ * @param {'movie'|'tv'} type
+ * @returns {string}
+ ****/
 function pickCertification(details, type) {
   if (!details) return '';
   if (type === 'movie') {
@@ -91,9 +134,16 @@ function pickCertification(details, type) {
   }
 }
 
-// ---------- Détection & choix du meilleur titre à afficher ----------
+/* ---------- Détection & choix du meilleur titre à afficher ---------- */
 const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
 
+/****
+ * Choisit le meilleur titre (FR > EN > fallback, EN si fallback en japonais).
+ * @param {object} details
+ * @param {'movie'|'tv'} type
+ * @param {string} [fallback='']
+ * @returns {string}
+ ****/
 function pickDisplayTitle(details, type, fallback='') {
   const translations = details?.translations?.translations || [];
   const fr = translations.find(t => t.iso_639_1 === 'fr');
@@ -108,6 +158,13 @@ function pickDisplayTitle(details, type, fallback='') {
 
   return base;
 }
+
+/****
+ * Extrait l’année (YYYY) depuis les détails (film/série).
+ * @param {'movie'|'tv'} type
+ * @param {object} details
+ * @returns {string}
+ ****/
 function extractYearFromDetails(type, details){
   const dateStr = type === 'movie'
     ? (details?.release_date || details?.primary_release_date || '')
@@ -115,17 +172,34 @@ function extractYearFromDetails(type, details){
   return dateStr ? dateStr.slice(0,4) : '';
 }
 
+/****
+ * Détails film (inclut release_dates, translations).
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ ****/
 async function getMovieDetails(id){
   try { return await api(`/movie/${id}`, { append_to_response: 'release_dates,translations' }); }
   catch { return null; }
 }
+
+/****
+ * Détails série (inclut content_ratings, translations).
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ ****/
 async function getTvDetails(id){
   try { return await api(`/tv/${id}`, { append_to_response: 'content_ratings,translations' }); }
   catch { return null; }
 }
 
-// Historique (fallback si index-client n’a pas injecté pushHistory/refreshHistoryCarousel)
+/* =============================== Historique (fallback) =============================== */
 const HISTORY_KEY = 'vod_history';
+
+/****
+ * Ajoute un élément à l’historique dans localStorage (max 30).
+ * @param {object} item
+ * @returns {void}
+ ****/
 function pushHistoryLocal(item){
   try{
     const list = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
@@ -137,9 +211,7 @@ function pushHistoryLocal(item){
   }catch(e){ console.warn('localStorage indisponible:', e); }
 }
 
-// ===============================
-// Config images TMDB
-// ===============================
+/* =============================== Config images TMDB =============================== */
 fetch(`https://api.themoviedb.org/3/configuration?api_key=${API_KEY}`)
   .then(r => r.json())
   .then(data => {
@@ -148,14 +220,17 @@ fetch(`https://api.themoviedb.org/3/configuration?api_key=${API_KEY}`)
   })
   .catch(err => console.error('Erreur config TMDB :', err));
 
-// ===============================
-// Recherche combinée (films + séries) AVEC TRADUCTIONS + HISTORIQUE
-// ===============================
-const MAX_RENDER = 20; // limite de cartes rendues (perf)
+/* =============================== Recherche combinée (films + séries) =============================== */
+const MAX_RENDER = 20;
 
+/****
+ * Recherche films + séries (filtre animation 1970–2010), enrichit via détails, rend et branche l’historique.
+ * @param {string} query
+ * @returns {Promise<void>}
+ ****/
 async function search(query) {
   if (!query || !results) return;
-  results.innerHTML = ''; // reset
+  results.innerHTML = '';
 
   const moviesUrl = tmdbUrl('/search/movie', { query, include_adult:'false' });
   const tvUrl     = tmdbUrl('/search/tv',    { query, include_adult:'false' });
@@ -169,7 +244,6 @@ async function search(query) {
     const movies = Array.isArray(moviesData?.results) ? moviesData.results : [];
     const shows  = Array.isArray(tvData?.results)     ? tvData.results     : [];
 
-    // Filtre “Animation” (genre 16) + années 1970–2010
     const filteredMovies = movies
       .filter(m => (m?.genre_ids || []).includes(16))
       .filter(m => {
@@ -186,13 +260,11 @@ async function search(query) {
       })
       .slice(0, MAX_RENDER);
 
-    // Récupère détails pour traductions + badges/années (en parallèle)
     const [movieDetails, tvDetails] = await Promise.all([
       Promise.all(filteredMovies.map(m => getMovieDetails(m.id))),
       Promise.all(filteredShows.map(s => getTvDetails(s.id)))
     ]);
 
-    // Enrichit pour affichage
     const enrichedMovies = filteredMovies.map((m, i) => {
       const d = movieDetails[i];
       const baseTitle = m.title || '';
@@ -202,12 +274,7 @@ async function search(query) {
       const age = certToBadge(pickCertification(d,'movie'));
       const duration = minutesToText(d?.runtime);
       const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
-      return {
-        type: 'movie',
-        id: m.id,
-        title, year, poster, age, duration, genres,
-        _details: d
-      };
+      return { type: 'movie', id: m.id, title, year, poster, age, duration, genres, _details: d };
     });
 
     const enrichedShows = filteredShows.map((s, i) => {
@@ -219,15 +286,9 @@ async function search(query) {
       const age = certToBadge(pickCertification(d,'tv'));
       const duration = d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '';
       const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
-      return {
-        type: 'tv',
-        id: s.id,
-        title, year, poster, age, duration, genres,
-        _details: d
-      };
+      return { type: 'tv', id: s.id, title, year, poster, age, duration, genres, _details: d };
     });
 
-    // Rendu selon filtre
     if (filterType === 'all') {
       const total = enrichedMovies.length + enrichedShows.length;
       const niceQuery = capitalizeFirst(query);
@@ -242,7 +303,6 @@ async function search(query) {
       results.innerHTML += enrichedShows.map(buildCardElement).join('');
     }
 
-    // Délégation de clic : ajout à l’historique + refresh éventuel
     if (!results.__historyBound) {
       results.addEventListener('click', (e) => {
         const card = e.target.closest('.card[data-type][data-id]');
@@ -251,7 +311,6 @@ async function search(query) {
         const id   = Number(card.dataset.id || 0);
         if (!id || !type) return;
 
-        // retrouver l'item enrichi pour payload
         const list = [...enrichedMovies, ...enrichedShows];
         const item = list.find(x => x.id === id && x.type === type);
         if (!item) return;
@@ -282,15 +341,23 @@ async function search(query) {
   }
 }
 
-// ===============================
-// Templates (cartes résultats)
-// ===============================
+/* =============================== Templates (cartes résultats) =============================== */
+/****
+ * Construit l’en-tête de résultats.
+ * @param {string} typeOrQuery
+ * @param {number} count
+ * @returns {string}
+ ****/
 function buildResultsHeader(typeOrQuery, count) {
   return `<div class="results-header"><h2>${count} résultats pour "${typeOrQuery}"</h2></div>`;
 }
 
+/****
+ * Construit le HTML d’une carte résultat.
+ * @param {object} item - {type, id, title, year, poster, age, duration, genres}
+ * @returns {string}
+ ****/
 function buildCardElement(item) {
-  // item: {type, id, title, year, poster, age, duration, genres}
   return `
     <div class="card" data-type="${item.type}" data-id="${item.id}">
       <img src="${item.poster}" alt="${item.title || (item.type==='movie' ? 'Film' : 'Série')}">
@@ -301,20 +368,26 @@ function buildCardElement(item) {
     </div>`;
 }
 
+/****
+ * Compose l’URL d’un poster TMDB à partir de la configuration.
+ * @param {string} imagePath
+ * @returns {string}
+ ****/
 function getMoviePoster(imagePath) {
-  // si la config TMDB n’est pas encore chargée, fallback sur IMG_BASE
   const base = _imageBaseUrl || `${IMG_BASE}/`;
   const size = _imageSizes?.[2] || _imageSizes?.[0] || 'w342';
   return `${base}${size}${imagePath}`;
 }
 
-// ===============================
-// Chargement initial (URL → recherche)
-// ===============================
+/* =============================== Chargement initial (URL → recherche) =============================== */
+/****
+ * Lit la query et le filtre depuis l’URL, lance la recherche et hydrate l’input.
+ * @returns {void}
+ ****/
 function loadResults() {
   const queryFromUrl = getQueryParam('query');
   const filterFromUrl = getQueryParam('filter');
-  filterType = filterFromUrl || 'all'; // par défaut ALL
+  filterType = filterFromUrl || 'all';
   if (queryFromUrl) {
     search(queryFromUrl);
     if (largeSearchBox) largeSearchBox.value = queryFromUrl;
@@ -322,64 +395,57 @@ function loadResults() {
 }
 window.addEventListener('load', loadResults);
 
-// ===============================
-// Filtres (indépendants)
-// ===============================
+/* =============================== Filtres (indépendants) =============================== */
+/****
+ * Applique un filtre, lit la query active et rafraîchit la page avec les params.
+ * @param {'all'|'movies'|'animation'} newFilterType
+ * @returns {void}
+ ****/
 function applyFilter(newFilterType) {
   filterType = newFilterType;
-
-  // on lit la requête depuis inputs si présents, sinon depuis l’URL
   const q =
     (document.getElementById('large-search-box')?.value ||
      getQueryParam('query') ||
      '').trim();
-
   if (q) {
-    setQueryParamsAndGo(q, filterType); // recharge avec query + filtre
+    setQueryParamsAndGo(q, filterType);
   } else {
-    setQueryParamsAndGo('', filterType); // change juste le filtre si pas de query
+    setQueryParamsAndGo('', filterType);
   }
 }
 
-// Listeners des boutons filtres
 filterAllButton?.addEventListener('click', () => applyFilter('all'));
 filterAnimationButton?.addEventListener('click', () => applyFilter('animation'));
 filterMoviesButton?.addEventListener('click', () => applyFilter('movies'));
 
-// ===============================
-// Listeners grande barre (force ALL pour une nouvelle recherche)
-// ===============================
+/* =============================== Listeners grande barre =============================== */
 document.addEventListener('DOMContentLoaded', () => {
-  // Enter
   if (largeSearchBox) {
     largeSearchBox.addEventListener('keyup', (e) => {
       if (e.key === 'Enter') {
         const q = largeSearchBox.value.trim();
-        if (q) setQueryParamsAndGo(q, 'all'); // nouvelle recherche => ALL
+        if (q) setQueryParamsAndGo(q, 'all');
       }
     });
   }
-  // Bouton
   if (largeSearchButton && largeSearchBox) {
     largeSearchButton.addEventListener('click', () => {
       const q = largeSearchBox.value.trim();
-      if (q) setQueryParamsAndGo(q, 'all'); // nouvelle recherche => ALL
+      if (q) setQueryParamsAndGo(q, 'all');
     });
   }
-  // Submit du formulaire (si présent)
   if (form && largeSearchBox) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const q = largeSearchBox.value.trim();
-      if (q) setQueryParamsAndGo(q, 'all'); // nouvelle recherche => ALL
+      if (q) setQueryParamsAndGo(q, 'all');
     });
   }
 });
 
-// ===============================
-// Écoute la petite barre (d’un autre script) — “search:submit”
-// ===============================
+/* =============================== Événement “search:submit” (petite barre) =============================== */
 document.addEventListener('search:submit', (e) => {
   const q = (e.detail?.query || '').trim();
-  if (q) setQueryParamsAndGo(q, 'all'); // petite barre => ALL par défaut aussi
+  if (q) setQueryParamsAndGo(q, 'all');
 });
+

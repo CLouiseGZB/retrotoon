@@ -10,16 +10,34 @@ const DATE_FROM_TV    = "1970-01-01";
 const DATE_TO_TV      = "2010-12-31";
 
 /* ============================== UTILITAIRES =============================== */
+/****
+ * Construit une URL TMDB avec la clé API et la langue FR.
+ * @param {string} path
+ * @param {object} [params={}]
+ * @returns {string}
+ ****/
 function tmdbUrl(path, params = {}) {
   const p = new URLSearchParams({ api_key: API_KEY, language: "fr-FR", ...params });
   return `${TMDB_BASE}${path}?${p.toString()}`;
 }
+
+/****
+ * Effectue un appel TMDB et renvoie le JSON, lève si non-2xx.
+ * @param {string} path
+ * @param {object} params
+ * @returns {Promise<object>}
+ ****/
 async function api(path, params) {
   const res = await fetch(tmdbUrl(path, params));
   if (!res.ok) throw new Error(`TMDB ${res.status} @ ${path}`);
   return res.json();
 }
 
+/****
+ * Convertit des minutes en texte (95 -> "1h35").
+ * @param {number} m
+ * @returns {string}
+ ****/
 function minutesToText(m) {
   if (!m || m <= 0) return "";
   const h = Math.floor(m / 60), min = m % 60;
@@ -27,6 +45,11 @@ function minutesToText(m) {
 }
 
 /* ----- Certifications (âge) ----- */
+/****
+ * Normalise une certification en badge d’âge.
+ * @param {string} cert
+ * @returns {string}
+ ****/
 function certToBadge(cert) {
   const c = (cert || "").toUpperCase().trim();
   if (!c) return "NR";
@@ -39,6 +62,13 @@ function certToBadge(cert) {
   if (["18","-18","NC-17"].includes(c)) return "18+";
   return c;
 }
+
+/****
+ * Extrait la certification FR/US depuis les détails.
+ * @param {object} details
+ * @param {'movie'|'tv'} type
+ * @returns {string}
+ ****/
 function pickCertification(details, type) {
   if (!details) return "";
   if (type === "movie") {
@@ -54,6 +84,14 @@ function pickCertification(details, type) {
 
 /* ----- Choix du meilleur titre d’affichage ----- */
 const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
+
+/****
+ * Choisit le meilleur titre (FR > EN > fallback, EN si fallback japonais).
+ * @param {object} details
+ * @param {'movie'|'tv'} type
+ * @param {string} [fallback=""]
+ * @returns {string}
+ ****/
 function pickDisplayTitle(details, type, fallback="") {
   const translations = details?.translations?.translations || [];
   const fr = translations.find(t => t.iso_639_1 === "fr");
@@ -68,6 +106,13 @@ function pickDisplayTitle(details, type, fallback="") {
 
   return base;
 }
+
+/****
+ * Extrait l’année (YYYY) depuis les détails.
+ * @param {'movie'|'tv'} type
+ * @param {object} details
+ * @returns {string}
+ ****/
 function extractYearFromDetails(type, details){
   const dateStr = type === "movie"
     ? (details?.release_date || details?.primary_release_date || "")
@@ -76,6 +121,12 @@ function extractYearFromDetails(type, details){
 }
 
 /* ----- Images utiles (selon layout) ----- */
+/****
+ * Retourne l’URL d’image (poster/backdrop) selon l’orientation.
+ * @param {object} item
+ * @param {'portrait'|'landscape'} layout
+ * @returns {string}
+ ****/
 function imageUrl(item, layout) {
   if (layout === "portrait") {
     const p = item.poster_path || item.backdrop_path;
@@ -88,6 +139,12 @@ function imageUrl(item, layout) {
 
 /* ----- Historique (fallback si fonctions globales absentes) ----- */
 const HISTORY_KEY = "vod_history";
+
+/****
+ * Ajoute un élément à l’historique (localStorage), limite 30 éléments.
+ * @param {object} item
+ * @returns {void}
+ ****/
 function pushHistoryLocal(item){
   try{
     const list = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
@@ -101,13 +158,13 @@ function pushHistoryLocal(item){
 
 /* ============================== FILMS ============================== */
 /* ---- Etat films ---- */
-let selectedGenreFilm = "";    // Genre secondaire sélectionné
-let selectedAnneeFilm = "";    // "1970,2010"
+let selectedGenreFilm = "";
+let selectedAnneeFilm = "";
 let currentPageFilm   = 1;
 let totalPagesFilm    = null;
 const PAGE_SIZE_TMDB  = 20;
 let lastPageCountFilm = 0;
-let sortOrderFilm     = "pop"; // 'pop' | 'az' | 'za' | 'client'
+let sortOrderFilm     = "pop";
 let lastFilmsPage     = [];
 const MAX_PAGES_TO_LOAD = 5;
 let clientPaging = false;
@@ -119,6 +176,11 @@ const apiUrlBaseFilms =
   `&with_genres=16&primary_release_date.gte=${DATE_FROM_MOVIE}&primary_release_date.lte=${DATE_TO_MOVIE}` +
   `&language=fr-FR&include_adult=false`;
 
+/****
+ * Convertit "YYYY,YYYY" en bornes de dates complètes pour films.
+ * @param {string} rangeStr
+ * @returns {{gte:string,lte:string}|null}
+ ****/
 function toDateRangeFromYearsMovies(rangeStr) {
   if (!rangeStr) return null;
   const [startYear, endYear] = rangeStr.split(",").map(s => s.trim());
@@ -126,6 +188,11 @@ function toDateRangeFromYearsMovies(rangeStr) {
   return { gte: `${startYear}-01-01`, lte: `${endYear}-12-31` };
 }
 
+/****
+ * Normalise les résultats TMDB film pour l’UI.
+ * @param {object[]} results
+ * @returns {object[]}
+ ****/
 function mapFilms(results = []) {
   return results.map(film => ({
     title: film.title,
@@ -138,12 +205,22 @@ function mapFilms(results = []) {
   }));
 }
 
+/****
+ * Détails film (append release_dates, translations).
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ ****/
 async function getMovieDetails(id) {
   try { return await api(`/movie/${id}`, { append_to_response: "release_dates,translations" }); }
   catch { return null; }
 }
 
 /* ---- Fetch films ---- */
+/****
+ * Charge une page de films en appliquant les filtres et met à jour l’UI.
+ * @param {number} [page=1]
+ * @returns {Promise<void>}
+ ****/
 function fetchFilms(page = 1) {
   let apiUrl = `${apiUrlBaseFilms}&page=${page}`;
 
@@ -181,6 +258,11 @@ function fetchFilms(page = 1) {
     });
 }
 
+/****
+ * Version brute (results seulement) pour le mode client.
+ * @param {number} [page=1]
+ * @returns {Promise<object[]>}
+ ****/
 function fetchFilmsRaw(page = 1) {
   let apiUrl = `${apiUrlBaseFilms}&page=${page}`;
   if (selectedGenreFilm)  apiUrl += `&with_genres=16,${selectedGenreFilm}`;
@@ -196,6 +278,10 @@ function fetchFilmsRaw(page = 1) {
     .catch(e => { console.error(e); return []; });
 }
 
+/****
+ * Charge plusieurs pages, trie FR A→Z/Z→A côté client et initialise la pagination.
+ * @returns {Promise<void>}
+ ****/
 async function fetchAllThenSortAZZA() {
   clientPaging = true;
   cacheFilms = [];
@@ -214,6 +300,10 @@ async function fetchAllThenSortAZZA() {
   renderClientPage();
 }
 
+/****
+ * Rend une page locale (mode client) sans refetch et met à jour la pagination.
+ * @returns {Promise<void>}
+ ****/
 async function renderClientPage() {
   const start = (currentPageFilm - 1) * PAGE_SIZE_TMDB;
   const pageItems = cacheFilms.slice(start, start + PAGE_SIZE_TMDB);
@@ -225,6 +315,11 @@ async function renderClientPage() {
 }
 
 /* ---- Display films + click -> historique ---- */
+/****
+ * Affiche la grille films (enrichit titre/année) et branche l’ajout à l’historique.
+ * @param {object[]} films
+ * @returns {Promise<void>}
+ ****/
 async function displayFilms(films) {
   const containerFilms = document.getElementById("films");
   if (!containerFilms) return;
@@ -245,7 +340,6 @@ async function displayFilms(films) {
 
   let sorted = enriched.slice();
   if (sortOrderFilm === "client") {
-    // déjà trié
   } else if (sortOrderFilm === "az" || sortOrderFilm === "za") {
     const collator = new Intl.Collator("fr", { sensitivity: "base", ignorePunctuation: true, numeric: true });
     sorted.sort((a, b) => {
@@ -289,11 +383,7 @@ async function displayFilms(films) {
       const poster_path   = d?.poster_path || "";
       const backdrop_path = d?.backdrop_path || "";
 
-      const payload = {
-        id, type: "movie",
-        title, poster_path, backdrop_path,
-        age, duration, year, genres
-      };
+      const payload = { id, type: "movie", title, poster_path, backdrop_path, age, duration, year, genres };
 
       if (typeof pushHistory === "function") pushHistory(payload);
       else pushHistoryLocal(payload);
@@ -305,6 +395,9 @@ async function displayFilms(films) {
 }
 
 /* ---- UI Films ---- */
+/****
+ * Met à jour la pagination (mode serveur).
+ ****/
 function updatePaginationServer() {
   const btnPrev = document.getElementById("prev-page-films");
   const btnNext = document.getElementById("next-page-films");
@@ -318,6 +411,10 @@ function updatePaginationServer() {
 
   if (btnNext) btnNext.disabled = !!noNext;
 }
+
+/****
+ * Met à jour la pagination (mode client).
+ ****/
 function updatePaginationClient() {
   const btnPrev = document.getElementById("prev-page-films");
   const btnNext = document.getElementById("next-page-films");
@@ -326,6 +423,10 @@ function updatePaginationClient() {
   if (btnPrev) btnPrev.disabled = currentPageFilm <= 1;
   if (btnNext) btnNext.disabled = currentPageFilm >= totalPagesFilm;
 }
+
+/****
+ * Met le label "Page X / Y".
+ ****/
 function setPageLabelFilms() {
   const lbl = document.getElementById("current-page-films");
   if (!lbl) return;
@@ -337,11 +438,11 @@ function setPageLabelFilms() {
     lbl.setAttribute("aria-label", `Page ${currentPageFilm}`);
   }
 }
-function getOrderLabelFilms() {
-  if (sortOrderFilm === "az") return "Ordre : A → Z";
-  if (sortOrderFilm === "za") return "Ordre : Z → A";
-  return "Popularité";
-}
+
+/****
+ * Libellés de filtres films.
+ ****/
+function getOrderLabelFilms() { if (sortOrderFilm === "az") return "Ordre : A → Z"; if (sortOrderFilm === "za") return "Ordre : Z → A"; return "Popularité"; }
 function getGenreLabelFilms() {
   const sel = document.getElementById("filter-genre");
   if (!sel || !selectedGenreFilm) return "";
@@ -354,9 +455,19 @@ function getAnneeLabelFilms() {
   const opt = [...sel.options].find(o => o.value === String(selectedAnneeFilm));
   return opt ? `Années : ${opt.textContent.trim()}` : "Années";
 }
+
+/****
+ * Échappe du HTML pour affichage.
+ * @param {string} [s=""]
+ * @returns {string}
+ ****/
 function escapeHtml(s="") {
   return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
+
+/****
+ * Rend les chips de filtres actifs (films).
+ ****/
 function renderActiveFiltersFilms() {
   const wrap = document.getElementById("active-filters-films");
   if (!wrap) return;
@@ -365,9 +476,7 @@ function renderActiveFiltersFilms() {
   const chips = [];
   if (selectedGenreFilm)  chips.push({ key: "genre",  label: getGenreLabelFilms() });
   if (selectedAnneeFilm)  chips.push({ key: "annees", label: getAnneeLabelFilms() });
-  if (sortOrderFilm === "az" || sortOrderFilm === "za") {
-    chips.push({ key: "order",  label: getOrderLabelFilms() });
-  }
+  if (sortOrderFilm === "az" || sortOrderFilm === "za") chips.push({ key: "order",  label: getOrderLabelFilms() });
   if (chips.length === 0) return;
 
   for (const c of chips) {
@@ -383,13 +492,13 @@ function renderActiveFiltersFilms() {
 
 /* ============================== SÉRIES ============================== */
 /* ---- Etat séries ---- */
-let selectedGenreSeries   = "";   // Genre secondaire
-let selectedAnneeSeries   = "";   // "1970,2010" ou "1970-01-01,1979-12-31"
+let selectedGenreSeries   = "";
+let selectedAnneeSeries   = "";
 let currentPageSeries     = 1;
 let totalPagesSeries      = null;
 const PAGE_SIZE_TMDB_S    = 20;
 let lastPageCountSeries   = 0;
-let sortOrderSeries       = "pop"; // 'pop' | 'az' | 'za' | 'client'
+let sortOrderSeries       = "pop";
 let lastSeriesPage        = [];
 const MAX_PAGES_TO_LOAD_S = 5;
 let clientPagingSeries    = false;
@@ -401,6 +510,11 @@ const apiUrlBaseSeries =
   `&with_genres=16&first_air_date.gte=${DATE_FROM_TV}&first_air_date.lte=${DATE_TO_TV}` +
   `&include_null_first_air_dates=false&language=fr-FR`;
 
+/****
+ * Convertit un intervalle "YYYY,YYYY" ou dates complètes en bornes TV.
+ * @param {string} rangeStr
+ * @returns {{gte:string,lte:string}|null}
+ ****/
 function toDateRangeFromYearsTV(rangeStr) {
   if (!rangeStr) return null;
   const [a, b] = rangeStr.split(",").map(s => s.trim());
@@ -409,6 +523,11 @@ function toDateRangeFromYearsTV(rangeStr) {
   return isFull ? { gte: a, lte: b } : { gte: `${a}-01-01`, lte: `${b}-12-31` };
 }
 
+/****
+ * Normalise les résultats TMDB série pour l’UI.
+ * @param {object[]} results
+ * @returns {object[]}
+ ****/
 function mapSeries(results = []) {
   return results.map(serie => ({
     title: serie.name,
@@ -421,12 +540,22 @@ function mapSeries(results = []) {
   }));
 }
 
+/****
+ * Détails série (append content_ratings, translations).
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ ****/
 async function getTvDetails(id) {
   try { return await api(`/tv/${id}`, { append_to_response: "content_ratings,translations" }); }
   catch { return null; }
 }
 
 /* ---- Fetch séries ---- */
+/****
+ * Charge une page de séries en appliquant les filtres et met à jour l’UI.
+ * @param {number} [page=1]
+ * @returns {Promise<void>}
+ ****/
 function fetchSeries(page = 1) {
   let apiUrl = `${apiUrlBaseSeries}&page=${page}`;
 
@@ -464,6 +593,11 @@ function fetchSeries(page = 1) {
     });
 }
 
+/****
+ * Version brute (results seulement) pour le mode client séries.
+ * @param {number} [page=1]
+ * @returns {Promise<object[]>}
+ ****/
 function fetchSeriesRaw(page = 1) {
   let apiUrl = `${apiUrlBaseSeries}&page=${page}`;
   if (selectedGenreSeries) apiUrl += `&with_genres=16,${selectedGenreSeries}`;
@@ -479,6 +613,10 @@ function fetchSeriesRaw(page = 1) {
     .catch(e => { console.error(e); return []; });
 }
 
+/****
+ * Charge plusieurs pages séries, trie FR A→Z/Z→A côté client et initialise la pagination.
+ * @returns {Promise<void>}
+ ****/
 async function fetchAllThenSortSeries() {
   clientPagingSeries = true;
   cacheSeries = [];
@@ -497,6 +635,10 @@ async function fetchAllThenSortSeries() {
   renderClientPageSeries();
 }
 
+/****
+ * Rend une page locale séries (mode client) et met à jour la pagination.
+ * @returns {void}
+ ****/
 function renderClientPageSeries() {
   const start = (currentPageSeries - 1) * PAGE_SIZE_TMDB_S;
   const pageItems = cacheSeries.slice(start, start + PAGE_SIZE_TMDB_S);
@@ -508,6 +650,11 @@ function renderClientPageSeries() {
 }
 
 /* ---- Display séries + click -> historique ---- */
+/****
+ * Affiche la grille séries (enrichit titre/année) et branche l’historique.
+ * @param {object[]} series
+ * @returns {Promise<void>}
+ ****/
 async function displaySeries(series) {
   const container = document.getElementById("series");
   if (!container) return;
@@ -528,7 +675,6 @@ async function displaySeries(series) {
 
   let sorted = enriched.slice();
   if (sortOrderSeries === "client") {
-    // déjà trié
   } else if (sortOrderSeries === "az" || sortOrderSeries === "za") {
     const collator = new Intl.Collator("fr", { sensitivity: "base", ignorePunctuation: true, numeric: true });
     sorted.sort((a, b) => {
@@ -572,11 +718,7 @@ async function displaySeries(series) {
       const poster_path   = d?.poster_path || "";
       const backdrop_path = d?.backdrop_path || "";
 
-      const payload = {
-        id, type: "tv",
-        title, poster_path, backdrop_path,
-        age, duration, year, genres
-      };
+      const payload = { id, type: "tv", title, poster_path, backdrop_path, age, duration, year, genres };
 
       if (typeof pushHistory === "function") pushHistory(payload);
       else pushHistoryLocal(payload);
@@ -588,6 +730,9 @@ async function displaySeries(series) {
 }
 
 /* ---- UI Séries ---- */
+/****
+ * Met à jour la pagination (mode serveur) pour séries.
+ ****/
 function updatePaginationServerSeries() {
   const btnPrev = document.getElementById("prev-page");
   const btnNext = document.getElementById("next-page");
@@ -601,6 +746,10 @@ function updatePaginationServerSeries() {
 
   if (btnNext) btnNext.disabled = !!noNext;
 }
+
+/****
+ * Met à jour la pagination (mode client) pour séries.
+ ****/
 function updatePaginationClientSeries() {
   const btnPrev = document.getElementById("prev-page");
   const btnNext = document.getElementById("next-page");
@@ -609,6 +758,10 @@ function updatePaginationClientSeries() {
   if (btnPrev) btnPrev.disabled = currentPageSeries <= 1;
   if (btnNext) btnNext.disabled = currentPageSeries >= totalPagesSeries;
 }
+
+/****
+ * Met le label "Page X / Y" séries.
+ ****/
 function setPageLabelSeries() {
   const lbl = document.getElementById("current-page");
   if (!lbl) return;
@@ -620,11 +773,11 @@ function setPageLabelSeries() {
     lbl.setAttribute("aria-label", `Page ${currentPageSeries}`);
   }
 }
-function getOrderLabelSeries() {
-  if (sortOrderSeries === "az") return "Ordre : A → Z";
-  if (sortOrderSeries === "za") return "Ordre : Z → A";
-  return "Popularité";
-}
+
+/****
+ * Libellés de filtres séries.
+ ****/
+function getOrderLabelSeries() { if (sortOrderSeries === "az") return "Ordre : A → Z"; if (sortOrderSeries === "za") return "Ordre : Z → A"; return "Popularité"; }
 function getGenreLabelSeries() {
   const sel = document.getElementById("filter-genre");
   if (!sel || !selectedGenreSeries) return "";
@@ -637,9 +790,19 @@ function getAnneeLabelSeries() {
   const opt = [...sel.options].find(o => o.value === String(selectedAnneeSeries));
   return opt ? `Années : ${opt.textContent.trim()}` : "Années";
 }
+
+/****
+ * Échappe du HTML pour affichage (séries).
+ * @param {string} [s=""]
+ * @returns {string}
+ ****/
 function escapeHtmlSeries(s="") {
   return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
+
+/****
+ * Rend les chips de filtres actifs (séries).
+ ****/
 function renderActiveFiltersSeries() {
   const wrap = document.getElementById("active-filters-series");
   if (!wrap) return;
@@ -648,9 +811,7 @@ function renderActiveFiltersSeries() {
   const chips = [];
   if (selectedGenreSeries)  chips.push({ key: "genre",  label: getGenreLabelSeries() });
   if (selectedAnneeSeries)  chips.push({ key: "annees", label: getAnneeLabelSeries() });
-  if (sortOrderSeries === "az" || sortOrderSeries === "za") {
-    chips.push({ key: "order",  label: getOrderLabelSeries() });
-  }
+  if (sortOrderSeries === "az" || sortOrderSeries === "za") chips.push({ key: "order",  label: getOrderLabelSeries() });
   if (chips.length === 0) return;
 
   for (const c of chips) {
@@ -665,6 +826,9 @@ function renderActiveFiltersSeries() {
 }
 
 /* ======================= INIT DOM + Listeners GLOBAUX ======================= */
+/****
+ * Branche tous les listeners Films/Séries et lance les chargements initiaux.
+ ****/
 document.addEventListener("DOMContentLoaded", () => {
   /* ---------- FILMS ---------- */
   const btnFilterAllFilms    = document.getElementById("filter-all-films");
@@ -715,7 +879,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (selOrderFilms) selOrderFilms.value = sortOrderFilm;
   selOrderFilms?.addEventListener("change", async (e) => {
-    const value = e.target.value; // 'pop' | 'az' | 'za'
+    const value = e.target.value;
     sortOrderFilm     = value;
     currentPageFilm   = 1;
     totalPagesFilm    = null;
@@ -760,7 +924,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ---------- SÉRIES ---------- */
+/* === Séries : filtres, tri et pagination === */
   const selFilterGenreTV  = document.getElementById("filter-genre-series")  || document.getElementById("filter-genre");
   const selFilterAnneesTV = document.getElementById("filter-annees-series") || document.getElementById("filter-annees");
   const selOrderTV        = document.getElementById("filter-order-series")  || document.getElementById("filter-order");
@@ -776,7 +940,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (selOrderTV) selOrderTV.value = sortOrderSeries;
   selOrderTV?.addEventListener("change", async (e) => {
-    const value = e.target.value; // 'pop' | 'az' | 'za'
+    const value = e.target.value;
     sortOrderSeries     = value;
     currentPageSeries   = 1;
     totalPagesSeries    = null;
@@ -821,13 +985,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ---------- LANCEMENTS ---------- */
-  // ⚠️ Décommente les flux que tu veux afficher sur la page courante
+  /* =========== LANCEMENTS ============ */
   fetchFilms(currentPageFilm);
   fetchSeries(currentPageSeries);
 });
 
 /* ===================== Rechargements (helpers séries) ===================== */
+/****
+ * Recharge les séries après changement de filtre/tri, en basculant entre tri client/serveur.
+ * @returns {void}
+ ****/
 function refetchAfterFilterChangeSeries() {
   currentPageSeries   = 1;
   totalPagesSeries    = null;

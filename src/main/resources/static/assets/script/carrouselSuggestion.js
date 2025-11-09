@@ -4,20 +4,46 @@ const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE  = 'https://image.tmdb.org/t/p';
 
 /* ============================ UTILITAIRES =========================== */
+/****
+ * Construit une URL TMDB avec la clé & la langue FR
+ * @param {string} path - Chemin d'endpoint (ex: /discover/movie)
+ * @param {object} [params={}] - Paramètres query additionnels
+ * @returns {string} URL complète prête pour fetch
+ ****/
 function tmdbUrl(path, params = {}) {
   const p = new URLSearchParams({ api_key: API_KEY, language: 'fr-FR', ...params });
   return `${TMDB_BASE}${path}?${p.toString()}`;
 }
+
+/****
+ * Appelle l’API TMDB et renvoie le JSON
+ * @param {string} path - Endpoint TMDB (ex: /search/tv)
+ * @param {object} params - Paramètres query passés à tmdbUrl
+ * @throws Error si la réponse HTTP n’est pas OK
+ * @returns {Promise<object>} Données JSON
+ ****/
 async function api(path, params) {
   const res = await fetch(tmdbUrl(path, params));
   if (!res.ok) throw new Error(`TMDB ${res.status} @ ${path}`);
   return res.json();
 }
+
+/****
+ * Convertit des minutes en texte lisible (ex: 95 -> "1h35")
+ * @param {number} m - Durée en minutes
+ * @returns {string} "XhYY", "Zm" ou '' si invalide
+ ****/
 function minutesToText(m) {
   if (!m || m <= 0) return '';
   const h = Math.floor(m / 60), min = m % 60;
   return h ? `${h}h${String(min).padStart(2,'0')}` : `${min}m`;
 }
+
+/****
+ * Normalise une certification en badge d’âge (ex: "PG-13" -> "13+")
+ * @param {string} cert - Certification brute
+ * @returns {string} Badge (Tous, 10+, 12+, 16+, 18+, NR, etc.)
+ ****/
 function certToBadge(cert) {
   const c = (cert || '').toUpperCase().trim();
   if (!c) return 'NR';
@@ -30,6 +56,13 @@ function certToBadge(cert) {
   if (['18','-18','NC-17'].includes(c)) return '18+';
   return c;
 }
+
+/****
+ * Récupère la certification FR/US depuis les détails TMDB
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {object} details - Détails TMDB (avec append)
+ * @returns {string} Certification brute ou ''
+ ****/
 function pickCertification(details, type) {
   if (!details) return '';
   if (type === 'movie') {
@@ -42,6 +75,13 @@ function pickCertification(details, type) {
     return take('FR') || take('US') || '';
   }
 }
+
+/****
+ * Choisit la meilleure image selon l’orientation (poster/backdrop)
+ * @param {object} item - Élément TMDB (poster_path/backdrop_path)
+ * @param {'portrait'|'landscape'} layout - Orientation voulue
+ * @returns {string} URL d’image ou ''
+ ****/
 function imageUrl(item, layout) {
   if (layout === 'portrait') {
     const p = item.poster_path || item.backdrop_path;
@@ -51,7 +91,17 @@ function imageUrl(item, layout) {
     return b ? `${IMG_BASE}/w780${b}` : '';
   }
 }
+
+/* ---------- Détection & choix du meilleur titre à afficher ---------- */
 const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
+
+/****
+ * Sélectionne le meilleur titre (FR > EN > fallback, EN si fallback JP)
+ * @param {object} details - Détails TMDB avec translations
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {string} [fallback=''] - Titre de secours
+ * @returns {string} Titre affichable
+ ****/
 function pickDisplayTitle(details, type, fallback='') {
   const translations = details?.translations?.translations || [];
   const fr = translations.find(t => t.iso_639_1 === 'fr');
@@ -64,15 +114,45 @@ function pickDisplayTitle(details, type, fallback='') {
   return base;
 }
 
+
 /* ============================ HISTORIQUE =========================== */
 const HISTORY_KEY = 'vod_history';
+
+/****
+ * Convertit un path TMDB en URL absolue (ou renvoie tel quel si déjà URL)
+ * @param {string} p - Chemin d’image ou URL complète
+ * @param {string} [size='w500'] - Taille TMDB (ex: w500)
+ * @returns {string} URL image ou ''
+ ****/
 function ensureTMDBUrl(p, size = 'w500') {
   if (!p) return '';
   if (/^https?:\/\//i.test(p)) return p;
   return `${IMG_BASE}/${size}${p}`;
 }
-function getHistory(){ try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; } }
-function saveHistory(list){ try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); } catch(e){ console.warn('localStorage indisponible:', e); } }
+
+/****
+ * Lit l’historique depuis localStorage
+ * @returns {object[]} Liste d’items (ou [])
+ ****/
+function getHistory(){
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch { return []; }
+}
+
+/****
+ * Sauvegarde la liste dans localStorage (catch silencieux)
+ * @param {object[]} list - Items à persister
+ ****/
+function saveHistory(list){
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); }
+  catch(e){ console.warn('localStorage indisponible:', e); }
+}
+
+/****
+ * Pousse/replace un item en tête de l’historique (max 30)
+ * @param {object} item - Élément { id, type, title, ... }
+ * @sideEffect Met à jour localStorage
+ ****/
 function pushHistory(item){
   const list = getHistory();
   const idx = list.findIndex(x => x.id === item.id && x.type === item.type);
@@ -81,6 +161,11 @@ function pushHistory(item){
   if (list.length > 30) list.length = 30;
   saveHistory(list);
 }
+
+/****
+ * Reconstruit le carrousel d’historique (si présent dans le DOM)
+ * @sideEffect Écrit dans le DOM et attache le carrousel
+ ****/
 async function refreshHistoryCarousel(){
   const root = document.querySelector('[data-carousel][data-source="history"]');
   if (!root) return;
@@ -102,7 +187,13 @@ async function refreshHistoryCarousel(){
   attachCarousel(root);
 }
 
+
 /* ============================ CARROUSEL UI ============================ */
+/****
+ * Active le carrousel (navigation, drag, responsive)
+ * @param {HTMLElement} root - Élément racine [data-carousel]
+ * @sideEffect Ajoute des listeners & met à jour les transforms
+ ****/
 function attachCarousel(root){
   const track    = root.querySelector('[data-track]');
   const viewport = root.querySelector('.viewport') || root;
@@ -248,9 +339,13 @@ function attachCarousel(root){
 }
 
 
-
-
 /* ======================= CARD HTML (custom) ======================= */
+/****
+ * Génére le HTML d’une carte de contenu
+ * @param {object} props - title, rank, img, age, duration, year, genres, link
+ * @param {'portrait'|'landscape'} layout - Orientation
+ * @returns {string} HTML prêt à injecter
+ ****/
 function cardHTML({ title, rank, img, age, duration, year, genres, link }, layout) {
   const portrait = layout === 'portrait' ? 'portrait' : '';
   const bg = img ? `style="background-image:url('${img}')"` : `style="background-image:linear-gradient(135deg,#555,#333)"`;
@@ -288,18 +383,17 @@ const TS_CFG = {
 
 /* Seeds prioritaires — ordre EXACT conservé */
 const PRIORITY_SEEDS = [
-  { q: 'Totally Spies! The Movie',         type: 'movie' }, // film TS (si dispo)
+  { q: 'Totally Spies! The Movie',         type: 'movie' },
   { q: 'Martin Mystery',                   type: 'tv'    },
   { q: "Cat's Eye",                        type: 'tv'    },
   { q: 'Kim Possible',                     type: 'tv'    },
-  { q: 'Team Galaxy',                      type: 'tv'    }, // alias FR juste après
+  { q: 'Team Galaxy',                      type: 'tv'    },
   { q: 'Galaxie Académie',                 type: 'tv'    },
   { q: 'W.I.T.C.H.',                       type: 'tv'    },
   { q: 'Detective Conan',                  type: 'tv'    },
-  { q: 'Les Super Nanas',                  type: 'tv'    }, // FR de Powerpuff Girls
+  { q: 'Les Super Nanas',                  type: 'tv'    },
   { q: 'Detective Conan: Le Gratte-Ciel infernal', type: 'movie' },
-  { q: 'fantomette',                  type: 'tv'    },
-
+  { q: 'fantomette',                        type: 'tv'    },
 ];
 
 /* Mots-clés similaires pour compléter (si besoin) */
@@ -311,13 +405,35 @@ const TS_SPY_KEYWORDS = [
   'thief','thieves','heist','vigilante','martial arts'
 ];
 
+/****
+ * Indique si un item (liste) est animé via ses genre_ids
+ * @param {object} item - Élément de liste TMDB
+ * @returns {boolean}
+ ****/
 function ts_isAnimatedFromListItem(item){ return Array.isArray(item?.genre_ids) && item.genre_ids.includes(16); }
+
+/****
+ * Indique si des détails TMDB sont "animation" via leurs genres
+ * @param {object} details - Détails TMDB
+ * @returns {boolean}
+ ****/
 function ts_isAnimatedFromDetails(details){
   const names = (details?.genres || []).map(g => (g.name || '').toLowerCase());
   return names.includes('animation') || names.includes('animé') || names.includes('animación');
 }
+
+/****
+ * Concatène des ids de mots-clés pour la query (OR)
+ * @param {number[]} ids
+ * @returns {string} "id1|id2|..."
+ ****/
 function ts_keywordsOr(ids){ return (ids && ids.length) ? ids.join('|') : ''; }
 
+/****
+ * Récupère les IDs TMDB des mots-clés fournis
+ * @param {string[]} queries - Mots-clés à rechercher
+ * @returns {Promise<number[]>} Liste d’IDs uniques
+ ****/
 async function ts_searchKeywordIds(queries){
   const ids = [];
   for (const q of queries) {
@@ -330,6 +446,13 @@ async function ts_searchKeywordIds(queries){
   return [...new Set(ids)];
 }
 
+/****
+ * Découvre des séries animées entre deux dates (avec filtres mots-clés)
+ * @param {string} from - Date min YYYY-MM-DD
+ * @param {string} to   - Date max YYYY-MM-DD
+ * @param {number} [limit=80] - Taille max du pool
+ * @returns {Promise<object[]>} Résultats TV normalisés
+ ****/
 async function discoverTv(from, to, limit = 80){
   const kwIds = await ts_searchKeywordIds(TS_SPY_KEYWORDS);
   const params = {
@@ -346,6 +469,14 @@ async function discoverTv(from, to, limit = 80){
   const seen = new Set();
   return tv.filter(x => (seen.has(x.id) ? false : (seen.add(x.id), true))).slice(0, limit);
 }
+
+/****
+ * Découvre des films animés entre deux dates (avec filtres mots-clés)
+ * @param {string} from - Date min YYYY-MM-DD
+ * @param {string} to   - Date max YYYY-MM-DD
+ * @param {number} [limit=60] - Taille max du pool
+ * @returns {Promise<object[]>} Résultats Movie normalisés
+ ****/
 async function discoverMovies(from, to, limit = 60){
   const kwIds = await ts_searchKeywordIds(TS_SPY_KEYWORDS);
   const params = {
@@ -363,12 +494,23 @@ async function discoverMovies(from, to, limit = 60){
   return mv.filter(x => (seen.has(x.id) ? false : (seen.add(x.id), true))).slice(0, limit);
 }
 
+/****
+ * Récupère les détails d’un film/série (append: dates/certifs + translations)
+ * @param {'movie'|'tv'} type
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ ****/
 async function getDetails(type, id){
   const append = type === 'movie' ? 'release_dates,translations' : 'content_ratings,translations';
   try { return await api(`/${type}/${id}`, { append_to_response: append }); }
   catch { return null; }
 }
 
+/****
+ * Supprime les doublons (clé: __type:id) en conservant l’ordre
+ * @param {object[]} items
+ * @returns {object[]} items uniques
+ ****/
 function uniqByTypeId(items){
   const seen = new Set();
   return items.filter(it => {
@@ -379,7 +521,13 @@ function uniqByTypeId(items){
   });
 }
 
-/* ——— Recherche seed précise (ne filtre pas "animation" à ce stade) ——— */
+/****
+ * Recherche un seed précis (TV/Movie) borné par dates
+ * @param {{q:string,type:'tv'|'movie'}} seed
+ * @param {string} from
+ * @param {string} to
+ * @returns {Promise<object|null>} Premier hit ou null
+ ****/
 async function searchSeed(seed, from, to){
   try {
     if (seed.type === 'tv') {
@@ -403,7 +551,11 @@ async function searchSeed(seed, from, to){
   } catch { return null; }
 }
 
-/* ——— Builder principal ——— */
+/****
+ * Construit le carrousel “Totally Spies” mixte (TV + Films)
+ * @param {HTMLElement} root - Racine [data-carousel][data-topic="totally-spies"]
+ * @sideEffect Met en place le DOM et les handlers ▶️ + historique
+ ****/
 async function buildSpiesSuggestionsMixedCarousel(root){
   const layout = (root.getAttribute('data-layout') || 'landscape').toLowerCase();
   const track  = root.querySelector('[data-track]');
@@ -420,7 +572,7 @@ async function buildSpiesSuggestionsMixedCarousel(root){
 
   const { from, to } = TS_CFG.dates;
 
-  // 1) Seeds (mémorise l'ordre désiré avec __seedIndex)
+  // 1) Seeds (ordre exact)
   const seedHits = [];
   for (let i = 0; i < PRIORITY_SEEDS.length; i++) {
     const s = PRIORITY_SEEDS[i];
@@ -429,15 +581,12 @@ async function buildSpiesSuggestionsMixedCarousel(root){
   }
 
   // 2) Compléments (discover)
-  const [tvPool, moviePool] = await Promise.all([
-    discoverTv(from, to, 80),
-    discoverMovies(from, to, 60)
-  ]);
+  const [tvPool, moviePool] = await Promise.all([ discoverTv(from, to, 80), discoverMovies(from, to, 60) ]);
 
   // 3) Pool global (unicité)
   let pool = uniqByTypeId([...seedHits, ...tvPool, ...moviePool]);
 
-  // 4) Détails + contrôle animation + borne années
+  // 4) Détails + filtres (animation + bornes)
   const chosen = pool.slice(0, TS_CFG.total);
   const details = await Promise.all(chosen.map(it => getDetails(it.__type, it.id)));
 
@@ -469,7 +618,7 @@ async function buildSpiesSuggestionsMixedCarousel(root){
     attachCarousel(root); return;
   }
 
-  // 5) Tri final — seeds d'abord dans l'ordre EXACT défini
+  // 5) Tri final — seeds d'abord dans l’ordre EXACT
   const seedIndexMap = new Map(seedHits.map(x => [`${x.__type}:${x.id}`, x.__seedIndex]));
   filtered.sort((a, b) => {
     const ka = `${a.it.__type}:${a.it.id}`;
@@ -494,12 +643,12 @@ async function buildSpiesSuggestionsMixedCarousel(root){
     const baseTitle = d?.title || d?.name || it.title || it.name || '';
     const title = pickDisplayTitle(d, it.__type, baseTitle);
     const dateStr = it.__type === 'tv' ? (d.first_air_date || d.air_date || '') : (d.release_date || d.primary_release_date || '');
-    const year = dateStr ? dateStr.slice(0, 4) : ''; // 👈 extrait l’année
+    const year = dateStr ? dateStr.slice(0, 4) : '';
 
     return cardHTML({ title, rank: i+1, img, age, duration, year, genres, link: '' }, layout);
   }).join('');
 
-  // 7) ▶️ → Historique
+  // 7) Bouton ▶️ → Historique
   const buttons = track.querySelectorAll('.js-play');
   buttons.forEach((btn, i) => {
     btn.addEventListener('click', (e) => {
@@ -525,7 +674,12 @@ async function buildSpiesSuggestionsMixedCarousel(root){
   attachCarousel(root);
 }
 
+
 /* ============================== START =============================== */
+/****
+ * Point d’entrée: prépare le carrousel “Totally Spies” + historique
+ * @sideEffect Lit/écrit le DOM, affiche des warnings si file://
+ ****/
 document.addEventListener('DOMContentLoaded', async () => {
   if (location.protocol === 'file:') console.warn('TMDB nécessite un serveur HTTP (ex: npx serve).');
   const spiesCarousels = document.querySelectorAll('[data-carousel][data-topic="totally-spies"]');
