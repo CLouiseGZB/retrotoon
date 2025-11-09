@@ -1,3 +1,7 @@
+/****
+ * Fonction fetch app route
+ * du formulaire de connexion
+ ****/
 const loginForm = document.getElementById('loginForm');
 const errorMessage = document.getElementById('error');
 
@@ -46,7 +50,9 @@ loginForm.addEventListener('submit', async (e) => {
 });
 
 
-// oeil mot de passe
+/****
+ * Fonction pour l'icone d'afficher le mot de passe
+ ****/
 const input = document.getElementById('loginPassword');
 const btn = document.getElementById('togglePwd');
 const icon = btn.querySelector('i');
@@ -57,6 +63,5 @@ btn.addEventListener('click', () => {
   btn.setAttribute('aria-pressed', String(willShow));
   btn.setAttribute('aria-label', willShow ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
 
-  // changer l’icône : œil ↔ œil barré
   icon.className = willShow ? 'fi fi-rs-crossed-eye' : 'fi fi-rr-eye';
 });

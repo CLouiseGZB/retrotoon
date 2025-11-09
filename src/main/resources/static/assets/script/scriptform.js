@@ -1,3 +1,7 @@
+/****
+ * Fonction fetch app route
+ * du formulaire d'inscription
+ ****/
 const inscriptionForm = document.getElementById('inscriptionForm');
 inscriptionForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -13,6 +17,19 @@ inscriptionForm.addEventListener('submit', async (e) => {
 
   if (userData.motDePasse !== confirmPassword) {
     alert("Les mots de passe ne correspondent pas.");
+    return;
+  }
+
+  const DDN = new Date(userData.dateDeNaissance);
+  const now = new Date();
+  const age = now.getFullYear() - DDN.getFullYear();
+  const mois = now.getMonth() - DDN.getMonth();
+  const jour = now.getDate() - DDN.getDate();
+
+  const moins13 = age < 13 || (age === 13 && (mois < 0 || (mois === 0 && jour < 0)));
+
+  if (moins13) {
+    alert("Vous devez avoir au moins 13 ans pour vous inscrire.");
     return;
   }
 
@@ -39,7 +56,9 @@ inscriptionForm.addEventListener('submit', async (e) => {
   }
 });
 
-// oeil mot de passe
+/****
+ * Fonction pour l'icone d'afficher le mot de passe
+ ****/
 document.querySelectorAll('.input-with-eye').forEach(wrap => {
   const input = wrap.querySelector('input[type="password"], input[type="text"]'); // le champ
   const btn   = wrap.querySelector('.icon-btn');

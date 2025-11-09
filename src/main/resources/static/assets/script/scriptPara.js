@@ -1,10 +1,13 @@
+/****
+ * Fonction pour afficher le contenu cache
+ ****/
 document.addEventListener('DOMContentLoaded', () => {
   const pages = document.querySelectorAll('.page');
 
   const showPage = (id) => {
     pages.forEach(p => {
       p.classList.remove('active');
-      p.setAttribute('hidden', ''); // a11y + évite les flash
+      p.setAttribute('hidden', '');
     });
     const target = document.getElementById(id);
     if (target) {
@@ -14,27 +17,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Un seul écouteur pour TOUT ce qui a data-page (choix + retour)
-  document.querySelectorAll('[data-page]').forEach(el => {
+/****
+ * Fonction pour naviguer entre le contenu cache
+ ****/
+ document.querySelectorAll('[data-page]').forEach(el => {
     el.addEventListener('click', (e) => {
       const id = el.getAttribute('data-page');
       if (!id) return;
 
-      // Cas spécial: "Déconnexion" (data-page="page-gestion-compte-6" chez toi)
       if (id === 'page-gestion-compte-6') {
-        // TODO: clear token/localStorage si tu utilises JWT
         window.location.href = '../html/index.html';
         return;
       }
 
-      // Empêche la sélection de texte et évite side effects
       e.preventDefault();
       e.stopPropagation();
 
       showPage(id);
     });
 
-    // Accessibilité clavier (Entrée / Espace) pour les div/btn
     if (el.tagName !== 'A' && !el.hasAttribute('tabindex')) {
       el.setAttribute('tabindex', '0');
       el.addEventListener('keydown', (e) => {
@@ -46,41 +47,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Optionnel: démarrer proprement (assure hidden sur celles non actives)
   pages.forEach(p => {
     if (!p.classList.contains('active')) p.setAttribute('hidden', '');
   });
 });
 
-// 1) SPA : clics sur éléments avec data-page ET PAS de href
+/****
+ * Fonction pour clics sur éléments avec data-page ET PAS de href
+ ****/
 document.addEventListener('click', (e) => {
   const trigger = e.target.closest('[data-page]');
   if (!trigger) return;
 
-  // si c'est (ou contient) un lien <a href>, on laisse la navigation native
   const link = e.target.closest('a[href]');
   if (link) return;
 
-  // on gère UNIQUEMENT les éléments sans href (ex: <button data-page="...">)
   const pageId = trigger.dataset.page;
   if (!pageId) return;
 
   e.preventDefault();
-  afficherPage(pageId);
+ afficherPage(pageId);
 });
 
-// 2) Bonus : empêche qu’un parent SPA intercepte un clic sur un vrai lien
 document.addEventListener('click', (e) => {
   const anchor = e.target.closest('a[href]');
   if (anchor) {
-    // on laisse faire la redirection native et on bloque la propagation
     e.stopPropagation();
   }
-}, { capture: true }); // capture pour être sûr de passer avant d'autres handlers
+}, { capture: true });
 
 
 
-// Fonction de déconnexion
+/****
+ * Fonction pour déconnecter
+ ****/
 async function doLogout(redirectUrl) {
   try {
     await fetch('/logout', { method: 'POST' });
@@ -94,68 +94,71 @@ async function doLogout(redirectUrl) {
   window.location.href = redirectUrl;
 }
 
-// Bouton de la sub-navbar
+/****
+ * Bouton de la sub-navbar
+ ****/
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
   doLogout('/index.html');
 });
 
-// Bouton sur compte.html
+/****
+ * Bouton sur compte.html
+ ****/
 document.getElementById('logoutBtnAccount')?.addEventListener('click', () => {
   doLogout('/index.html');
 });
-
-// Lien "Déconnexion" dans paramètres
+/****
+ * Lien "Déconnexion" dans paramètres
+ ****/
 document.querySelector('.choixParametre[data-page="page-gestion-compte-6"]')
   ?.addEventListener('click', () => {
     doLogout('../html/index.html');
 });
 
-// Map "hash" -> id de section .page
+/****
+ * Fonction pour Map "hash" -> id de section .page
+ * Ouvre la section demandée par le hash (ex: #securite)
+ ****/
 const SECTION_HASH_MAP = {
-  // compte.html -> ./parametre.html#securite
   securite:  'page-gestion-compte-2',
   compte:    'page-gestion-compte-1',
   appareils: 'page-gestion-compte-3',
   accueil:   'page-accueil'
 };
 
-// Ouvre la section demandée par le hash (ex: #securite)
 function openFromHash() {
   const key = (location.hash || '').replace('#', '').trim();
   const targetId = SECTION_HASH_MAP[key];
   if (!targetId) return;
 
-  // Utilise ta fonction existante si elle est définie
   if (typeof afficherPage === 'function') {
     afficherPage(targetId);
   } else {
-    // fallback si afficherPage n'est pas dispo
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(targetId)?.classList.add('active');
   }
 
-  // Si tu as un état “accueil flex”, assure qu'il est caché
   const accueil = document.getElementById('page-accueil');
   if (accueil && targetId !== 'page-accueil') {
     accueil.classList.remove('active');
   }
 
-  // remonter en haut pour un vrai effet "nouvelle page"
   window.scrollTo({ top: 190, behavior: 'smooth' });
 }
 
-// 1) Au premier chargement
 document.addEventListener('DOMContentLoaded', openFromHash);
-
-// 2) Si le hash change (navigation interne)
 window.addEventListener('hashchange', openFromHash);
 
 
-// appel API back pour modifier compte utilisateur 
+/****
+ * Fonction fetch app route
+ * pour la formulaire du modifications
+ * des données personnelles
+ ****/
 document.getElementById('userBtn').addEventListener('click', async (e) => {
   e.preventDefault();
 
-  const oldEmail = document.getElementById('email').value.trim(); // ancien email (celui actuel)
+  const oldEmail = document.getElementById('email').value.trim();
   const nouveauEmail = document.getElementById('nouveauEmail').value.trim();
   const confirmEmail = document.getElementById('confirmEmail').value.trim();
 
@@ -166,7 +169,6 @@ document.getElementById('userBtn').addEventListener('click', async (e) => {
     email: nouveauEmail
   };
 
-  // Vérification des emails
   if (nouveauEmail !== confirmEmail) {
     alert("Les emails ne correspondent pas.");
     return;
@@ -191,7 +193,10 @@ document.getElementById('userBtn').addEventListener('click', async (e) => {
   }
 });
 
-// Active le bouton œil pour tous les inputs avec data-target
+/****
+ * Fonction pour active le bouton œil 
+ * pour tous les inputs avec data-target
+ ****/
   (function () {
     const container = document.getElementById('page-gestion-compte-2');
     if (!container) return;
@@ -207,7 +212,6 @@ document.getElementById('userBtn').addEventListener('click', async (e) => {
       const isPw = input.type === 'password';
       input.type = isPw ? 'text' : 'password';
 
-      // Bascule l’icône (Font Awesome)
       const icon = btn.querySelector('i');
       if (icon) {
         icon.classList.toggle('fa-eye');
