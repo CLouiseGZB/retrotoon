@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroToon - Totally Spies</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 1.Lien vers le CSS officiel de Plyr
+            Ce lien ajoute le style par défaut du lecteur (boutons, barre de progression, volume etc) -->
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
     <link rel="stylesheet" href="../assets/css/fiche-dessin-anime.css">
@@ -93,8 +97,10 @@
 
     <main>
         <section id="principal-video">
-            <!-- VIDEO PLAYER WITH PLYR -->
 
+            <!-- 2.Création de l'élément vidéo avec l'ID "player" pour être ciblé par le script -->
+            <!-- L'attribut 'poster' affiche une image avant le commencement de la vidéo -->
+            <!-- Et l'attribut permet la lecture sans plein écran automatique sur mobile -->
             <h1>Totally Spies</h1>
             <video id="player" playsinline controls poster="../assets/images-fiche-dessin-anime/totally-spies.webp">
                 <source src="../assets/videos/y2mate.com - Totally Spies en français   Générique_480p.mp4"
@@ -145,16 +151,6 @@
                 <p>Durée : <span id="runtime"></span></p>
                 <p>Année : <span id="year"></span></p>
 
-                <!-- <p>Cette série raconte les aventures de trois amies adolescentes : Alex, Clover et Sam. Étudiantes dans
-                    la
-                    vie de tous les jours, elles sont en réalité agents secrets ; c'est-à-dire des espionnes
-                    professionnelles qui travaillent pour le WOOHP, une organisation secrète de protection de
-                    l'humanité.
-                    Lorsque leur patron Jerry a besoin de leurs services, il les envoie en mission, après leur avoir
-                    fait
-                    revêtir des combinaisons intégrales moulantes en latex coloré (jaune pour Alex, rouge pour Clover et
-                    verte pour Sam) et fourni des gadgets, qui les aideront à mener à bien leurs enquêtes.</p> -->
-                <!-- <p>Animation, Comédie, Kids, Action & Adventure, Drame<br>2001<br>7 saisons<br>20m</p> -->
             </section>
 
             <section id="commentaires">
@@ -199,7 +195,7 @@
                     data-layout="landscape" data-step="3">
                     <button class="nav prev" aria-label="Précédent" data-prev>❮</button>
                     <div class="viewport">
-                    <div class="track" data-track></div>
+                        <div class="track" data-track></div>
                     </div>
                     <button class="nav next" aria-label="Suivant" data-next>❯</button>
                 </div>

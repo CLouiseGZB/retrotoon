@@ -3,13 +3,14 @@ const containerGeneralComment = document.getElementById('comment-container')
 const submitButton = document.getElementById('submit');
 let userCommentRow = document.getElementById('user-comment-row');
 
-/************ AJOUT D'UN COMMENTAIRE A LA BOITE DE COMMENTAIRES + VERIFICATION ************/
 
 function addComment() {
 
+    // 1.Création d'un nouvel élément <p> pour afficher le commentaitre
     let comment = document.createElement('p');
     comment.classList.add('commentaire');
 
+    // 2.Vérification pour empêcher d'envoyer un commentaire vide
     if (inputUser.value.trim() == "" || inputUser.value == null) {
         alert("Laissez un commentaire !");
         return false;
@@ -21,10 +22,8 @@ function addComment() {
         containerGeneralComment.appendChild(comment);
 
 
-        /************ BOUTON QUI SUPPRIME INDIVIDUELLEMENT LES COMMENTAIRES ************/
-
+        /************ BOUTON SOUS ICONE DE POUBELLE QUI SUPPRIME INDIVIDUELLEMENT LES COMMENTAIRES ************/
         let aSupprimer = document.createElement('span');
-        aSupprimer.classList.add('btn-a-supprimer');
 
         aSupprimer.innerHTML = '<i class="fa-solid fa-trash"></i>';
 
