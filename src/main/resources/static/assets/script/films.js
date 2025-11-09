@@ -4,35 +4,61 @@ const TMDB_BASE        = "https://api.themoviedb.org/3";
 const IMG_BASE         = "https://image.tmdb.org/t/p";
 
 /* ========================== Filtres & pagination ========================== */
-let selectedGenreFilm = "";    // Genre secondaire sélectionné
-let selectedAnneeFilm = "";    // Plage d'années sélectionnée ("1970,2010")
-let currentPageFilm   = 1;     // Page actuelle (affichée)
-let totalPagesFilm    = null;  // Nombre total de pages (serveur) inconnu
-const PAGE_SIZE_TMDB  = 20;    // Taille page standard TMDB
-let lastPageCountFilm = 0;     // Nombre de films de la dernière page
-let sortOrderFilm     = "pop"; // 'pop' | 'az' | 'za' | 'client'
-let lastFilmsPage     = [];    // dernière liste affichée (pour re-render rapide)
+let selectedGenreFilm = "";
+let selectedAnneeFilm = "";
+let currentPageFilm   = 1;
+let totalPagesFilm    = null;
+const PAGE_SIZE_TMDB  = 20;
+let lastPageCountFilm = 0;
+let sortOrderFilm     = "pop";
+let lastFilmsPage     = [];
 
 /* ===================== Mode client (tri global local) ===================== */
-const MAX_PAGES_TO_LOAD = 5;   // Combien de pages charger pour trier localement (5*20 = 100 films)
-let clientPaging = false;      // true si pagination locale
-let cacheFilms   = [];         // Films triés côté client (FR)
+const MAX_PAGES_TO_LOAD = 5;
+let clientPaging = false;
+let cacheFilms   = [];
 
 /* ============================== UTILITAIRES =============================== */
+/****
+ * Construit une URL TMDB avec la clé & la langue FR
+ * @param {string} path - Chemin d'endpoint (ex: /discover/movie)
+ * @param {object} [params={}] - Paramètres query additionnels
+ * @returns {string} URL complète prête pour fetch
+ ****/
 function tmdbUrl(path, params = {}) {
   const p = new URLSearchParams({ api_key: API_KEY, language: "fr-FR", ...params });
   return `${TMDB_BASE}${path}?${p.toString()}`;
 }
+
+/****
+ * Appelle l’API TMDB et renvoie le JSON
+ * @param {string} path - Endpoint TMDB (ex: /search/tv)
+ * @param {object} params - Paramètres query passés à tmdbUrl
+ * @throws Error si la réponse HTTP n’est pas OK
+ * @returns {Promise<object>} Données JSON
+ ****/
 async function api(path, params) {
   const res = await fetch(tmdbUrl(path, params));
   if (!res.ok) throw new Error(`TMDB ${res.status} @ ${path}`);
   return res.json();
 }
+
+/****
+ * Convertit des minutes en texte lisible (ex: 95 -> "1h35")
+ * @param {number} m - Durée en minutes
+ * @returns {string} "XhYY", "Zm" ou '' si invalide
+ ****/
 function minutesToText(m) {
   if (!m || m <= 0) return "";
   const h = Math.floor(m / 60), min = m % 60;
   return h ? `${h}h${String(min).padStart(2,"0")}` : `${min}m`;
 }
+
+/****
+ * Normalise une certification en badge d’âge (ex: "PG-13" -> "13+")
+ * @param {string} cert - Certification brute
+ * @returns {string} Badge (Tous, 10+, 12+, 16+, 18+, NR, etc.)
+ ****/
 function certToBadge(cert) {
   const c = (cert || "").toUpperCase().trim();
   if (!c) return "NR";
@@ -45,11 +71,25 @@ function certToBadge(cert) {
   if (["18","-18","NC-17"].includes(c)) return "18+";
   return c;
 }
+
+/****
+ * Récupère la certification FR/US depuis les détails d’un film
+ * (utilise release_dates -> results)
+ * @param {object} details - Détails TMDB avec release_dates
+ * @returns {string} Certification brute ou ""
+ ****/
 function pickCertification(details) {
   const arr = details?.release_dates?.results || [];
   const take = (cc) => arr.find(r=>r.iso_3166_1===cc)?.release_dates?.find(d=>d.certification?.trim())?.certification;
   return take("FR") || take("US") || "";
 }
+
+/****
+ * Choisit la meilleure image selon l’orientation (poster/backdrop)
+ * @param {object} item - Élément TMDB (poster_path/backdrop_path)
+ * @param {'portrait'|'landscape'} layout - Orientation voulue
+ * @returns {string} URL d’image ou ""
+ ****/
 function imageUrl(item, layout) {
   if (layout === "portrait") {
     const p = item.poster_path || item.backdrop_path;
@@ -63,6 +103,13 @@ function imageUrl(item, layout) {
 /* ---------- Détection & choix du meilleur titre à afficher ---------- */
 const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
 
+/****
+ * Sélectionne le meilleur titre (FR > EN > fallback, EN si fallback JP)
+ * @param {object} details - Détails TMDB avec translations
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {string} [fallback=""] - Titre de secours
+ * @returns {string} Titre affichable
+ ****/
 function pickDisplayTitle(details, type, fallback="") {
   const translations = details?.translations?.translations || [];
   const fr = translations.find(t => t.iso_639_1 === "fr");
@@ -78,6 +125,12 @@ function pickDisplayTitle(details, type, fallback="") {
   return base;
 }
 
+/****
+ * Extrait l’année depuis les détails (sortie/première diffusion)
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {object} details - Détails TMDB
+ * @returns {string} Année (YYYY) ou ""
+ ****/
 function extractYearFromDetails(type, details){
   const dateStr = type === "movie"
     ? (details?.release_date || details?.primary_release_date || "")
@@ -94,6 +147,11 @@ const apiUrlBaseFilms =
   `&with_genres=16&primary_release_date.gte=${DATE_FROM}&primary_release_date.lte=${DATE_TO}` +
   `&language=fr-FR&include_adult=false`;
 
+/****
+ * Transforme un intervalle "YYYY,YYYY" en bornes de dates complètes
+ * @param {string} rangeStr - Exemple: "1970,2010"
+ * @returns {{gte:string,lte:string}|null} Bornes ou null si invalide
+ ****/
 function toDateRangeFromYears(rangeStr) {
   if (!rangeStr) return null;
   const [startYear, endYear] = rangeStr.split(",").map(s => s.trim());
@@ -101,6 +159,11 @@ function toDateRangeFromYears(rangeStr) {
   return { gte: `${startYear}-01-01`, lte: `${endYear}-12-31` };
 }
 
+/****
+ * Map TMDB results -> objets film pour l’UI
+ * @param {object[]} results - data.results
+ * @returns {object[]} Films normalisés (title, year, affiche, popularity, tmdbId)
+ ****/
 function mapFilms(results = []) {
   return results.map(film => ({
     title: film.title,
@@ -113,17 +176,26 @@ function mapFilms(results = []) {
   }));
 }
 
+/****
+ * Récupère les détails d’un film (append: release_dates, translations)
+ * @param {number} id - TMDB movie id
+ * @returns {Promise<object|null>} Détails ou null si erreur
+ ****/
 async function getMovieDetails(id) {
-  // translations + release_dates (pour âge)
   try { return await api(`/movie/${id}`, { append_to_response: "release_dates,translations" }); }
   catch { return null; }
 }
 
 /* ========================== Fetch côté serveur =========================== */
+/****
+ * Fetch des films côté serveur (tri/popularité côté API)
+ * Applique les filtres (genre, années) et met à jour la pagination
+ * @param {number} [page=1] - Page TMDB à charger
+ * @returns {Promise<void>}
+ ****/
 function fetchFilms(page = 1) {
   let apiUrl = `${apiUrlBaseFilms}&page=${page}`;
 
-  // tri serveur si demandé (original_title.* = titre original TMDB)
   if (sortOrderFilm === "az")  apiUrl += `&sort_by=original_title.asc`;
   if (sortOrderFilm === "za")  apiUrl += `&sort_by=original_title.desc`;
 
@@ -148,7 +220,7 @@ function fetchFilms(page = 1) {
       lastPageCountFilm = Array.isArray(data.results) ? data.results.length : 0;
 
       const filmsList = mapFilms(data.results || []);
-      await displayFilms(filmsList);     // ⬅️ attend l’enrichissement titres + binding clic
+      await displayFilms(filmsList);
       updatePaginationServer();
     })
     .catch(error => {
@@ -158,7 +230,11 @@ function fetchFilms(page = 1) {
     });
 }
 
-// Version "raw" qui renvoie juste results (pour le mode client)
+/****
+ * Version brute: renvoie directement data.results (pour le mode client)
+ * @param {number} [page=1]
+ * @returns {Promise<object[]>} Tableau de résultats TMDB (ou [])
+ ****/
 function fetchFilmsRaw(page = 1) {
   let apiUrl = `${apiUrlBaseFilms}&page=${page}`;
 
@@ -178,6 +254,10 @@ function fetchFilmsRaw(page = 1) {
 }
 
 /* ===== Mode client : charger plusieurs pages, trier FR, paginer localement ==== */
+/****
+ * Charge plusieurs pages côté client, trie A→Z/Z→A en FR, initialise la pagination locale
+ * @returns {Promise<void>}
+ ****/
 async function fetchAllThenSortAZZA() {
   clientPaging = true;
   cacheFilms = [];
@@ -185,30 +265,31 @@ async function fetchAllThenSortAZZA() {
   for (let p = 1; p <= MAX_PAGES_TO_LOAD; p++) {
     const batch = await fetchFilmsRaw(p);
     cacheFilms.push(...mapFilms(batch));
-    if (batch.length < PAGE_SIZE_TMDB) break; // plus de pages
+    if (batch.length < PAGE_SIZE_TMDB) break;
   }
 
-  // Tri FR sur le titre affiché (on ne retire pas les articles)
   const collator = new Intl.Collator("fr", { sensitivity: "base", ignorePunctuation: true, numeric: true });
   cacheFilms.sort((a, b) => {
     if (sortOrderFilm === "za") return collator.compare(b.title || "", a.title || "");
-    return collator.compare(a.title || "", b.title || ""); // 'az' par défaut
+    return collator.compare(a.title || "", b.title || "");
   });
 
-  // Init pagination locale
   totalPagesFilm  = Math.max(1, Math.ceil(cacheFilms.length / PAGE_SIZE_TMDB));
   currentPageFilm = 1;
   renderClientPage();
 }
 
+/****
+ * Rend une page côté client (sans refetch), en conservant le tri appliqué
+ * @returns {Promise<void>}
+ ****/
 async function renderClientPage() {
   const start = (currentPageFilm - 1) * PAGE_SIZE_TMDB;
   const pageItems = cacheFilms.slice(start, start + PAGE_SIZE_TMDB);
 
-  // On demande à displayFilms de ne pas re-trier
   const prevSort = sortOrderFilm;
   sortOrderFilm = "client";
-  await displayFilms(pageItems);    // ⬅️ attend le rendu + binding clic
+  await displayFilms(pageItems);
   sortOrderFilm = prevSort;
 
   updatePaginationClient();
@@ -216,6 +297,11 @@ async function renderClientPage() {
 
 /* =============================== DISPLAY =============================== */
 const HISTORY_KEY = "vod_history";
+
+/****
+ * Ajoute un élément dans l’historique (localStorage) en tête (max 30)
+ * @param {object} item - { id, type, title, ... }
+ ****/
 function pushHistoryLocal(item){
   try{
     const list = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
@@ -227,14 +313,17 @@ function pushHistoryLocal(item){
   }catch(e){ console.warn("localStorage indisponible:", e); }
 }
 
+/****
+ * Affiche la grille de films (enrichit titres/années) + bind clic historique
+ * @param {object[]} films - Liste de films normalisés (mapFilms)
+ * @returns {Promise<void>}
+ ****/
 async function displayFilms(films) {
   const containerFilms = document.getElementById("films");
   if (!containerFilms) return;
 
-  // mémorise la page courante pour pouvoir re-trier sans refetch
   lastFilmsPage = (films || []).slice();
 
-  // ----- enrichissement titres (translations) + année -----
   const detailsList = await Promise.all(
     lastFilmsPage.map(f => getMovieDetails(f.tmdbId).catch(() => null))
   );
@@ -247,10 +336,8 @@ async function displayFilms(films) {
     return { ...film, title, year, _details: d };
   });
 
-  // ----- tri de la page si nécessaire -----
   let sorted = enriched.slice();
   if (sortOrderFilm === "client") {
-    // pas de tri ici (déjà trié en amont)
   } else if (sortOrderFilm === "az" || sortOrderFilm === "za") {
     const collator = new Intl.Collator("fr", { sensitivity: "base", ignorePunctuation: true, numeric: true });
     sorted.sort((a, b) => {
@@ -261,7 +348,6 @@ async function displayFilms(films) {
     sorted.sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0));
   }
 
-  // ----- rendu cartes -----
   containerFilms.innerHTML = "";
   sorted.forEach(film => {
     const card = document.createElement("div");
@@ -277,7 +363,6 @@ async function displayFilms(films) {
     containerFilms.appendChild(card);
   });
 
-  // ----- délégation de clic : ajout à l'historique -----
   if (!containerFilms.__historyBound) {
     containerFilms.addEventListener("click", async (e) => {
       const card = e.target.closest(".card");
@@ -285,9 +370,7 @@ async function displayFilms(films) {
       const id = Number(card.dataset.id || 0);
       if (!id) return;
 
-      // retrouver l'item enrichi (pour réutiliser le titre FR déjà choisi si possible)
       const item = enriched.find(f => f.tmdbId === id) || lastFilmsPage.find(f => f.tmdbId === id);
-      // si on n'a pas encore les détails, on va les chercher (sécurité)
       const d  = item?._details || await getMovieDetails(id).catch(()=>null);
 
       const title = pickDisplayTitle(d, "movie", item?.title || "");
@@ -305,20 +388,21 @@ async function displayFilms(films) {
         age, duration, year, genres
       };
 
-      // utilise la version globale si dispo (index-client), sinon fallback local
       if (typeof pushHistory === "function") pushHistory(payload);
       else pushHistoryLocal(payload);
 
       if (typeof refreshHistoryCarousel === "function") {
-        // rafraîchit le carrousel d’historique si on est sur index-client
         refreshHistoryCarousel();
       }
     });
-    containerFilms.__historyBound = true; // évite les doublons d’écouteurs
+    containerFilms.__historyBound = true;
   }
 }
 
 /* ============================ Pagination UI ============================ */
+/****
+ * Met à jour l’UI de pagination (mode serveur)
+ ****/
 function updatePaginationServer() {
   const lblPage = document.getElementById("current-page-films");
   const btnPrev = document.getElementById("prev-page-films");
@@ -334,6 +418,9 @@ function updatePaginationServer() {
   if (btnNext) btnNext.disabled = !!noNext;
 }
 
+/****
+ * Met à jour l’UI de pagination (mode client)
+ ****/
 function updatePaginationClient() {
   const lblPage = document.getElementById("current-page-films");
   const btnPrev = document.getElementById("prev-page-films");
@@ -345,6 +432,10 @@ function updatePaginationClient() {
 }
 
 /* =================== Rechargement après changement de filtre =================== */
+/****
+ * (Re)charge les films après modification d’un filtre
+ * Bascule en tri client pour A→Z/Z→A, sinon serveur (popularité)
+ ****/
 function refetchAfterFilterChange() {
   currentPageFilm   = 1;
   totalPagesFilm    = null;
@@ -352,32 +443,50 @@ function refetchAfterFilterChange() {
   cacheFilms        = [];
 
   if (sortOrderFilm === "az" || sortOrderFilm === "za") {
-    clientPaging = true;      // rester en tri global côté client
+    clientPaging = true;
     fetchAllThenSortAZZA().then(renderActiveFilters);
   } else {
-    clientPaging = false;     // popularité (serveur)
+    clientPaging = false;
     fetchFilms(currentPageFilm).then(renderActiveFilters);
   }
 }
 
 /* --------------------- helpers affichage libellés --------------------- */
+/****
+ * Libellé de tri courant
+ * @returns {string}
+ ****/
 function getOrderLabel() {
   if (sortOrderFilm === "az") return "Ordre : A → Z";
   if (sortOrderFilm === "za") return "Ordre : Z → A";
-  return "Popularité"; // on ne crée un chip "ordre" que pour az/za
+  return "Popularité";
 }
+
+/****
+ * Libellé du genre sélectionné
+ * @returns {string}
+ ****/
 function getGenreLabel() {
   const sel = document.getElementById("filter-genre");
   if (!sel || !selectedGenreFilm) return "";
   const opt = [...sel.options].find(o => o.value === String(selectedGenreFilm));
   return opt ? `Genre : ${opt.textContent.trim()}` : "Genre";
 }
+
+/****
+ * Libellé de l’intervalle d’années sélectionné
+ * @returns {string}
+ ****/
 function getAnneeLabel() {
   const sel = document.getElementById("filter-annees");
   if (!sel || !selectedAnneeFilm) return "";
   const opt = [...sel.options].find(o => o.value === String(selectedAnneeFilm));
   return opt ? `Années : ${opt.textContent.trim()}` : "Années";
 }
+
+/****
+ * Met à jour le label "Page X / Y"
+ ****/
 function setPageLabelFilms() {
   const lbl = document.getElementById("current-page-films");
   if (!lbl) return;
@@ -390,11 +499,19 @@ function setPageLabelFilms() {
   }
 }
 
+/****
+ * Échappe les caractères HTML pour du texte injecté
+ * @param {string} [s=""]
+ * @returns {string}
+ ****/
 function escapeHtml(s="") {
   return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
 /* -------------------------- rendu de l’historique -------------------------- */
+/****
+ * Rend les chips de filtres actifs (genre/années/ordre)
+ ****/
 function renderActiveFilters() {
   const wrap = document.getElementById("active-filters");
   if (!wrap) return;
@@ -456,7 +573,6 @@ document.addEventListener("click", (e) => {
   sortOrderFilm     = "pop";
   clientPaging      = false;
 
-  // sync UI
   const selG = document.getElementById("filter-genre");
   const selA = document.getElementById("filter-annees");
   const selO = document.getElementById("filter-order");
@@ -464,7 +580,6 @@ document.addEventListener("click", (e) => {
   if (selA) selA.value = "";
   if (selO) selO.value = "pop";
 
-  // recharge standard
   currentPageFilm   = 1;
   totalPagesFilm    = null;
   lastPageCountFilm = 0;
@@ -475,8 +590,10 @@ document.addEventListener("click", (e) => {
 });
 
 /* ======================= INIT DOM + Listeners ======================= */
+/****
+ * Point d’entrée: branche les filtres, le tri, la pagination, et charge la liste
+ ****/
 document.addEventListener("DOMContentLoaded", () => {
-  // Filtres
   const btnFilterAll    = document.getElementById("filter-all");
   const selFilterGenre  = document.getElementById("filter-genre");
   const selFilterAnnees = document.getElementById("filter-annees");
@@ -494,16 +611,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   selFilterAnnees?.addEventListener("change", (event) => {
-    selectedAnneeFilm = event.target.value || ""; // ex: "1970,2010"
+    selectedAnneeFilm = event.target.value || "";
     refetchAfterFilterChange();
   });
 
-  // TRI via le <select id="filter-order">
   const selOrder = document.getElementById("filter-order");
   if (selOrder) selOrder.value = sortOrderFilm;
 
   selOrder?.addEventListener("change", async (e) => {
-    const value = e.target.value;            // 'pop' | 'az' | 'za'
+    const value = e.target.value;
     sortOrderFilm    = value;
     currentPageFilm  = 1;
     totalPagesFilm   = null;
@@ -520,7 +636,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderActiveFilters();
   });
 
-  // Pagination
   const btnPrev = document.getElementById("prev-page-films");
   const btnNext = document.getElementById("next-page-films");
 
@@ -555,6 +670,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Chargement initial
   fetchFilms(currentPageFilm);
 });
+

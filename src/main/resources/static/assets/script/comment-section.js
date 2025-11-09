@@ -16,10 +16,8 @@ function addComment() {
         return false;
     } else {
 
-        // 3.Si le champ est rempli, on ajoute ce que l'user a saisi dans le <p>
         comment.innerHTML = inputUser.value;
 
-        // 4. Identité de l'user + commentaire dans la zone de commentaires
         containerGeneralComment.appendChild(userCommentRow);
         containerGeneralComment.appendChild(comment);
 
@@ -33,7 +31,6 @@ function addComment() {
 
         comment.appendChild(aSupprimer);
 
-        //Suppression de l'identité de l'user + commentaire et prévention d'actions inutiles
         aSupprimer.addEventListener("click", function (event) {
             event.stopPropagation();
             userCommentRow.remove();

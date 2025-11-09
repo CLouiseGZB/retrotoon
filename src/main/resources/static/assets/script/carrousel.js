@@ -4,20 +4,46 @@ const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE  = 'https://image.tmdb.org/t/p';
 
 /* ============================ UTILITAIRES =========================== */
+/****
+ * Construit une URL TMDB avec clé & langue
+ * @param {string} path - Chemin d'endpoint (ex: /discover/movie)
+ * @param {object} params - Paramètres query supplémentaires
+ * @returns {string} URL complète prête pour fetch
+ ****/
 function tmdbUrl(path, params = {}) {
   const p = new URLSearchParams({ api_key: API_KEY, language: 'fr-FR', ...params });
   return `${TMDB_BASE}${path}?${p.toString()}`;
 }
+
+/****
+ * Appelle l’API TMDB et renvoie le JSON
+ * @param {string} path - Endpoint TMDB
+ * @param {object} params - Paramètres query
+ * @throws Error si la réponse n’est pas OK
+ * @returns {Promise<object>} Données JSON
+ ****/
 async function api(path, params) {
   const res = await fetch(tmdbUrl(path, params));
   if (!res.ok) throw new Error(`TMDB ${res.status} @ ${path}`);
   return res.json();
 }
+
+/****
+ * Convertit des minutes en texte lisible (ex: 95 -> "1h35")
+ * @param {number} m - Durée en minutes
+ * @returns {string} "XhYY" ou "Zm" ou '' si invalide
+ ****/
 function minutesToText(m) {
   if (!m || m <= 0) return '';
   const h = Math.floor(m / 60), min = m % 60;
   return h ? `${h}h${String(min).padStart(2,'0')}` : `${min}m`;
 }
+
+/****
+ * Normalise une certification vers un badge (ex: "PG-13" -> "13+")
+ * @param {string} cert - Certification brute
+ * @returns {string} Badge (Tous, 10+, 12+, 16+, 18+, NR, etc.)
+ ****/
 function certToBadge(cert) {
   const c = (cert || '').toUpperCase().trim();
   if (!c) return 'NR';
@@ -30,6 +56,13 @@ function certToBadge(cert) {
   if (['18','-18','NC-17'].includes(c)) return '18+';
   return c;
 }
+
+/****
+ * Récupère la certification FR/US depuis les détails TMDB
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {object} details - Détails TMDB (incl. append)
+ * @returns {string} Certification brute ou ''
+ ****/
 function pickCertification(details, type) {
   if (!details) return '';
   if (type === 'movie') {
@@ -42,6 +75,13 @@ function pickCertification(details, type) {
     return take('FR') || take('US') || '';
   }
 }
+
+/****
+ * Donne la meilleure image (poster/backdrop) selon le layout
+ * @param {object} item - Élément TMDB avec paths d’images
+ * @param {'portrait'|'landscape'} layout - Orientation
+ * @returns {string} URL de l’image ou ''
+ ****/
 function imageUrl(item, layout) {
   if (layout === 'portrait') {
     const p = item.poster_path || item.backdrop_path;
@@ -52,11 +92,18 @@ function imageUrl(item, layout) {
   }
 }
 
-/* ---------- Détection & choix du meilleur titre à afficher ---------- */
+/* =========== Détection & choix du meilleur titre à afficher =========== */
 const JAPANESE_RE = /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u;
 
+/****
+ * Sélectionne le meilleur titre à afficher (FR > EN > fallback)
+ * Si fallback du titre est en japonais (hiragana, katakana, kanji) et EN dispo, préfère EN
+ * @param {object} details - Détails TMDB avec translations
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {string} fallback - Titre de secours
+ * @returns {string} Titre affichable
+ ****/
 function pickDisplayTitle(details, type, fallback='') {
-  // 1) Essayer une traduction FR fournie par TMDB
   const translations = details?.translations?.translations || [];
   const fr = translations.find(t => t.iso_639_1 === 'fr');
   const en = translations.find(t => t.iso_639_1 === 'en');
@@ -65,15 +112,18 @@ function pickDisplayTitle(details, type, fallback='') {
 
   if (frTitle && frTitle.trim()) return frTitle.trim();
 
-  // 2) Sinon, si le fallback est en japonais, préférer EN si dispo
   const base = (fallback || '').trim();
   if (JAPANESE_RE.test(base) && enTitle && enTitle.trim()) return enTitle.trim();
 
-  // 3) Sinon, garder fallback (déjà localisé via language=fr-FR si dispo)
   return base;
 }
 
-// 👇 A coller sous pickDisplayTitle(...)
+/****
+ * Extrait l’année depuis les détails (sortie/première diffusion)
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {object} details - Détails TMDB
+ * @returns {string} Année (YYYY) ou ''
+ ****/
 function extractYearFromDetails(type, details){
   const dateStr = type === 'movie'
     ? (details?.release_date || details?.primary_release_date || '')
@@ -86,6 +136,13 @@ function extractYearFromDetails(type, details){
 const DATE_FROM = '1980-01-01';
 const DATE_TO   = '2010-12-31';
 
+/****
+ * Récupère une liste “discover” triée par popularité
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {string|number} genreId - Genre TMDB (par défaut 16)
+ * @param {number} limit - Nombre max d’items à retourner
+ * @returns {Promise<object[]>} Tableau de résultats normalisés TMDB
+ ****/
 async function getList(type, genreId = '16', limit = 10) {
   const baseParams = {
     with_genres: String(genreId || '16'),
@@ -101,8 +158,13 @@ async function getList(type, genreId = '16', limit = 10) {
   return (data.results || []).slice(0, limit);
 }
 
+/****
+ * Récupère les détails d’un film/série (avec append)
+ * @param {'movie'|'tv'} type - Type de contenu
+ * @param {number} id - ID TMDB
+ * @returns {Promise<object|null>} Détails ou null si erreur silencieuse
+ ****/
 async function getDetails(type, id) {
-  // ➜ On ajoute "translations" pour récupérer les titres FR/EN
   const append = type === 'movie'
     ? 'release_dates,translations'
     : 'content_ratings,translations';
@@ -110,16 +172,23 @@ async function getDetails(type, id) {
   catch { return null; }
 }
 
+/****
+ * Recherche la première série qui matche une requête
+ * @param {string} query - Texte recherché
+ * @returns {Promise<object|null>} Premier résultat ou null
+ ****/
 async function searchTv(query){
   const data = await api('/search/tv', { query, include_adult:'false', page:1 });
   return (data.results || [])[0] || null;
 }
 
 /* ============================ TEMPLATES ============================= */
-// avant
-// function cardHTML({ title, rank, img, age, duration, genres, link }, layout) {
-
-// après
+/****
+ * Génère le HTML d’une carte de contenu
+ * @param {object} props - Données d’affichage (title, img, etc.)
+ * @param {'portrait'|'landscape'} layout - Orientation
+ * @returns {string} HTML d’un <article class="card">
+ ****/
 function cardHTML({ title, rank, img, age, duration, year, genres, link }, layout) {
   const portrait = layout === 'portrait' ? 'portrait' : '';
   const bg = img ? `style="background-image:url('${img}')"` : `style="background-image:linear-gradient(135deg,#555,#333)"`;
@@ -136,7 +205,7 @@ function cardHTML({ title, rank, img, age, duration, year, genres, link }, layou
       </div>
       <div class="meta">
         <span class="title">${title || ''}</span>
-        <span class="year">${year || ''}</span> <!-- 👈 nouveau -->
+        <span class="year">${year || ''}</span>
         <span class="badge-age">${age || 'NR'}</span>
         <span class="duration">${duration || ''}</span>
         <div class="genres">${genres || ''}</div>
@@ -146,21 +215,42 @@ function cardHTML({ title, rank, img, age, duration, year, genres, link }, layou
 
 
 /* ====================== HISTORIQUE (localStorage) ======================= */
-const HISTORY_KEY = 'vod_history';
-
+/****
+ * Assure une URL d’image TMDB correcte (absolue)
+ * @param {string} p - Path ou URL complète
+ * @param {string} size - Taille TMDB (ex: w500)
+ * @returns {string} URL image ou ''
+ ****/
 function ensureTMDBUrl(p, size = 'w500') {
   if (!p) return '';
   if (/^https?:\/\//i.test(p)) return p;
   return `${IMG_BASE}/${size}${p}`;
 }
+
+/****
+ * Lit l’historique depuis localStorage
+ * @returns {object[]} Liste des items (ou [])
+ ****/
 function getHistory(){
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
   catch { return []; }
 }
+
+/****
+ * Sauvegarde une liste d’items dans l’historique
+ * @param {object[]} list - Items à stocker
+ * @sideEffect localStorage
+ ****/
 function saveHistory(list){
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); }
   catch(e){ console.warn('localStorage indisponible:', e); }
 }
+
+/****
+ * Ajoute/Met à jour un item en tête de l’historique (max 30)
+ * @param {object} item - Élément {id,type,title,...}
+ * @sideEffect localStorage
+ ****/
 function pushHistory(item){
   const list = getHistory();
   const idx = list.findIndex(x => x.id === item.id && x.type === item.type);
@@ -169,6 +259,13 @@ function pushHistory(item){
   if (list.length > 30) list.length = 30;
   saveHistory(list);
 }
+
+/****
+ * Donne l’URL d’image pour un item d’historique selon layout
+ * @param {object} h - Élément d’historique
+ * @param {'portrait'|'landscape'} layout
+ * @returns {string} URL image
+ ****/
 function histImageUrl(h, layout){
   if (layout === 'portrait') {
     return ensureTMDBUrl(h.poster_path || h.backdrop_path, 'w500');
@@ -177,7 +274,13 @@ function histImageUrl(h, layout){
   }
 }
 
+
 /* ============================ CARROUSEL UI ============================ */
+/****
+ * Active le carrousel (navigation, drag, responsive)
+ * @param {HTMLElement} root - Racine du carrousel (data-carousel)
+ * @sideEffect: ajoute des listeners & met à jour le DOM/transform
+ ****/
 function attachCarousel(root){
   const track    = root.querySelector('[data-track]');
   const viewport = root.querySelector('.viewport') || root;
@@ -207,10 +310,10 @@ function attachCarousel(root){
       if (w <= 1024) return 3;
       return 5;
     } else {
-      if (w <= 480)  return 1;   // ✅ mobile: 1 carte
-      if (w <= 768)  return 1;   // ✅ mobile: 1 carte
-      if (w <= 1024) return 2;   // tablette
-      return 3;                  // desktop
+      if (w <= 480)  return 1;
+      if (w <= 768)  return 1;
+      if (w <= 1024) return 2;
+      return 3;
     }
   }
 
@@ -255,7 +358,7 @@ function attachCarousel(root){
     if (!animate){ track.getBoundingClientRect(); track.style.transition = ''; }
   }
 
-  // Wrap propre: on montre la dernière page avant de boucler
+  // Wrap avec affichage de la dernière page
   function next(e){
     e?.preventDefault?.(); e?.stopPropagation?.();
     const m = maxIndex();
@@ -323,6 +426,11 @@ function attachCarousel(root){
 }
 
 /* ======================== BUILD TMDB CARROUSEL ======================= */
+/****
+ * Construit un carrousel (movie/tv) avec données TMDB
+ * @param {HTMLElement} root - Élément racine du carrousel
+ * @sideEffect: remplit le track, branche les clics, attacheCarousel
+ ****/
 async function buildCarousel(root){
   const type     = root.getAttribute('data-type')   || 'movie';
   const layout   = root.getAttribute('data-layout') || 'landscape';
@@ -332,45 +440,43 @@ async function buildCarousel(root){
   const list = await getList(type, genreId, 10);
   const details = await Promise.all(list.map(i => getDetails(type, i.id)));
 
-track.innerHTML = list.map((item, i) => {
-  const d = details[i];
-  const age = certToBadge(pickCertification(d, type));
-  const duration = type === 'movie'
-    ? minutesToText(d?.runtime)
-    : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
-  const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || (type==='tv' ? 'Animation' : '');
-  const img = imageUrl(item, layout);
+  track.innerHTML = list.map((item, i) => {
+    const d = details[i];
+    const age = certToBadge(pickCertification(d, type));
+    const duration = type === 'movie'
+      ? minutesToText(d?.runtime)
+      : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
+    const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ') || (type==='tv' ? 'Animation' : '');
+    const img = imageUrl(item, layout);
 
-  const baseTitle = d?.title || d?.name || item.title || item.name || '';
-  const title = pickDisplayTitle(d, type, baseTitle);
+    const baseTitle = d?.title || d?.name || item.title || item.name || '';
+    const title = pickDisplayTitle(d, type, baseTitle);
 
-  const year = extractYearFromDetails(type, d);            // 👈 NOUVEAU
+    const year = extractYearFromDetails(type, d);
 
-  return cardHTML({ title, rank: i+1, img, age, duration, year, genres, link: '' }, layout); // 👈 year ajouté
-}).join('');
-
+    return cardHTML({ title, rank: i+1, img, age, duration, year, genres, link: '' }, layout);
+  }).join('');
 
   const cards = Array.from(track.querySelectorAll('.card'));
-function record(i) {
-  const d = details[i];
-  const age = certToBadge(pickCertification(d, type));
-  const duration = type === 'movie'
-    ? minutesToText(d?.runtime)
-    : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
-  const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
-  const year = extractYearFromDetails(type, d);            // 👈 NOUVEAU
+  function record(i) {
+    const d = details[i];
+    const age = certToBadge(pickCertification(d, type));
+    const duration = type === 'movie'
+      ? minutesToText(d?.runtime)
+      : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
+    const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
+    const year = extractYearFromDetails(type, d);
 
-  pushHistory({
-    id: list[i].id,
-    type,
-    title: d?.title || d?.name || list[i].title || list[i].name || '',
-    poster_path: list[i].poster_path || d?.poster_path || '',
-    backdrop_path: list[i].backdrop_path || d?.backdrop_path || '',
-    age, duration, year, genres                                // 👈 year stocké
-  });
-  refreshHistoryCarousel();
-}
-
+    pushHistory({
+      id: list[i].id,
+      type,
+      title: d?.title || d?.name || list[i].title || list[i].name || '',
+      poster_path: list[i].poster_path || d?.poster_path || '',
+      backdrop_path: list[i].backdrop_path || d?.backdrop_path || '',
+      age, duration, year, genres
+    });
+    refreshHistoryCarousel();
+  }
 
   track.addEventListener('click', (e) => {
     const card = e.target.closest('.card');
@@ -389,6 +495,12 @@ function record(i) {
 }
 
 /* ==================== BUILD & REFRESH HISTORIQUE ==================== */
+/****
+ * Construit le carrousel d’historique (depuis localStorage)
+ * Force l'innjection “Totally Spies” si absent (silencieux si échec)
+ * @param {HTMLElement} root - Racine du carrousel history
+ * @sideEffect: met à jour le DOM, branche les clics, attachCarousel
+ ****/
 async function buildHistoryCarousel(root){
   const layout = root.getAttribute('data-layout') || 'landscape';
   const track  = root.querySelector('[data-track]');
@@ -425,19 +537,19 @@ async function buildHistoryCarousel(root){
   if (!list.length && !spiesHtml) {
     histHtml = `<div style="padding:20px;color:#cbd5e1">Aucun élément dans l’historique. Cliquez sur ▶️ sur une carte pour l’ajouter.</div>`;
   } else {
-histHtml = list.slice(0, 20).map((h, i) => {
-  const img = histImageUrl(h, layout);
-  return cardHTML({
-    title: h.title || '',
-    rank: i+1,
-    img,
-    age: h.age || 'NR',
-    duration: h.duration || '',
-    year: h.year || '',                // 👈 NOUVEAU
-    genres: h.genres || '',
-    link: ''
-  }, layout);
-}).join('');
+    histHtml = list.slice(0, 20).map((h, i) => {
+      const img = histImageUrl(h, layout);
+      return cardHTML({
+        title: h.title || '',
+        rank: i+1,
+        img,
+        age: h.age || 'NR',
+        duration: h.duration || '',
+        year: h.year || '',
+        genres: h.genres || '',
+        link: ''
+      }, layout);
+    }).join('');
   }
 
   track.innerHTML = spiesHtml + histHtml;
@@ -452,12 +564,22 @@ histHtml = list.slice(0, 20).map((h, i) => {
   attachCarousel(root);
 }
 
+/****
+ * Rafraîchit (reconstruit) le carrousel d’historique s’il existe
+ * @sideEffect: DOM
+ ****/
 async function refreshHistoryCarousel(){
   const root = document.querySelector('[data-carousel][data-source="history"]');
   if (root) await buildHistoryCarousel(root);
 }
 
 /* ======================= MIXTE (Films + Séries) ======================= */
+/****
+ * Récupère une liste mixte (films + séries) ordonnée par popularité
+ * @param {string|number} genreId - Genre TMDB
+ * @param {number} limit - Nombre d’items
+ * @returns {Promise<object[]>} Items normalisés {type,id,paths,popularity}
+ ****/
 async function getMixedList(genreId = '16', limit = 10) {
   const movieParams = {
     with_genres: String(genreId),
@@ -495,6 +617,11 @@ async function getMixedList(genreId = '16', limit = 10) {
     .slice(0, limit);
 }
 
+/****
+ * Construit le carrousel mixte (films + séries)
+ * @param {HTMLElement} root - Racine du carrousel mixte
+ * @sideEffect: remplit le track, branche les boutons play, attachCarousel
+ ****/
 async function buildMixedCarousel(root){
   const layout = root.getAttribute('data-layout') || 'portrait';
   const track  = root.querySelector('[data-track]');
@@ -529,14 +656,14 @@ async function buildMixedCarousel(root){
         : (d?.episode_run_time?.[0] ? `${d.episode_run_time[0]}m` : '');
       const genres = (d?.genres || []).map(g => g.name).slice(0,3).join(' • ');
 
-      const year = extractYearFromDetails(it.type, d);           // 👈 NOUVEAU
+      const year = extractYearFromDetails(it.type, d);
       pushHistory({
         id: it.id,
         type: it.type,
         title: d?.title || d?.name || '',
         poster_path: it.poster_path || d?.poster_path || '',
         backdrop_path: it.backdrop_path || d?.backdrop_path || '',
-        age, duration, year, genres                               // 👈 year stocké
+        age, duration, year, genres
       });
 
       refreshHistoryCarousel();
@@ -547,6 +674,12 @@ async function buildMixedCarousel(root){
 }
 
 /* ============================== START =============================== */
+/****
+ * Point d’entrée: construit les carrousels à la fin du chargement DOM
+ * Alerte si la page est ouverte via file:// (TMDB nécessite un serveur)
+ * Construit: mixte, carrousels TMDB classiques, historique
+ * @sideEffect: multiples opérations DOM
+ ****/
 document.addEventListener('DOMContentLoaded', async () => {
   if (location.protocol === 'file:') {
     alert('Ouvre la page via un petit serveur local (ex: `npx serve`) pour que TMDB fonctionne.');
@@ -568,4 +701,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Historique
   refreshHistoryCarousel();
 });
-

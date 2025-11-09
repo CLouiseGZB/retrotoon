@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroToon - Recherche</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/Design_sans_titre-removebg-preview 4.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
     <link rel="stylesheet" href="../assets/css/resultas-barre-de-recherche.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
@@ -38,9 +40,10 @@
                     <input id="search-box" type="text" class="search-box" name="q" />
                     <label for="search-box"><span class="search-icon"><i class="fi fi-rr-search"></i></span></label>
                 </form>
-                
+
                 <div class="account">
-                    <button type="button" class="icon dropdown-arrow" data-account-toggle aria-controls="accountSubMenu" aria-expanded="false">
+                    <button type="button" class="icon dropdown-arrow" data-account-toggle aria-controls="accountSubMenu"
+                        aria-expanded="false">
                         <i class="fi fi-sr-user"></i>
                     </button>
 
@@ -48,37 +51,37 @@
                         <!-- Header carte -->
                         <li class="sm-header" aria-hidden="true">
                             <div class="sm-user">
-                            <div class="sm-avatar" aria-hidden="true">UA</div>
-                            <div class="sm-id">
-                                <p class="sm-hello">Bonjour <span id="smUserName">Utilisateur</span></p>
-                                <a class="sm-myaccount" href="../html/compte.htm">Mon compte</a>
-                            </div>
+                                <div class="sm-avatar" aria-hidden="true">UA</div>
+                                <div class="sm-id">
+                                    <p class="sm-hello">Bonjour <span id="smUserName">Utilisateur</span></p>
+                                    <a class="sm-myaccount" href="../html/compte.html">Mon compte</a>
+                                </div>
                             </div>
                         </li>
 
                         <!-- Section compte -->
                         <li class="sm-section" aria-hidden="true">Compte</li>
                         <li><a class="sm-item" href="../html/profil.html" role="menuitem" tabindex="-1">
-                            <i class="fa-solid fa-user-pen" aria-hidden="true"></i><span>Gestion profil</span>
-                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
-                        </a></li>
+                                <i class="fa-solid fa-user-pen" aria-hidden="true"></i><span>Gestion profil</span>
+                                <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                            </a></li>
                         <li><a class="sm-item" href="../html/parametre.html" role="menuitem" tabindex="-1">
-                            <i class="fi fi-rr-settings" aria-hidden="true"></i><span>Paramètres</span>
-                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
-                        </a></li>
+                                <i class="fi fi-rr-settings" aria-hidden="true"></i><span>Paramètres</span>
+                                <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                            </a></li>
 
                         <!-- Section aide -->
                         <li class="sm-section" aria-hidden="true">Support</li>
                         <li><a class="sm-item" href="../html/contact.html" role="menuitem" tabindex="-1">
-                            <i class="fi fi-rr-info" aria-hidden="true"></i><span>Aide & Contact</span>
-                            <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
-                        </a></li>
+                                <i class="fi fi-rr-info" aria-hidden="true"></i><span>Aide & Contact</span>
+                                <i class="fa-solid fa-chevron-right sm-chevron" aria-hidden="true"></i>
+                            </a></li>
 
                         <!-- Déconnexion -->
                         <li class="sm-sep" aria-hidden="true"></li>
                         <li>
                             <button class="sm-logout" type="button" id="logoutBtn" role="menuitem" tabindex="-1">
-                            <i class="fi fi-rr-exit" aria-hidden="true"></i><span>Déconnexion</span>
+                                <i class="fi fi-rr-exit" aria-hidden="true"></i><span>Déconnexion</span>
                             </button>
                         </li>
                     </ul>
@@ -94,32 +97,34 @@
                 <img class="entete-img" src="../assets/images/recherche.png" alt="Recherche">
             </h1>
         </div>
-
-
         <div class="large-search-container">
-            <input type="text" class="large-search-box" id="large-search-box" placeholder="Rechercher un film ou une série...">
+            <input type="text" class="large-search-box" id="large-search-box"
+                placeholder="Rechercher un film ou une série...">
             <button type="submit" id="large-search-button">Rechercher</button>
-    
         </div>
-    
         <div class="filter-buttons">
             <button id="filter-all">Tout</button>
             <button id="filter-animation">Dessins Animés</button>
             <button id="filter-movies">Films</button>
         </div>
-        
         <div id="results"></div>
-
-
     </main>
-
     <footer>
-        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png" alt="logo"></a>
+        <a href="../html/index-client.html"><img src="../assets/imgParametre/Design_sans_titre-removebg-preview 2.png"
+                alt="logo"></a>
         <div id="liste-footer">
-            <a href="../html/contact.html"><p>Nous contacter</p></a>
-            <a href="../html/index.html#dispo"><p>Applications</p></a>
-            <a href="#"><p>Conditions générales d'utilisation</p></a>
-            <a href="#"><p>Politique de confidentialité</p></a>
+            <a href="../html/contact.html">
+                <p>Nous contacter</p>
+            </a>
+            <a href="../html/index.html#dispo">
+                <p>Applications</p>
+            </a>
+            <a href="#">
+                <p>Conditions générales d'utilisation</p>
+            </a>
+            <a href="#">
+                <p>Politique de confidentialité</p>
+            </a>
         </div>
         <nav>
             <a href=""><i class="fa-brands fa-twitter"></i></a>
@@ -130,36 +135,36 @@
     </footer>
 
     <!-- Tab bar -->
-<div class="tab-bar">
-  <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
-  <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
-  <a href="../html/films.html"><i class="fi fi-rr-clapperboard-play"></i></a>
-  <button type="button" id="tabAccountBtn">
-    <i class="fi fi-sr-user"></i>
-  </button>
-</div>
+    <div class="tab-bar">
+        <a href="../html/index-client.html"><i class="fi fi-sr-home"></i></a>
+        <a href="../html/series.html"><i class="fi fi-rr-tv-retro"></i></a>
+        <a href="../html/films.html"><i class="fi fi-rr-clapperboard-play"></i></a>
+        <button type="button" id="tabAccountBtn">
+            <i class="fi fi-sr-user"></i>
+        </button>
+    </div>
 
-<!-- Drawer (menu latéral) -->
-<div class="drawer-backdrop" id="accountDrawer">
-  <div class="drawer-card">
-    <button class="drawer-close" aria-label="Fermer">&times;</button>
-    <h3>Mon compte</h3>
-    <a class="drawer-item" href="../html/compte.html">
-      <i class="fa-solid fa-user"></i><span>Mon profil</span>
-    </a>
-    <a class="drawer-item" href="../html/parametre.html">
-      <i class="fi fi-rr-settings"></i><span>Paramètres</span>
-    </a>
-    <a class="drawer-item" href="../html/profil.html">
-      <i class="fa-solid fa-user-pen"></i><span>Gestion des profils</span>
-    </a>
-    <button class="drawer-item" id="logoutBtn">
-      <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
-    </button>
-  </div>
-</div>
+    <!-- Drawer (menu latéral) -->
+    <div class="drawer-backdrop" id="accountDrawer">
+        <div class="drawer-card">
+            <button class="drawer-close" aria-label="Fermer">&times;</button>
+            <h3>Mon compte</h3>
+            <a class="drawer-item" href="../html/compte.html">
+                <i class="fa-solid fa-user"></i><span>Mon profil</span>
+            </a>
+            <a class="drawer-item" href="../html/parametre.html">
+                <i class="fi fi-rr-settings"></i><span>Paramètres</span>
+            </a>
+            <a class="drawer-item" href="../html/profil.html">
+                <i class="fa-solid fa-user-pen"></i><span>Gestion des profils</span>
+            </a>
+            <button class="drawer-item" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i><span>Déconnexion</span>
+            </button>
+        </div>
+    </div>
 
-    <script src="../assets/script/recherche.js"></script>
+    <script src="../assets/script/resultSearchbar.js"></script>
     <script src="../assets/script/sub-navbar.js"></script>
     <script src="../assets/script/searchbar.js"></script>
 </body>
