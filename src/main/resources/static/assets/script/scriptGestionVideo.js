@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Erreur lors du chargement :", error);
   }
 });
+
 /****
  * Fonction fetch qui sert a supprimer les vidéos
  ****/
