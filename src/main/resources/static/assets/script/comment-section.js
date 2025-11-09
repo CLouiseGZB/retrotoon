@@ -1,5 +1,3 @@
-/************ COMMENTAIRES ************/
-//envoi des commentaires
 const inputUser = document.getElementById('input-user');
 const containerGeneralComment = document.getElementById('comment-container')
 const submitButton = document.getElementById('submit');

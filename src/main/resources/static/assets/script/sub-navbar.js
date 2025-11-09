@@ -84,8 +84,8 @@
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-    fetch('/logout', { method: 'POST' }).finally(() => {
-      window.location.href = '../html/index.html';
+    fetch('/logout', { method:'POST' }).finally(() => {
+      window.location.href = '../index.html';
     });
   });
 })();
