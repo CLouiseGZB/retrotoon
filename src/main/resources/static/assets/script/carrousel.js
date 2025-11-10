@@ -215,6 +215,7 @@ function cardHTML({ title, rank, img, age, duration, year, genres, link }, layou
 
 
 /* ====================== HISTORIQUE (localStorage) ======================= */
+const HISTORY_KEY = 'tmdb_history';
 /****
  * Assure une URL d’image TMDB correcte (absolue)
  * @param {string} p - Path ou URL complète
