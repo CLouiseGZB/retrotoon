@@ -293,6 +293,29 @@ input[type="date"]::-moz-calendar-picker-indicator {
     border-radius: 3px;
 }
 
+.container-formulaire #motDePasse {
+    margin-bottom: inherit;
+}
+
+.password-container{
+    margin-bottom: 20px;
+}
+
+.input-with-eye input.invalid { border-color: #e11d48; }
+.input-with-eye input.valid   { border-color: #16a34a; }
+.password-helper { font-size: .85rem; margin-top: .25rem; color: #64748b; }
+
+.password-help {
+  font-size: 0.85rem;
+  color: #FFFAE0;
+  margin-top: 4px;
+}
+
+.password-help span {
+  font-weight: 600;
+}
+
+
 
 /*********************** media queries*******************/
 /* responsive inscription/contact/connexions */

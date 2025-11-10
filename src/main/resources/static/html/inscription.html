@@ -53,12 +53,18 @@
                 <input type="date" id="dateDeNaissance" required>
 
                 <h3>Mot de passe</h3>
-                <div class="input-with-eye">
-                    <input type="password" name="password" id="motDePasse" required>
-                    <button type="button" class="icon-btn" aria-pressed="false" aria-label="Afficher le mot de passe">
-                        <i class="fi fi-rr-eye" aria-hidden="true"></i>
-                    </button>
+                <div class="password-container">
+                    <div class="input-with-eye">
+                        <input type="password" name="password" id="motDePasse" required>
+                        <button type="button" class="icon-btn" aria-pressed="false" aria-label="Afficher le mot de passe">
+                            <i class="fi fi-rr-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <p id="password-help" class="password-help">
+                        Doit contenir : <span data-upper>une majuscule</span>, <span data-special>un caractère spécial</span>, <span data-length>au moins 12 caractères</span>.
+                    </p>
                 </div>
+
 
                 <h3>Confirmation mot de passe</h3>
                 <div class="input-with-eye">
