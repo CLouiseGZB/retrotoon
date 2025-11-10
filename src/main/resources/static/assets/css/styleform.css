@@ -301,10 +301,6 @@ input[type="date"]::-moz-calendar-picker-indicator {
     margin-bottom: 20px;
 }
 
-.input-with-eye input.invalid { border-color: #e11d48; }
-.input-with-eye input.valid   { border-color: #16a34a; }
-.password-helper { font-size: .85rem; margin-top: .25rem; color: #64748b; }
-
 .password-help {
   font-size: 0.85rem;
   color: #FFFAE0;
