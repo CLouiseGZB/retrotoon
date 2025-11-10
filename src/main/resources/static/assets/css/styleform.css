@@ -1,4 +1,4 @@
-/************************general*************************/
+/************************ general *************************/
 * {
     margin: 0;
     padding: 0;
@@ -8,20 +8,21 @@
 body {
     background-color: #001D3D;
     min-height: 100vh;
-    /* S'assure que le container prend toute la hauteur de la page */
-    font-family: "Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-
+    font-family: "Fredoka", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif;
 }
-a{
+
+a {
     text-decoration: none;
 }
+
 input {
     font-size: 18px;
 }
+/************************ general *************************/
 
-/************************general*************************/
 
-/**************titres********************/
+/************** titres ********************/
 .containertitrepage {
     display: flex;
     flex-direction: column;
@@ -32,7 +33,7 @@ input {
     background: linear-gradient(to top, #001429, transparent);
     margin-top: 100px;
     margin-bottom: 20px;
-    font-family: 'Bangers', cursive;
+    font-family: "Bangers", cursive;
     font-weight: normal;
     font-size: 26px;
     letter-spacing: 3px;
@@ -43,7 +44,7 @@ h1 {
     margin: 0;
     text-align: center;
     color: #FFFAE0;
-    font-family: 'Bangers', cursive;
+    font-family: "Bangers", cursive;
     font-weight: 800;
     line-height: 1.1;
     font-size: 42px;
@@ -53,7 +54,7 @@ h1 {
 }
 
 h2 {
-    font-family: 'Bangers', cursive;
+    font-family: "Bangers", cursive;
     color: #FFFAE0;
     font-size: 15px;
     margin-top: 10px;
@@ -68,7 +69,6 @@ h2 {
 
 h3 {
     font-weight: 300;
-    /* Définit une police plus fine */
     color: #FFFAE0;
     font-family: Fredoka;
     font-size: 16px;
@@ -80,25 +80,27 @@ h3 {
 #switchToLogin:hover {
     color: #f3a289;
 }
+/************************ titres *************************/
 
-/************************titres*************************/
 
-/****************************container formulaire*****************/
+/************************ container formulaire *****************/
 .container-formulaire {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+/************************ container formulaire *****************/
 
-/************************input*************************/
+
+/************************ input *************************/
 .container-formulaire input,
 .container-formulaire textarea {
     background-color: #001429;
     border: none;
     color: #FFFAFA;
     font-weight: normal;
-    font-family: 'Fredoka', sans-serif;
+    font-family: "Fredoka", sans-serif;
     padding: 10px;
     width: 600px;
     margin-bottom: 20px;
@@ -113,10 +115,10 @@ h3 {
 .container-formulaire input.inputserie {
     width: 30px;
 }
+/************************ input *************************/
 
-/************************input*************************/
 
-/************************astérisques*********************/
+/************************ astérisques *********************/
 .container-asterisques {
     display: flex;
     justify-content: center;
@@ -124,7 +126,7 @@ h3 {
 }
 
 .container-asterisques p {
-    font-family: 'Fredoka', sans-serif;
+    font-family: "Fredoka", sans-serif;
     color: #FFFAFA;
     font-size: smaller;
     white-space: nowrap;
@@ -132,17 +134,17 @@ h3 {
     padding-top: 4px;
     margin-bottom: 15px;
 }
+/************************ astérisques *********************/
 
-/************************astérisques*********************/
 
-/************************checkbox*************************/
+/************************ checkbox *************************/
 .checkbox-container {
     display: flex;
     align-items: center;
 }
 
 .checkbox-container p {
-    font-family: 'Fredoka', sans-serif;
+    font-family: "Fredoka", sans-serif;
     color: #FFFAFA;
     font-size: 15px;
     white-space: nowrap;
@@ -170,17 +172,17 @@ h3 {
 }
 
 .reinitialisation p {
-    font-family: 'Fredoka', sans-serif;
+    font-family: "Fredoka", sans-serif;
     color: #FFFAFA;
     font-size: 10px;
     padding-right: 500px;
     margin-bottom: 10px;
     cursor: pointer;
-
 }
-/************************checkbox*************************/
+/************************ checkbox *************************/
 
-/************************boutton*************************/
+
+/************************ boutons *************************/
 #loginBtn,
 #inscriptionBtn,
 #contactBtn,
@@ -213,14 +215,13 @@ h3 {
     gap: 60px;
 }
 
-/************************boutton*************************/
-
 .fa-solid {
     color: #FFFAE0;
 }
+/************************ boutons *************************/
 
-/************************boutton*************************/
 
+/************************ date picker *************************/
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: #FFFAFA;
     filter: invert(1);
@@ -229,31 +230,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
 }
 
-
 input[type="date"]::-moz-calendar-picker-indicator {
     filter: invert(1);
     font-size: 18px;
     margin-right: 8px;
     cursor: pointer;
 }
+/************************ date picker *************************/
 
 
+/************************ input-with-eye (login + inscription) *************************/
 #loginForm .input-with-eye,
 #inscriptionForm .input-with-eye {
     position: relative;
 }
 
-/* Réserve la place à droite, que ce soit password OU text après toggle */
-#loginForm .input-with-eye>input[type="password"],
-#loginForm .input-with-eye>input[type="text"],
-#inscriptionForm .input-with-eye>input[type="password"],
-#inscriptionForm .input-with-eye>input[type="text"] {
+/* réserve la place pour l’icône */
+#loginForm .input-with-eye > input[type="password"],
+#loginForm .input-with-eye > input[type="text"],
+#inscriptionForm .input-with-eye > input[type="password"],
+#inscriptionForm .input-with-eye > input[type="text"] {
     padding-right: 44px;
-
 }
 
-#loginForm .input-with-eye>input[type="password"],
-#inscriptionForm .input-with-eye>input[type="password"] {
+#loginForm .input-with-eye > input[type="password"],
+#inscriptionForm .input-with-eye > input[type="password"] {
     font-size: 25px;
     letter-spacing: .2ch;
 }
@@ -276,7 +277,6 @@ input[type="date"]::-moz-calendar-picker-indicator {
     color: #FFFAFA;
 }
 
-/* Icône UIcons (petit nudge si nécessaire) */
 #loginForm .input-with-eye .icon-btn i,
 #inscriptionForm .input-with-eye .icon-btn i {
     font-size: 18px;
@@ -285,38 +285,62 @@ input[type="date"]::-moz-calendar-picker-indicator {
     transform: translateY(1px);
 }
 
-/* Focus visible */
 #loginForm .input-with-eye .icon-btn:focus-visible,
 #inscriptionForm .input-with-eye .icon-btn:focus-visible {
     outline: 2px solid #EB7A57;
     outline-offset: -2px;
     border-radius: 3px;
 }
+/************************ input-with-eye *************************/
 
+
+/************************ bloc mot de passe (alignement input + aide) *************************/
 .container-formulaire #motDePasse {
     margin-bottom: inherit;
 }
 
-.password-container{
-    margin-bottom: 20px;
+.password-container {
+    width: 600px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.password-container .input-with-eye {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.password-container .input-with-eye > input {
+    width: 100%;
+}
+
+.password-container .input-with-eye .icon-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .password-help {
-  font-size: 0.85rem;
-  color: #FFFAE0;
-  margin-top: 4px;
+    width: 600px;
+    margin: 4px auto 0;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #FFFAE0;
 }
 
 .password-help span {
-  font-weight: 600;
+    font-weight: 600;
 }
+/************************ bloc mot de passe *************************/
 
 
-
-/*********************** media queries*******************/
-/* responsive inscription/contact/connexions */
-@media (max-width:768px) {
-
+/*********************** media queries *******************/
+@media (max-width: 768px) {
     h1 {
         font-size: 2.2rem;
     }
@@ -335,22 +359,16 @@ input[type="date"]::-moz-calendar-picker-indicator {
         flex-direction: column;
     }
 
-    /* On garde l’espace pour l’icône aussi en mobile */
-    #loginForm .input-with-eye>input[type="password"],
-    #inscriptionForm .input-with-eye>input[type="password"] {
+    /* on garde l’espace pour l’icône en mobile */
+    #loginForm .input-with-eye > input[type="password"],
+    #inscriptionForm .input-with-eye > input[type="password"] {
         padding-right: 44px;
     }
 }
 
-/* à partir de 700px ou 650px il faut commencer à réduire le formulaire d'inscription */
-@media (max-width:700px) {
-
+/* ≈700px : réduire la largeur des champs */
+@media (max-width: 700px) {
     .container-formulaire input {
-        height: 35px;
-        width: 500px;
-    }
-
-    h3 {
         height: 35px;
         width: 500px;
     }
@@ -358,13 +376,31 @@ input[type="date"]::-moz-calendar-picker-indicator {
     .container-formulaire textarea {
         width: 500px;
     }
+
+    .password-container,
+    .password-help {
+        width: 500px;
+    }
+
+    h3 {
+        height: 35px;
+        width: 500px;
+    }
 }
 
-@media (max-width:631px) {
-
+@media (max-width: 631px) {
     .container-formulaire input,
     .connexion input {
         height: 30px;
+        width: 400px;
+    }
+
+    .container-formulaire textarea {
+        width: 400px;
+    }
+
+    .password-container,
+    .password-help {
         width: 400px;
     }
 
@@ -373,20 +409,16 @@ input[type="date"]::-moz-calendar-picker-indicator {
     }
 
     h2 {
-        font-size: 1.20rem;
+        font-size: 1.2rem;
     }
 
     h3 {
         height: 30px;
         width: 400px;
     }
-
-    .container-formulaire textarea {
-        width: 400px;
-    }
 }
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
     h1 {
         font-size: 2rem;
     }
@@ -395,20 +427,24 @@ input[type="date"]::-moz-calendar-picker-indicator {
         font-size: 1rem;
         text-align: center;
     }
-
 }
 
-@media (max-width:426px) {
+@media (max-width: 426px) {
     .container-formulaire input {
+        width: 300px;
+    }
+
+    .container-formulaire textarea {
+        width: 300px;
+    }
+
+    .password-container,
+    .password-help {
         width: 300px;
     }
 
     h3 {
         height: 25px;
-        width: 300px;
-    }
-
-    .container-formulaire textarea {
         width: 300px;
     }
 }
