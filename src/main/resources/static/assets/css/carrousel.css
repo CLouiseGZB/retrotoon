@@ -14,7 +14,7 @@
   padding: 6px 0 12px 0;
   transition: transform 0.4s ease;
   will-change: transform;
-  margin-right: -0.6rem; /* évite l’espace après la dernière carte */
+  margin-right: -0.6rem;
 }
 
 /* ================= FLÈCHES DE NAVIGATION ================= */
@@ -62,10 +62,10 @@
   box-shadow: 0 22px 64px rgba(0,20,41,0.95), 0 2px 0 1px rgba(255,255,255,0.06);
 }
 
-/* Portrait (2:3) */
+
 .card.portrait { aspect-ratio: 2 / 3; }
 
-/* Couches internes */
+
 .thumb, .gradient, .play { position: absolute; inset: 0; }
 .thumb { background-size: cover; background-position: center; z-index: 0; }
 .gradient {
@@ -106,7 +106,7 @@
   box-shadow: 0 16px 36px rgba(229,9,20,0.5);
 }
 
-/* Badge rang */
+
 .badge-rank {
   position: absolute;
   top: 8px;
@@ -124,7 +124,7 @@
   box-shadow: 0 12px 32px rgba(229,9,20,0.45);
 }
 
-/* Détails texte */
+
 .title, .year { color: #fff; }
 .badge-age {
   padding: 2px 6px;
@@ -164,19 +164,17 @@
 
 /* ================= TABLETTE (768–1024) ================= */
 @media (max-width: 1024px) and (min-width: 768px) {
-  /* Landscape : 2 cartes visibles */
   .carousel[data-layout="landscape"] .card:not(.portrait) {
     width: 48%;
     aspect-ratio: 16 / 9;
   }
 
-  /* History : 2 cartes également */
+
   .carousel[data-source="history"] .card {
     width: 48%;
     aspect-ratio: 16 / 9;
   }
 
-  /* Portrait : 3 cartes visibles */
   .carousel[data-layout="portrait"] .card {
     width: 31.5%;
     aspect-ratio: 2 / 3;

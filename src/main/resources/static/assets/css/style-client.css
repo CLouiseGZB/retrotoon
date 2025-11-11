@@ -59,7 +59,7 @@ h3 {
   margin: 0 24px 1rem;
 }
 
-/* HR discret et aligné */
+
 hr {
   border: 0;
   height: 1px;
@@ -94,7 +94,6 @@ video {
   object-fit: cover;
 }
 
-/* Desktop par défaut : le player remplit l'écran */
 #player {
   position: relative;
   width: 100%;
@@ -104,7 +103,6 @@ video {
   min-height: 100dvh;
 }
 
-/* La vidéo remplit le player */
 #player .hero-video,
 #player > video {
   position: absolute;
@@ -115,7 +113,6 @@ video {
   object-fit: cover;
 }
 
-/* Overlay contenu */
 .overlay-content {
   position: absolute;
   inset: 0;
@@ -186,7 +183,6 @@ video {
   pointer-events: auto;
 }
 
-/* cartes */
 .play:hover {
   cursor: pointer;
 }
@@ -270,5 +266,3 @@ video {
   .overlay-content button { padding: 7px 12px; }
 }
 
-/* ================== Petites utilitaires optionnelles ================== */
-/* .debug-border{ border:1px dashed red; } */

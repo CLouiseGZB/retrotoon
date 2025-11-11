@@ -25,10 +25,7 @@ a{
     --row-h: 45vh;
     --header-h: 80px;
     --title-shadow: 0 3px 10px rgba(0, 0, 0, .45);
-
-    /* marge horizontale des titres gérée par MQ */
     --gutter: 24px;
-    /* desktop */
 }
 
 body {

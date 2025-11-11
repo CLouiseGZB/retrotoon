@@ -27,7 +27,7 @@ h3 {
 .hautPage h1 {
     text-align: center;
     color: #FFFAE0;
-    font-family: 'Bangers', cursive;   /* ou Fredoka si tu préfères */
+    font-family: 'Bangers', cursive;
     font-weight: 800;
     line-height: 1.1;
     font-size: 42px;
@@ -43,13 +43,11 @@ h3 {
     height:200px;
     padding-top:40px;
     background: linear-gradient(to top, #001429, transparent);
-    /* margin-top:100px; */
     font-family:'Bangers', cursive;
     font-weight:normal;
     font-size:26px;
     letter-spacing:3px;
     color:#FFFAE0;
-  /* border: solid 1px #FFFAE0; */
 }
     a{color:inherit;text-decoration:none}
 
@@ -100,7 +98,7 @@ h3 {
   padding:16px; border-radius:14px;
   background:#001D3D;
   border:1px solid rgba(255,255,255,.14);
-  color:#FFFAE0;                 /* << force la couleur */
+  color:#FFFAE0;
   box-shadow:0 8px 24px rgba(0,0,0,.35);
   transition: background .15s ease, border-color .15s ease, color .15s ease;
 }
@@ -109,17 +107,14 @@ h3 {
 /* ancre : rien de spécial */
 a.actionCard{ text-decoration:none; }
 
-/* bouton : neutraliser le style par défaut */
+
 button.actionCard{
   font: inherit;
   text-align: left;
   width: 100%;
   cursor: pointer;
-  /* si un reset t’oblige, décommente la ligne suivante */
-  /* color:#FFFAE0 !important; */
 }
 
-/* hover (identique pour a + button) */
 .actionCard:hover{
   background:#001429;
   border-color:#EB7A57;
@@ -148,5 +143,4 @@ button.actionCard{
       background:#2b1111; color:#ff9b80; border-color:#ff9b80;
     }
 
-    /* Petits textes */
     .muted{ opacity:.9; font-size:14px }

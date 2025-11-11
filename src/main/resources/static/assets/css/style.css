@@ -8,7 +8,6 @@
     box-sizing: border-box;
 }
 
-/* Styles pour les titres */
 h1,
 h2,
 h3 {
@@ -30,12 +29,11 @@ body {
 /* ===== Header en plein écran (desktop) + 70% en mobile ===== */
 header{
   position: relative;
-  z-index: 0;          /* crée un contexte pour le ::before */
+  z-index: 0;
   overflow: hidden;
 
-  /* plein écran */
   height: 100vh;
-  height: 100dvh;      /* mieux pour mobile moderne */
+  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -43,9 +41,9 @@ header{
 header::before{
   content: "";
   position: absolute;
-  inset: 0;            /* top/right/bottom/left: 0 */
+  inset: 0;
   background: url("../images/Backgroung-header.jpg") center / cover no-repeat;
-  z-index: -1;         /* derrière le contenu du header */
+  z-index: -1;
 }
 
 hr {
@@ -58,7 +56,6 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: springgreen solid 1px; */
 
 }
 
@@ -67,10 +64,6 @@ header{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* height: fit-content; */
-    /* width: 30rem; */
-    /* padding-top: 1rem; */
-    /* border: solid 1px red; */
 }
 
 .entete-index h1 {
@@ -79,7 +72,7 @@ header{
 }
 
 h1 {
-  margin: 1rem !important;         /* écrase toute marge résiduelle */
+  margin: 1rem !important;
 }
 
 .entete-index button {
@@ -144,24 +137,12 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* Mobile : header = 70% de la hauteur de l’écran */
-/* @media (max-width: 768px){
-  header{
-    height: 70vh;
-    height: 70dvh;
-    min-height: 70vh;
-    min-height: 70dvh;
-  }
-} */
-
-/* ── Laptops / tablettes paysage ───────────────────────── */
 @media (max-width: 1024px){
   header{
-    /* on n’impose plus 100vh */
     height: auto;
-    min-height: 60vh;     /* moins imposant */
-    min-height: 60svh;    /* mieux sur mobiles récents */
-    padding: 24px 16px;   /* un peu d’air */
+    min-height: 60vh;
+    min-height: 60svh;
+    padding: 24px 16px;
   }
 
   .entete-index h1{ 
@@ -169,7 +150,6 @@ h1 {
 }
 }
 
-/* ── Tablette / mobile large ───────────────────────────── */
 @media (max-width: 768px){
   header{
     height: auto;
@@ -191,11 +171,10 @@ h1 {
   .entete-index{ gap:12px; width: 94vw; }
 }
 
-/* ── Mobile ────────────────────────────────────────────── */
 @media (max-width: 480px){
   header{
-    height: auto;         /* laisse la hauteur suivre le contenu */
-    min-height: 40vh;     /* header compact */
+    height: auto;
+    min-height: 40vh;
     min-height: 40svh;
     padding: 16px 12px;
   }

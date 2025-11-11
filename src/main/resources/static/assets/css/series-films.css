@@ -8,7 +8,7 @@
     box-sizing: border-box;
 }
 
-/* Styles pour les titres */
+
 h1, h2, h3 {
     font-family: "Bangers", system-ui;
     font-weight: 400;
@@ -26,7 +26,6 @@ body {
 
 h1{
     margin-block: 1rem;
-    /* border: solid 1px red; */
     width: fit-content;
 }
 
@@ -41,8 +40,6 @@ hr{
 }
 
 .entete{
-  /* border: solid red 1px; */
-  /* margin-block: 8rem 6rem; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,14 +49,11 @@ hr{
 .entete-img {
   max-width: 100%;
   height: auto;
-  width: 600px;      /* taille de base desktop */
+  width: 600px;
   display: block;
-  /* margin: 0 auto; */
-    /* border: solid blue 1px; */
 }
 
 .entete-img-series{
-    /* border: solid 1px red; */
     height: 300px;
     padding-top: 1rem;
     width: 500px;
@@ -130,7 +124,6 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
 }
 
 /* ***************************carte**************** */
-/* Conteneur des cartes de séries */
 #series, #films{
     display: flex;
     flex-direction: row;
@@ -143,43 +136,42 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
 .card{
   display: flex;
   flex-direction: column;
-  width: 200px;                  /* taille par défaut desktop (tu l'avais déjà) */
+  width: 200px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 
-/* Image : même ratio partout, pas de hauteur fixe */
+
 .card img{
   width: 100%;
-  height: auto;                  /* supprime les 300px et autres hauteurs fixes */
-  aspect-ratio: 2 / 3;           /* portrait constant */
+  height: auto;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
   display: block;
 }
 
-/* Zone texte : hauteur normalisée pour aligner les cartes */
 .card > div{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding-inline: 3px;
   padding-block: 6px 8px;
-  min-height: 64px;              /* même base pour toutes */
+  min-height: 64px;
 }
 
-/* Titre : limité à 2 lignes */
+
 .card p:first-child{
-  font-size: 16px;               /* même style, plus stable */
+  font-size: 16px;
   line-height: 1.25;
   display: -webkit-box;
-  -webkit-line-clamp: 2;         /* 2 lignes max */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Année : 1 ligne */
+
 .card p:last-child{
   margin: 0;
   font-size: 14px;
@@ -194,12 +186,11 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
     
 }
 
-/* Évite le “saut” au hover (remplace la border par un outline) */
 .card img:hover{
   outline: 2px solid #EB7A57;
-  border-radius: 8px 8px 0 0;       /* pour suivre le contour de la carte */
+  border-radius: 8px 8px 0 0;
   outline-offset: -2px;
-  border: none;                  /* neutralise la border si encore appliquée */
+  border: none;
   cursor: pointer;
 }
 
@@ -226,27 +217,26 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
     color: #EB7A57;
 }
 
-/* Hover/focus sur boutons actifs */
 #pagination button:hover:not(:disabled) {
   transform: translateY(-1px);
 }
 #pagination button:focus-visible {
-  outline: 2px solid #EB7A57;   /* focus clair */
+  outline: 2px solid #EB7A57;
   outline-offset: 2px;
 }
 
 /* ————— ÉTAT GRISÉ ————— */
 #pagination button:disabled {
-  opacity: 0.45;                 /* “grisé” visuel */
-  filter: grayscale(80%);        /* dé-sature l’icône */
+  opacity: 0.45;
+  filter: grayscale(80%);
   cursor: not-allowed;
-  pointer-events: none;          /* non cliquable */
-  transform: none !important;    /* pas d’anim */
+  pointer-events: none;
+  transform: none !important;
 }
 
-/* Griser aussi l’icône Font Awesome si besoin */
+
 #pagination button:disabled i {
-  color: #F6EDC2;                /* garde ta teinte mais atténuée par l’opacité */
+  color: #F6EDC2;
 }
 
 .serie-card {
@@ -272,28 +262,25 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
 
     @media (max-width: 768px) {
         .entete {
-            /* border: solid blue 1px; */
-            height: 210px;      /* taille réduite pour tablettes */
+            height: 210px;
         }
 
         .entete-img-series{
             height: 210px;
-            width: 300px;      /* taille réduite pour tablettes */
-                  /* taille réduite pour tablettes */
+            width: 300px;
         }
 
 
-        /* Cartes de séries et films */      
         #series, #films {
-            gap: 10px; /* Réduction de l'espacement */
+            gap: 10px;
         }
     
         .card img {
-            height: auto;  /* Hauteur automatique pour s'adapter à la largeur */
+            height: auto;
         }
     
         .card p {
-            font-size: 12px; /* Texte plus compact */
+            font-size: 12px;
         }
       
         .btn-reset{
@@ -310,7 +297,7 @@ select:hover, select:focus,  #filter-all:hover, #filter-all:focus, .btn-reset:ho
       }
 
 @media (max-width: 480px) {
-    .card {width: calc(50% - 10px); /* Toujours deux cartes par ligne */
+    .card {width: calc(50% - 10px);
     }
   
   }

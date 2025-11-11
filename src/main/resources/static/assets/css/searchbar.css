@@ -62,14 +62,13 @@ input.search-box:active {
 
 @media (max-width: 1024px) {}
 
-/* Mobile ≤ 768px : ultra-slim */
+
 @media (max-width: 768px) {
-  /* zone de touch confortable sans épaissir visuellement */
   .search-container {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 6px 0;            /* ↑ tap target (≈ 26px + 12px = ~38–40px) */
+    padding: 6px 0;
     min-width: 0;
   }
 
@@ -83,10 +82,10 @@ input.search-box:active {
     cursor: text;
     background: transparent;
     color: transparent;
-    padding-left: 26px;        /* place pour l’icône */
+    padding-left: 26px;
     text-indent: -5000px;
-    font-size: .9rem;          /* texte lisible mais compact */
-    line-height: 1.2;          /* évite de couper les ascendantes/descendantes */
+    font-size: .9rem;
+    line-height: 1.2;
   }
 
   .search-box:focus {
@@ -96,7 +95,7 @@ input.search-box:active {
 
   .search-box.active {
     width: 58vw;
-    max-width: 190px;          /* étroit et propre */
+    max-width: 190px;
     background: #EB7A57;
     color: #FFFAE0;
     text-indent: 0;
@@ -111,13 +110,13 @@ input.search-box:active {
   }
   .search-icon i {
     color: #FFFAE0;
-    font-size: 1rem;           /* icône plus fine */
+    font-size: 1rem;
     line-height: 1;
     pointer-events: none;
   }
 }
 
-/* Ultra-étroit ≤ 360px : nano-slim */
+
 @media (max-width: 360px) {
   .search-box {
     height: 26px;
@@ -128,7 +127,7 @@ input.search-box:active {
     font-size: .9rem;
   }
   .search-box.active {
-    width: 56vw;               /* ~180px sur 320px */
+    width: 56vw;
     max-width: 180px;
   }
   .search-icon { left: 5px; }
