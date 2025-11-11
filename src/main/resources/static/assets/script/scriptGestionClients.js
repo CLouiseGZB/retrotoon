@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>${user.prenom || ""}</td>
         <td>${user.email || ""}</td>
         <td>${dateFormatee}</td>
-        <td>Actif</td> <!-- Statut non présent dans ton JSON -->
+        <td style="color: green;">Actif</td>
         <td><input type="checkbox" class="select-user" data-id="${user.email}"></td>
       `;
       container.appendChild(row);

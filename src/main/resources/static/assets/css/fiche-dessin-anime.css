@@ -2,7 +2,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@300..700&display=swap');
 
-/* @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css); */
 
 
 
@@ -78,10 +77,8 @@ h2 {
 
 #principal-video {
     padding: 60px 0px 20px 0px;
-    /* border: 1px solid green; */
 }
 
-/* Icône (le triangle “Play”) */
 .plyr__control--overlaid svg {
     width: 40px;
     height: 40px;
@@ -101,7 +98,6 @@ h2 {
 #container-select-boxes-and-favorite-likes {
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid red; */
 }
 
 select {
@@ -113,8 +109,6 @@ select {
     border: 2px solid var(--beige);
     border-radius: 4px;
     padding: 0.5rem 1.5rem;
-    /* ici j'ai enlevé l'apparence de base du chevron du coup 
-    j'ai ajouté une image pour avoir un chevron qui me convenait */
     appearance: none;
     background-image: url('/assets/images-fiche-dessin-anime/chevron-beige.png');
     background-repeat: no-repeat;
@@ -135,7 +129,6 @@ select:focus {
     flex-direction: row;
     gap: 20px;
     width: fit-content;
-    /*ajustement au niveau du contenu au lieu du conteneur*/
 }
 
 /* FAVORIS AND LIKE */
@@ -165,15 +158,6 @@ select:focus {
     border: 2px solid var(--corail);
 }
 
-/* #favorite-button,
-#like-button {
-    text-align: center;
-    border: 1px solid var(--beige);
-    border-radius: 4px;
-    height: 35px;
-    width: 140px;
-    padding: 0px 10px 0px 10px;
-} */
 .fi-rr-heart,
 .fi-tr-feedback-review,
 .fi-sr-heart,
@@ -252,9 +236,7 @@ textarea {
     width: 90%;
     height: 230px;
     resize: none;
-    /*retire l'element qui permet d'agrandir la text area*/
     border: 2px solid transparent;
-    /*bordure en transparent pour que lors du focus ca ne s'agrandisse pas*/
     outline: none;
     padding: 10px;
     font-family: 'Fredoka';
@@ -272,7 +254,6 @@ textarea:hover {
 textarea:focus {
     cursor: text;
     border-color: var(--corail);
-    /*bordure ne s'agrandit pas */
 }
 
 button[type="submit"] {
@@ -287,7 +268,6 @@ button[type="submit"] {
     padding: 0.5rem 1.5rem;
     border-radius: 4px;
     display: block;
-    /*le btn est en display block comme ca je n'ai pas à créer de div pour le centrer*/
     margin: 20px auto 0px auto;
     cursor: pointer;
 }
@@ -307,7 +287,6 @@ button[type="submit"]:focus {
         max-width: 725px;
     }
 
-    /* Police de l'écriture de la vidéo */
     #principal-video h1 {
         font-size: 40px;
     }
@@ -316,14 +295,12 @@ button[type="submit"]:focus {
     video {
         width: 100%;
         height: auto;
-        /*vidéo s'adaptera à la largeur de son conteneur */
     }
 
 }
 
 @media (max-width: 631px) {
 
-    /*  */
     #container-select-boxes-and-favorite-likes {
         flex-direction: column-reverse;
         gap: 30px;
@@ -334,7 +311,6 @@ button[type="submit"]:focus {
 
 @media (max-width: 426px) {
 
-    /* Police de l'écriture de la vidéo */
     #principal-video h1 {
         font-size: 16px;
     }
@@ -343,7 +319,6 @@ button[type="submit"]:focus {
 
 @media (max-width: 376px) {
 
-    /* Police de l'écriture de la vidéo */
     #principal-video h1 {
         font-size: 16px;
     }
@@ -356,15 +331,12 @@ button[type="submit"]:focus {
     }
 
     /************ VIDEO PLAYER BOX ************/
-    /* Police de l'écriture de la vidéo */
     #principal-video h1 {
         font-size: 16px;
     }
 
-    /*VIDEO CONTAINER*/
     #principal-video {
         padding: 2rem;
-        /* border: 1px solid green; */
     }
 
     /* DESCRIPTION */

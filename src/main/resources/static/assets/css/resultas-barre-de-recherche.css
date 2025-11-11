@@ -16,7 +16,6 @@ h1, h2, h3 {
   color: #F6EDC2;
 }
 
-/* Styles pour le corps de la page */
 body {
   margin: 0;
   font-family: "Fredoka", sans-serif;
@@ -46,7 +45,6 @@ a{ text-decoration: none; }
 
 /* Styles pour l'en-tête */
 .entete{
-  /* border: solid red 1px; */
   margin-block: 8rem 6rem;
   display: flex;
   align-items: center;
@@ -57,22 +55,21 @@ a{ text-decoration: none; }
 .entete img {
   max-width: 100%;
   height: auto;
-  width: 700px;      /* taille de base desktop */
+  width: 700px;
   display: block;
   margin: 0 auto;
 }
 
 /* **************************grande barre de recherche********** */
 .large-search-container {
-  /* placement icône + responsive wrap */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;            /* le bouton peut passer à la ligne */
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 30px;
-  padding: 0 16px;            /* petite marge latérale mobile */
+  padding: 0 16px;
 }
 
 .large-search-box {
@@ -82,7 +79,7 @@ a{ text-decoration: none; }
   border: 2px solid #F6EDC2;
   background-color: #001D3D;
   color: #F6EDC2;
-  padding-left: 2.5rem;       /* place pour l’icône */
+  padding-left: 2.5rem;
   border-radius: 50px;
   font-size: 18px;
   outline: none;
@@ -92,13 +89,12 @@ a{ text-decoration: none; }
 .large-search-box::placeholder{ color: #F6EDC2; }
 
 .large-search-icon {
-  /* icône dans l’input */
   position: absolute;
-  left: 26px;                 /* cohérent avec padding-left */
+  left: 26px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  pointer-events: none;       /* les clics focus l’input */
+  pointer-events: none;
 }
 
 .large-search-icon i{
@@ -111,7 +107,7 @@ a{ text-decoration: none; }
   border: solid 2px #F6EDC2;
   color: #F6EDC2;
   padding: 10px 20px;
-  margin-left: 10px;          /* Espace entre le bouton et la barre de recherche */
+  margin-left: 10px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
@@ -119,7 +115,7 @@ a{ text-decoration: none; }
 }
 .large-search-container button:hover{ border: solid 2px #EB7A57; }
 
-/* Filtres */
+
 .filter-buttons {
   text-align: center;
   margin-bottom: 20px;
@@ -147,13 +143,13 @@ a{ text-decoration: none; }
   padding: 0 12px;
 }
 .results-header h2{
-  font-size: 1.75rem;    /* UI-friendly */
+  font-size: 1.75rem;
   line-height: 1.25;
   text-align: center;
   margin: 0;
 }
 
-/* GRID responsive (au lieu du flex fixe) */
+
 #results {
   display: flex;
   flex-direction: row;
@@ -165,7 +161,7 @@ a{ text-decoration: none; }
 #results .card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, .25);
   overflow: hidden;
-  width: 200px;              /* largeur fixe */
+  width: 200px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: #F6EDC2;
@@ -173,24 +169,24 @@ a{ text-decoration: none; }
 
 #results .card img {
   width: 100%;
-  height: 300px;             /* hauteur fixe */
+  height: 300px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 #results .card:hover {
   outline: 2px solid #EB7A57;
-  border-radius: 8px 8px 0 0;       /* pour suivre le contour de la carte */
+  border-radius: 8px 8px 0 0;
   outline-offset: -2px;
-  border: none;                  /* neutralise la border si encore appliquée */
+  border: none;
   cursor: pointer;
 }
 
-/* Autres blocs existants */
+
 .movie, .tv-show {
-  border-radius: 5px; /* Coins arrondis pour les articles */
-  padding: 10px; /* Espacement interne */
-  overflow: hidden; /* Évite que le contenu dépasse les bords */
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 .movie-header, .tv-show-header { margin-bottom: 10px; }
@@ -236,7 +232,7 @@ a{ text-decoration: none; }
 
 /* Cartes un peu plus petites sur très grand écran (+1 colonne) */
 @media (min-width: 1201px) {
-  #results { grid-template-columns: repeat(7, 1fr); } /* +1 colonne */
+  #results { grid-template-columns: repeat(7, 1fr); }
 }
 
 /* ≤ 1200px */
@@ -261,14 +257,14 @@ a{ text-decoration: none; }
 
   .large-search-box {
     width: 36rem;
-    height: 2.25rem;       /* un peu plus lisible */
+    height: 2.25rem;
     font-size: 16px;
     padding: 12px 1rem 12px 2.3rem;
   }
 
   #results { grid-template-columns: repeat(4, 1fr); gap: 18px; }
 
-  /* cartes un poil plus compactes */
+
   #results .card > div { min-height: 68px; }
   #results .card p:first-child { font-size: 15px; }
   #results .card p:last-child  { font-size: 13.5px; }
@@ -287,8 +283,8 @@ a{ text-decoration: none; }
   .large-search-container { justify-content: center; }
 
   .large-search-box {
-    width: 100%;            /* prend la ligne */
-    max-width: 32rem;       /* mais garde une limite visuelle */
+    width: 100%;
+    max-width: 32rem;
     height: 2.25rem;
     font-size: 15px;
     padding: 10px 1rem 10px 2rem;
@@ -301,7 +297,6 @@ a{ text-decoration: none; }
   }
 
   #results{
-    /* cartes plus étroites, plus nombreuses si possible */
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px;
   }
@@ -335,7 +330,7 @@ a{ text-decoration: none; }
     justify-content: center; padding: 0 16px;
   }
   .filter-buttons button {
-    flex: 1 1 calc(50% - 8px); /* 2 par ligne si besoin */
+    flex: 1 1 calc(50% - 8px);
     font-size: 14px;
     min-height: 38px;
   }
@@ -360,7 +355,7 @@ a{ text-decoration: none; }
 
   .large-search-box {
     max-width: 20rem;
-    height: 2rem;        /* plus fine visuelle */
+    height: 2rem;
     font-size: 14px;
     padding: 8px .8rem 8px 1.8rem;
   }
@@ -372,7 +367,7 @@ a{ text-decoration: none; }
   #results .card p:first-child{ font-size: 13px; }
 }
 
-/* Motion respectueuse */
+
 @media (prefers-reduced-motion: reduce){
   * { transition: none !important; }
 }

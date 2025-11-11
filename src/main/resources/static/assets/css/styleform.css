@@ -152,23 +152,31 @@ h3 {
 }
 
 .checkbox-container input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
     width: 20px;
     height: 20px;
     border: 1.5px solid #FFFAFA;
     border-radius: 3px;
-    background-color: transparent;
     cursor: pointer;
     margin-top: 20px;
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    position: relative;
 }
 
 .checkbox-container input[type="checkbox"]:checked {
-    background-color: #FFFAFA;
+    background-color: #4CAF50;
 }
 
-.checkbox-container input[type="checkbox"]:hover {
-    border-color: #EB7A57;
+.checkbox-container input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 1px;
+    left: 4px;
 }
 
 .reinitialisation p {
@@ -245,7 +253,6 @@ input[type="date"]::-moz-calendar-picker-indicator {
     position: relative;
 }
 
-/* réserve la place pour l’icône */
 #loginForm .input-with-eye > input[type="password"],
 #loginForm .input-with-eye > input[type="text"],
 #inscriptionForm .input-with-eye > input[type="password"],
@@ -359,14 +366,12 @@ input[type="date"]::-moz-calendar-picker-indicator {
         flex-direction: column;
     }
 
-    /* on garde l’espace pour l’icône en mobile */
     #loginForm .input-with-eye > input[type="password"],
     #inscriptionForm .input-with-eye > input[type="password"] {
         padding-right: 44px;
     }
 }
 
-/* ≈700px : réduire la largeur des champs */
 @media (max-width: 700px) {
     .container-formulaire input {
         height: 35px;
