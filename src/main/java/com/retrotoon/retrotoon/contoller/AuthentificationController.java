@@ -2,6 +2,7 @@ package com.retrotoon.retrotoon.contoller;
 
 import java.util.List;
 
+import com.retrotoon.retrotoon.service.UtilisateurService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.retrotoon.retrotoon.dtos.UserRequestDto;
 import com.retrotoon.retrotoon.model.Utilisateur;
 import com.retrotoon.retrotoon.repository.UtilisateurRepository;
-import com.retrotoon.retrotoon.service.UtilisateurServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +28,7 @@ public class AuthentificationController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UtilisateurServiceImpl utilisateurServiceImpl;
+    private UtilisateurService utilisateurService;
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -38,14 +38,14 @@ public class AuthentificationController {
         if (utilisateurRepository.findByEmail(user.getEmail()) != null) {
             return ResponseEntity.status(409).body("Email déjà utilisé");
         }
-        Utilisateur nouvelUtilisateur = utilisateurServiceImpl.addNewUser(user);
+        Utilisateur nouvelUtilisateur = utilisateurService.addNewUser(user);
         session.setAttribute("prenom", nouvelUtilisateur.getPrenom());
         return ResponseEntity.ok("success");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserRequestDto userDto, HttpSession session) {
-        Utilisateur utilisateur = utilisateurServiceImpl.checkUser(userDto.getEmail(), userDto);
+        Utilisateur utilisateur = utilisateurService.checkUser(userDto.getEmail(), userDto);
 
         if (utilisateur != null) {
             session.setAttribute("prenom", utilisateur.getPrenom());
@@ -57,7 +57,7 @@ public class AuthentificationController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserRequestDto>> getAll() {
-        List<UserRequestDto> users = utilisateurServiceImpl.getAllUsers();
+        List<UserRequestDto> users = utilisateurService.getAllUsers();
         if (users.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -66,7 +66,7 @@ public class AuthentificationController {
 
     @PutMapping("/modify/user/{oldEmail}")
     public ResponseEntity<?> updateUser(@PathVariable String oldEmail, @RequestBody UserRequestDto userRequestDto) {
-        Utilisateur updatedUser = utilisateurServiceImpl.updateUser(oldEmail, userRequestDto);
+        Utilisateur updatedUser = utilisateurService.updateUser(oldEmail, userRequestDto);
         if (updatedUser == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Utilisateur avec l'email " + oldEmail + " introuvable.");

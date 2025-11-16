@@ -1,6 +1,8 @@
 package com.retrotoon.retrotoon.contoller;
 
 import java.util.List;
+
+import com.retrotoon.retrotoon.service.CategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.retrotoon.retrotoon.model.Categorie;
 import com.retrotoon.retrotoon.repository.CategorieRepository;
-import com.retrotoon.retrotoon.service.CategorieServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,20 +22,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CategorieController {
 
     @Autowired
-    CategorieServiceImpl categorieServiceImpl;
+    CategorieService categorieService;
 
     @Autowired
     CategorieRepository categorieRepository;
 
     @PostMapping
     public ResponseEntity<Categorie> createCatgorie(@RequestBody Categorie categorie){
-        Categorie savedCategorie = categorieServiceImpl.addNewCategorie(categorie);
+        Categorie savedCategorie = categorieService.addNewCategorie(categorie);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategorie);
     }
 
     @GetMapping
     public ResponseEntity<List<Categorie>> getAll(){
-        List<Categorie> categories = categorieServiceImpl.getAllCategories();
+        List<Categorie> categories = categorieService.getAllCategories();
         if (categories.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -43,7 +44,7 @@ public class CategorieController {
     
     @GetMapping("/{id}")
     public ResponseEntity<Categorie> getByName(@PathVariable String nom){
-        Categorie categorie = categorieServiceImpl.getCategorieByName(nom);
+        Categorie categorie = categorieService.getCategorieByName(nom);
         if (categorie == null) {
             return ResponseEntity.notFound().build();
         }
@@ -53,7 +54,7 @@ public class CategorieController {
     @PutMapping("/{id}")
     public ResponseEntity<Categorie> updateCategorie(@PathVariable String nom, @RequestBody Categorie updatedCategorie){
         Categorie categorie = categorieRepository.findByNom(nom);
-        Categorie updateCategorie = categorieServiceImpl.updateCategorie(nom, updatedCategorie);
+        Categorie updateCategorie = categorieService.updateCategorie(nom, updatedCategorie);
         if (categorie == null) {
             return ResponseEntity.notFound().build();
         }
@@ -62,7 +63,7 @@ public class CategorieController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategorie(@PathVariable Long id){
-        if (categorieServiceImpl.deleteCategorieById(id)) {
+        if (categorieService.deleteCategorieById(id)) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();

@@ -57,7 +57,6 @@ public class VideoServiceImplTest {
 
         Video savedVideo = videoService.addNewVideo(dto);
 
-        // Assert (vérifier le résultat)
         assertThat(savedVideo).isNotNull();
         assertThat(savedVideo.getId()).isEqualTo(1L);
         assertThat(savedVideo.getTitre()).isEqualTo("Video1");
@@ -66,7 +65,6 @@ public class VideoServiceImplTest {
         assertThat(savedVideo.getDateAjout()).isNotNull();
         assertThat(savedVideo.getCategorieVideo().getNom()).isEqualTo("FILM");
 
-        // Vérifier que save() a bien été appelé 1 fois
         verify(categorieRepository).findByNom("FILM");
         verify(videoRepository, times(1)).save(any(Video.class));
     }
